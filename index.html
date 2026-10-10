@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>墨香書廊 - 旗艦線上書店與虛擬會員中心</title>
+    <title>墨香書廊 - 旗艦線上書店與社群會員中心</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -40,8 +40,8 @@
 <body class="min-h-screen flex flex-col">
 
     <!-- 頂部通知列 -->
-    <div class="bg-[#3b2219] text-[#fbf7f4] text-xs py-2 px-4 text-center font-medium tracking-wide">
-        <i class="fa-solid fa-bullhorn mr-2"></i>翻開一頁書，遇見更好的自己！墨香書廊全新旗艦開幕，全館滿千免運。
+    <div class="bg-amber-900 text-amber-50 text-xs py-2 px-4 text-center font-medium tracking-wide">
+        <i class="fa-solid fa-bullhorn mr-2"></i>歡慶墨香書廊升級！每位會員皆擁有獨一無二的專屬邀請碼、圖片上傳與賣家專區！
     </div>
 
     <!-- 導覽列 -->
@@ -49,33 +49,34 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             <!-- Logo -->
             <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('shop')">
-                <div class="w-11 h-11 bg-[#533324] rounded-xl flex items-center justify-center text-white text-xl shadow-md">
+                <div class="w-11 h-11 bg-amber-800 rounded-xl flex items-center justify-center text-white text-xl shadow-md">
                     <i class="fa-solid fa-book-open"></i>
                 </div>
                 <div>
-                    <h1 class="serif-title text-xl font-bold tracking-wider text-[#3b2219]">墨香書廊</h1>
+                    <h1 class="serif-title text-xl font-bold tracking-wider text-amber-950">墨香書廊</h1>
                     <p class="text-xs text-slate-500">Mok-Hsiang Bookstore</p>
                 </div>
             </div>
 
             <!-- 導覽按鈕 -->
             <div class="hidden md:flex items-center space-x-6">
-                <button onclick="switchTab('shop')" id="nav-shop" class="text-sm font-semibold text-[#3b2219] border-b-2 border-[#533324] pb-1 transition">圖書首頁</button>
-                <button onclick="switchTab('membership')" id="nav-membership" class="text-sm font-medium text-slate-600 hover:text-[#533324] pb-1 transition">會員卡與方案</button>
-                <button onclick="switchTab('seller')" id="nav-seller" class="text-sm font-medium text-slate-600 hover:text-[#533324] pb-1 transition">賣家專區</button>
-                <button onclick="switchTab('social')" id="nav-social" class="text-sm font-medium text-slate-600 hover:text-[#533324] pb-1 transition">書友留言板</button>
-                <button onclick="switchTab('orders')" id="nav-orders" class="text-sm font-medium text-slate-600 hover:text-[#533324] pb-1 transition">訂單查詢</button>
+                <button onclick="switchTab('shop')" id="nav-shop" class="text-sm font-semibold text-amber-950 border-b-2 border-amber-800 pb-1 transition">圖書首頁</button>
+                <button onclick="switchTab('membership')" id="nav-membership" class="text-sm font-medium text-slate-600 hover:text-amber-900 pb-1 transition">會員卡與方案</button>
+                <button onclick="switchTab('wallet')" id="nav-wallet" class="text-sm font-medium text-slate-600 hover:text-amber-900 pb-1 transition">書香幣錢包</button>
+                <button onclick="switchTab('seller')" id="nav-seller" class="text-sm font-medium text-slate-600 hover:text-amber-900 pb-1 transition">賣家專區</button>
+                <button onclick="switchTab('social')" id="nav-social" class="text-sm font-medium text-slate-600 hover:text-amber-900 pb-1 transition">好友與留言區</button>
+                <button onclick="switchTab('orders')" id="nav-orders" class="text-sm font-medium text-slate-600 hover:text-amber-900 pb-1 transition">訂單查詢</button>
             </div>
 
             <!-- 右側功能圖示 -->
             <div class="flex items-center space-x-4">
-                <button onclick="openWishlistModal()" class="relative p-2 text-slate-600 hover:text-[#533324] transition" title="願望清單">
+                <button onclick="openWishlistModal()" class="relative p-2 text-slate-600 hover:text-amber-800 transition" title="願望清單">
                     <i class="fa-regular fa-heart text-xl"></i>
                     <span id="wishlist-badge" class="absolute top-0 right-0 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
                 </button>
-                <button onclick="openCartDrawer()" class="relative p-2 text-slate-600 hover:text-[#533324] transition" title="購物車">
+                <button onclick="openCartDrawer()" class="relative p-2 text-slate-600 hover:text-amber-800 transition" title="購物車">
                     <i class="fa-solid fa-cart-shopping text-xl"></i>
-                    <span id="cart-badge" class="absolute top-0 right-0 bg-[#533324] text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+                    <span id="cart-badge" class="absolute top-0 right-0 bg-amber-800 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
                 </button>
                 <div id="auth-nav-container"></div>
             </div>
@@ -87,56 +88,27 @@
         
         <!-- ==================== 1. 圖書首頁 Tab ==================== -->
         <div id="tab-shop" class="space-y-8">
-            <!-- 您指定的精美咖啡棕 Banner 主視覺 -->
-            <div class="relative bg-[#533324] rounded-3xl overflow-hidden shadow-2xl text-white p-8 md:p-14 flex flex-col md:flex-row items-center justify-between">
-                <div class="max-w-xl space-y-4 z-10">
-                    <span class="inline-block bg-[#7a4c37] text-amber-200 text-xs font-semibold px-3.5 py-1 rounded-full uppercase tracking-wider">本月職人推薦好書</span>
-                    <h2 class="serif-title text-4xl md:text-5xl font-bold tracking-wide leading-tight">翻開一頁書，<br>遇見更好的自己</h2>
-                    <p class="text-amber-100 text-sm md:text-base opacity-90 leading-relaxed">探索超過 40 冊精選文學、商業經營、人文史地與生活風格書籍。享受紙本與心靈的深刻對話，全館滿千免運。</p>
-                    <div class="flex flex-wrap gap-4 pt-2">
-                        <button onclick="filterByCategory('全部')" class="bg-[#f5ebe0] text-[#3b2219] font-bold px-6 py-3 rounded-2xl shadow hover:bg-white transition text-sm">立即瀏覽書店</button>
-                        <button onclick="switchTab('membership')" class="border border-amber-200/50 text-amber-100 font-semibold px-6 py-3 rounded-2xl hover:bg-[#7a4c37]/50 transition text-sm">查看特選書評</button>
-                    </div>
-                </div>
-
-                <!-- 右側精選卡片預覽 -->
-                <div class="mt-8 md:mt-0 z-10">
-                    <div class="bg-[#3b2219]/70 backdrop-blur-md p-5 rounded-3xl border border-amber-900/40 shadow-2xl w-72 text-left relative">
-                        <span class="absolute top-4 right-4 bg-[#f59e0b] text-slate-950 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow">熱銷特選</span>
-                        <div class="aspect-[3/4] rounded-2xl overflow-hidden mb-4 shadow-inner">
-                            <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600" class="w-full h-full object-cover">
-                        </div>
-                        <p class="text-[11px] text-amber-200">村上春樹 著</p>
-                        <h4 class="serif-title font-bold text-base text-white mt-0.5 line-clamp-1">街道的盡頭與奇幻圖書館</h4>
-                        <div class="flex items-center text-xs text-amber-400 my-1">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                            <span class="text-slate-300 ml-2 text-[10px]">(4.8 / 128 則評價)</span>
-                        </div>
-                        <div class="flex items-baseline space-x-2 mt-2">
-                            <span class="text-lg font-bold text-amber-300">NT$ 420</span>
-                            <span class="text-xs text-slate-400 line-through">NT$ 520</span>
-                        </div>
+            <div class="relative bg-gradient-to-r from-amber-900 to-amber-950 rounded-2xl overflow-hidden shadow-xl text-white p-8 md:p-12">
+                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl"><i class="fa-solid fa-book-bookmark"></i></div>
+                <div class="relative z-10 max-w-xl">
+                    <span class="bg-amber-800 text-amber-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">旗艦精選書展</span>
+                    <h2 class="serif-title text-3xl md:text-4xl font-bold mt-3 mb-4 leading-tight">心靈的避難所：探索 40 本文學、商業與自我成長好書</h2>
+                    <p class="text-amber-100 text-sm md:text-base mb-6 opacity-90">獨一無二的專屬邀請碼、裝置圖片上傳、經驗值自動升等與書香幣結帳，打造您的專屬閱讀生態圈。</p>
+                    <div class="flex flex-wrap gap-4">
+                        <button onclick="filterByCategory('全部')" class="bg-white text-amber-950 font-semibold px-6 py-2.5 rounded-xl shadow hover:bg-amber-50 transition text-sm">立即選購</button>
+                        <button onclick="switchTab('seller')" class="border border-amber-300 text-amber-100 font-semibold px-6 py-2.5 rounded-xl hover:bg-amber-800/50 transition text-sm">我要上架二手書</button>
                     </div>
                 </div>
             </div>
 
-            <!-- 輪播指示點 -->
-            <div class="flex justify-center space-x-2">
-                <span class="w-2.5 h-2.5 bg-[#533324] rounded-full"></span>
-                <span class="w-2.5 h-2.5 bg-slate-300 rounded-full"></span>
-                <span class="w-2.5 h-2.5 bg-slate-300 rounded-full"></span>
-            </div>
-
-            <!-- 搜尋與分類列 -->
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
                 <div id="category-tabs" class="flex flex-wrap gap-2 w-full md:w-auto"></div>
                 <div class="relative w-full md:w-72">
-                    <input type="text" id="search-input" oninput="handleSearch()" placeholder="搜尋書名、作者或關鍵字..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#533324]/20 focus:border-[#533324]">
+                    <input type="text" id="search-input" oninput="handleSearch()" placeholder="搜尋書名、作者或關鍵字..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-800/20 focus:border-amber-800">
                     <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
                 </div>
             </div>
 
-            <!-- 書籍列表 Grid -->
             <div>
                 <div class="flex justify-between items-center mb-4">
                     <h3 id="current-category-title" class="serif-title text-xl font-bold text-slate-800">全部書籍</h3>
@@ -150,18 +122,18 @@
         <div id="tab-membership" class="space-y-8 hidden">
             <div id="member-guest-view" class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 text-center max-w-2xl mx-auto">
                 <div class="w-16 h-16 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center mx-auto text-2xl mb-4"><i class="fa-solid fa-id-card"></i></div>
-                <h3 class="serif-title text-2xl font-bold text-slate-900 mb-2">解鎖專屬 QR Code 會員卡與自動升等系統</h3>
-                <p class="text-slate-600 text-sm mb-6">請先註冊帳號並填寫真實基本資料與生日，即可擁有您的虛擬會員卡與專屬 QR-Code！</p>
+                <h3 class="serif-title text-2xl font-bold text-slate-900 mb-2">解鎖專屬 QR Code 與個人邀請碼</h3>
+                <p class="text-slate-600 text-sm mb-6">請先註冊帳號並填寫真實基本資料與生日，即可擁有您獨一無二的邀請碼與自動升等系統！</p>
                 <div class="flex justify-center gap-4">
-                    <button onclick="openAuthModal('login')" class="bg-[#533324] text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-[#3b2219]">立即登入</button>
-                    <button onclick="openAuthModal('register')" class="border border-[#533324] text-[#533324] px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-amber-50">註冊新帳號</button>
+                    <button onclick="openAuthModal('login')" class="bg-amber-900 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-amber-950">立即登入</button>
+                    <button onclick="openAuthModal('register')" class="border border-amber-900 text-amber-900 px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-amber-50">註冊新帳號</button>
                 </div>
             </div>
 
             <div id="member-logged-view" class="space-y-8 hidden">
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <!-- 虛擬 QR Code 會員卡 -->
-                    <div id="virtual-card" class="bg-gradient-to-br from-slate-900 via-[#3b2219] to-slate-900 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden flex flex-col justify-between">
+                    <div id="virtual-card" class="bg-gradient-to-br from-slate-900 via-amber-950 to-slate-900 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden flex flex-col justify-between">
                         <div class="absolute -right-10 -bottom-10 opacity-15 text-9xl"><i class="fa-solid fa-crown"></i></div>
                         <div class="flex justify-between items-start relative z-10 mb-2">
                             <div>
@@ -221,13 +193,13 @@
                                     <input type="text" id="profile-address" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm">
                                 </div>
                                 <div class="sm:col-span-2 flex justify-end">
-                                    <button type="submit" class="bg-[#533324] text-white px-5 py-2 rounded-xl text-xs font-semibold hover:bg-[#3b2219]">儲存資料</button>
+                                    <button type="submit" class="bg-amber-900 text-white px-5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-950">儲存資料</button>
                                 </div>
                             </form>
                         </div>
                         <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex justify-between items-center">
-                            <span>您的獨家專屬邀請碼：<strong id="my-invite-code" class="font-mono bg-white px-2 py-0.5 rounded border text-[#533324] font-bold">--</strong></span>
-                            <button onclick="copyInviteCode()" class="bg-[#533324] text-white px-3 py-1 rounded-lg text-xs font-semibold">複製邀請碼</button>
+                            <span>您的獨家專屬邀請碼：<strong id="my-invite-code" class="font-mono bg-white px-2 py-0.5 rounded border text-amber-900 font-bold">--</strong></span>
+                            <button onclick="copyInviteCode()" class="bg-amber-900 text-white px-3 py-1 rounded-lg text-xs font-semibold">複製邀請碼</button>
                         </div>
                     </div>
                 </div>
@@ -235,7 +207,7 @@
                 <!-- 會員方案區 -->
                 <div id="plans-section" class="space-y-6 pt-6">
                     <div class="text-center max-w-xl mx-auto">
-                        <span class="text-xs font-semibold text-[#533324] uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">VIP Plans</span>
+                        <span class="text-xs font-semibold text-amber-800 uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">VIP Plans</span>
                         <h3 class="serif-title text-2xl font-bold text-slate-900 mt-2">升級會員方案 (或透過經驗值自動升等)</h3>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -250,18 +222,18 @@
                             </div>
                             <button onclick="upgradeMembership('銅卡會員', 299, 0.95)" class="w-full bg-slate-900 text-white py-2.5 rounded-xl text-sm font-semibold">選擇銅卡</button>
                         </div>
-                        <div class="bg-white rounded-2xl shadow-md border-2 border-[#533324] p-6 flex flex-col justify-between relative">
-                            <div class="absolute top-0 right-0 bg-[#533324] text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase">熱門</div>
+                        <div class="bg-white rounded-2xl shadow-md border-2 border-amber-800 p-6 flex flex-col justify-between relative">
+                            <div class="absolute top-0 right-0 bg-amber-800 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase">熱門</div>
                             <div>
                                 <h4 class="serif-title text-xl font-bold text-slate-900">銀卡會員方案</h4>
                                 <p class="text-xs text-slate-500 mt-1">達 500 Exp 自動或付費升級</p>
-                                <div class="my-6"><span class="text-3xl font-bold text-[#533324]">NT$ 699</span></div>
+                                <div class="my-6"><span class="text-3xl font-bold text-amber-900">NT$ 699</span></div>
                                 <ul class="space-y-2 text-sm text-slate-600 mb-6">
                                     <li><i class="fa-solid fa-check text-emerald-600 mr-2"></i>全館 9 折</li>
                                     <li><i class="fa-solid fa-check text-emerald-600 mr-2"></i>2% 紅利回饋</li>
                                 </ul>
                             </div>
-                            <button onclick="upgradeMembership('銀卡會員', 699, 0.90)" class="w-full bg-[#533324] text-white py-2.5 rounded-xl text-sm font-semibold shadow">立即升級銀卡</button>
+                            <button onclick="upgradeMembership('銀卡會員', 699, 0.90)" class="w-full bg-amber-800 text-white py-2.5 rounded-xl text-sm font-semibold shadow">立即升級銀卡</button>
                         </div>
                         <div class="bg-white rounded-2xl shadow-sm border p-6 flex flex-col justify-between">
                             <div>
@@ -280,21 +252,56 @@
             </div>
         </div>
 
-        <!-- ==================== 3. 賣家專區 Tab (二手書上架、圖片上傳與數量拉桿) ==================== -->
+        <!-- ==================== 3. 書香幣錢包 Tab ==================== -->
+        <div id="tab-wallet" class="space-y-8 hidden">
+            <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl border p-8 space-y-6">
+                <div class="text-center">
+                    <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full">Virtual Wallet</span>
+                    <h3 class="serif-title text-2xl font-bold text-slate-900 mt-2">書香幣虛擬錢包</h3>
+                    <p class="text-xs text-slate-500 mt-1">儲值享專屬回饋，結帳時直接使用書香幣秒速扣款！</p>
+                </div>
+                <div class="bg-gradient-to-r from-amber-900 to-amber-950 text-white p-6 rounded-2xl shadow flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-amber-200">目前可用書香幣餘額</p>
+                        <p id="wallet-balance" class="text-3xl font-bold mt-1">$ 0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-amber-800 rounded-xl flex items-center justify-center text-2xl text-amber-200"><i class="fa-solid fa-coins"></i></div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm text-slate-800 mb-3">快速線上儲值方案 (享回饋)</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <button onclick="topUpWallet(1000, 100)" class="p-4 border rounded-2xl hover:border-amber-800 hover:bg-amber-50 text-left transition">
+                            <p class="font-bold text-slate-900">儲值 $1,000</p>
+                            <p class="text-xs text-emerald-600 mt-1 font-semibold">+ 送 100 書香幣</p>
+                        </button>
+                        <button onclick="topUpWallet(3000, 400)" class="p-4 border rounded-2xl hover:border-amber-800 hover:bg-amber-50 text-left transition">
+                            <p class="font-bold text-slate-900">儲值 $3,000</p>
+                            <p class="text-xs text-emerald-600 mt-1 font-semibold">+ 送 400 書香幣</p>
+                        </button>
+                        <button onclick="topUpWallet(5000, 800)" class="p-4 border rounded-2xl hover:border-amber-800 hover:bg-amber-50 text-left transition">
+                            <p class="font-bold text-slate-900">儲值 $5,000</p>
+                            <p class="text-xs text-emerald-600 mt-1 font-semibold">+ 送 800 書香幣</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 4. 賣家專區 Tab (二手書上架、圖片上傳與數量拉桿) ==================== -->
         <div id="tab-seller" class="space-y-8 hidden">
             <div class="bg-white rounded-3xl shadow-xl border p-8 space-y-6">
                 <div class="flex justify-between items-center border-b pb-4">
                     <div>
-                        <h3 class="serif-title text-2xl font-bold text-slate-900"><i class="fa-solid fa-store mr-2 text-[#533324]"></i>賣家專區與二手書上架</h3>
+                        <h3 class="serif-title text-2xl font-bold text-slate-900"><i class="fa-solid fa-store mr-2 text-amber-800"></i>賣家專區與二手書上架</h3>
                         <p class="text-xs text-slate-500 mt-1">在此上架您的二手書、自行上傳裝置圖片封面、調整庫存拉桿與查看銷售營收！</p>
                     </div>
                     <div class="text-right">
                         <p class="text-xs text-slate-500">賣家總營收</p>
-                        <p id="seller-total-revenue" class="text-xl font-bold text-[#533324]">NT$ 0</p>
+                        <p id="seller-total-revenue" class="text-xl font-bold text-amber-900">NT$ 0</p>
                     </div>
                 </div>
 
-                <!-- 上架表單 -->
+                <!-- 上架表單 (支援圖片上傳) -->
                 <form id="sell-book-form" onsubmit="handlePublishBook(event)" class="bg-slate-50 p-6 rounded-2xl border space-y-4">
                     <h4 class="font-bold text-sm text-slate-900"><i class="fa-solid fa-circle-plus mr-1"></i>上架新二手書</h4>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -317,15 +324,15 @@
                             <input type="number" id="sell-price" required min="50" placeholder="300" class="w-full px-3 py-2 bg-white border rounded-xl text-sm">
                         </div>
                         <div class="sm:col-span-2">
-                            <label class="block text-xs font-semibold mb-1">庫存數量拉桿 (Slider)：<span id="slider-val" class="font-bold text-[#533324]">5</span> 本</label>
-                            <input type="range" id="sell-stock" min="1" max="50" value="5" oninput="document.getElementById('slider-val').innerText=this.value" class="w-full accent-[#533324] mt-2">
+                            <label class="block text-xs font-semibold mb-1">庫存數量拉桿 (Slider)：<span id="slider-val" class="font-bold text-amber-900">5</span> 本</label>
+                            <input type="range" id="sell-stock" min="1" max="50" value="5" oninput="document.getElementById('slider-val').innerText=this.value" class="w-full accent-amber-800 mt-2">
                         </div>
                     </div>
                     <div>
                         <label class="block text-xs font-semibold mb-1">上架書籍封面圖片 (從您的裝置中選擇照片)</label>
-                        <input type="file" id="sell-image-file" accept="image/*" class="w-full px-3 py-2 bg-white border rounded-xl text-sm file:mr-4 file:py-1 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-100 file:text-[#533324] hover:file:bg-amber-200">
+                        <input type="file" id="sell-image-file" accept="image/*" class="w-full px-3 py-2 bg-white border rounded-xl text-sm file:mr-4 file:py-1 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-100 file:text-amber-900 hover:file:bg-amber-200">
                     </div>
-                    <button type="submit" class="bg-[#533324] text-white px-6 py-2.5 rounded-xl text-xs font-semibold shadow hover:bg-[#3b2219]">確認上架販售</button>
+                    <button type="submit" class="bg-amber-900 text-white px-6 py-2.5 rounded-xl text-xs font-semibold shadow hover:bg-amber-950">確認上架販售</button>
                 </form>
 
                 <div>
@@ -334,28 +341,47 @@
                 </div>
 
                 <div class="border-t pt-4">
-                    <h4 class="font-bold text-sm text-slate-900 mb-3"><i class="fa-solid fa-bell mr-1 text-[#533324]"></i>即時賣書通知記錄</h4>
+                    <h4 class="font-bold text-sm text-slate-900 mb-3"><i class="fa-solid fa-bell mr-1 text-amber-800"></i>即時賣書通知記錄</h4>
                     <div id="seller-notifications" class="space-y-2"></div>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== 4. 留言板 Tab ==================== -->
+        <!-- ==================== 5. 好友邀請與留言區 Tab ==================== -->
         <div id="tab-social" class="space-y-8 hidden">
-            <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl border p-8 flex flex-col h-[600px]">
-                <h3 class="serif-title text-2xl font-bold text-slate-900 mb-2"><i class="fa-solid fa-comments mr-2 text-[#533324]"></i>書友公開留言板</h3>
-                <p class="text-xs text-slate-500 mb-4">與其他愛書人交流閱讀心得與推薦好書！</p>
-                <div id="comments-container" class="flex-grow overflow-y-auto space-y-3 pr-2 mb-4 bg-slate-50 p-4 rounded-2xl border">
-                    <p class="text-center text-xs text-slate-400 py-16">大家一起來留言交流讀書心得吧！</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 左側：自主好友邀請區 -->
+                <div class="bg-white rounded-3xl shadow-xl border p-6 space-y-6">
+                    <h3 class="serif-title text-xl font-bold text-slate-900"><i class="fa-solid fa-user-plus mr-2 text-amber-800"></i>自主好友邀請區</h3>
+                    <p class="text-xs text-slate-500">您可以輸入好友的專屬邀請碼主動發送邀請，或查看別人發給您的邀請並點選同意或不同意。</p>
+                    <div>
+                        <label class="block text-xs font-semibold mb-1">輸入好友邀請碼</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="invite-code-input" placeholder="例：MK-9281" class="flex-grow px-3 py-2 border rounded-xl text-sm font-mono">
+                            <button onclick="sendFriendInvite()" class="bg-amber-900 text-white px-4 py-2 rounded-xl text-xs font-semibold">送出邀請</button>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xs text-slate-700 uppercase mb-2">好友邀請列表與狀態</h4>
+                        <div id="friend-invites-list" class="space-y-2"></div>
+                    </div>
                 </div>
-                <div class="flex gap-2">
-                    <input type="text" id="comment-input" onkeypress="if(event.key==='Enter')postComment()" placeholder="寫下您的讀書心得或留言..." class="flex-grow px-4 py-2 border rounded-xl text-sm focus:outline-none focus:border-[#533324]">
-                    <button onclick="postComment()" class="bg-[#533324] text-white px-6 py-2 rounded-xl text-sm font-semibold hover:bg-[#3b2219]">發布留言</button>
+
+                <!-- 右側：公開留言區 -->
+                <div class="bg-white rounded-3xl shadow-xl border p-6 flex flex-col h-[500px]">
+                    <h3 class="serif-title text-xl font-bold text-slate-900 mb-4"><i class="fa-solid fa-comments mr-2 text-amber-800"></i>書友公開留言板</h3>
+                    <div id="comments-container" class="flex-grow overflow-y-auto space-y-3 pr-2 mb-4 bg-slate-50 p-4 rounded-2xl border">
+                        <p class="text-center text-xs text-slate-400 py-16">大家一起來留言交流讀書心得吧！</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" id="comment-input" onkeypress="if(event.key==='Enter')postComment()" placeholder="寫下您的讀書心得或留言..." class="flex-grow px-4 py-2 border rounded-xl text-sm focus:outline-none focus:border-amber-800">
+                        <button onclick="postComment()" class="bg-amber-900 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-amber-950">發布留言</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== 5. 訂單查詢 Tab ==================== -->
+        <!-- ==================== 6. 訂單查詢 Tab ==================== -->
         <div id="tab-orders" class="space-y-6 hidden">
             <div class="bg-white rounded-2xl shadow-sm border p-6">
                 <h3 class="serif-title text-xl font-bold text-slate-900 mb-4">歷史訂單與繳費記錄</h3>
@@ -376,7 +402,7 @@
     <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-opacity">
         <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
             <div class="p-6 border-b flex justify-between items-center">
-                <h3 class="serif-title text-lg font-bold text-slate-900"><i class="fa-solid fa-cart-shopping mr-2 text-[#533324]"></i>您的購物車</h3>
+                <h3 class="serif-title text-lg font-bold text-slate-900"><i class="fa-solid fa-cart-shopping mr-2 text-amber-800"></i>您的購物車</h3>
                 <button onclick="closeCartDrawer()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4"></div>
@@ -408,23 +434,23 @@
         <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden p-8 relative max-h-[90vh] overflow-y-auto">
             <button onclick="closeAuthModal()" class="absolute right-5 top-5 text-slate-400"><i class="fa-solid fa-xmark text-lg"></i></button>
             <div class="flex border-b mb-6">
-                <button id="auth-tab-login" onclick="switchAuthTab('login')" class="flex-1 pb-3 text-center font-bold text-[#533324] border-b-2 border-[#533324] text-sm">會員登入</button>
+                <button id="auth-tab-login" onclick="switchAuthTab('login')" class="flex-1 pb-3 text-center font-bold text-amber-900 border-b-2 border-amber-800 text-sm">會員登入</button>
                 <button id="auth-tab-register" onclick="switchAuthTab('register')" class="flex-1 pb-3 text-center font-medium text-slate-500 text-sm">註冊帳號</button>
             </div>
             <form id="form-login" onsubmit="handleLoginSubmit(event)" class="space-y-4">
                 <div><label class="block text-xs font-semibold mb-1">電子信箱</label><input type="email" id="login-email" required class="w-full px-4 py-2.5 bg-slate-50 border rounded-xl text-sm"></div>
                 <div><label class="block text-xs font-semibold mb-1">密碼</label><input type="password" id="login-password" required class="w-full px-4 py-2.5 bg-slate-50 border rounded-xl text-sm"></div>
-                <button type="submit" class="w-full bg-[#533324] text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-[#3b2219]">登入帳戶</button>
+                <button type="submit" class="w-full bg-amber-900 text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-amber-950">登入帳戶</button>
             </form>
             <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="space-y-3 hidden">
-                <p class="text-xs text-amber-900 bg-amber-50 p-2.5 rounded-xl"><i class="fa-solid fa-circle-info mr-1"></i>填寫真實基本資料與生日，系統將為您自動生成虛擬會員卡與 QR-Code！</p>
+                <p class="text-xs text-amber-800 bg-amber-50 p-2.5 rounded-xl"><i class="fa-solid fa-circle-info mr-1"></i>填寫真實基本資料與生日，系統將為您自動生成獨一無二的專屬邀請碼！</p>
                 <div><label class="block text-xs font-semibold mb-1">真實姓名</label><input type="text" id="reg-name" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
                 <div><label class="block text-xs font-semibold mb-1">手機號碼</label><input type="tel" id="reg-phone" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
                 <div><label class="block text-xs font-semibold mb-1">生日</label><input type="date" id="reg-birthday" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
                 <div><label class="block text-xs font-semibold mb-1">電子信箱</label><input type="email" id="reg-email" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
                 <div><label class="block text-xs font-semibold mb-1">密碼</label><input type="password" id="reg-password" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
                 <div><label class="block text-xs font-semibold mb-1">通訊地址</label><input type="text" id="reg-address" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
-                <button type="submit" class="w-full bg-[#533324] text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-[#3b2219] mt-2">完成註冊</button>
+                <button type="submit" class="w-full bg-amber-900 text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-amber-950 mt-2">完成註冊</button>
             </form>
         </div>
     </div>
@@ -492,6 +518,7 @@
         let currentUser = null; 
         let myPublishedBooks = [];
         let sellerNotifications = [];
+        let friendInvites = []; 
         let publicComments = [
             { name: "王小明", text: "墨香書廊的書真的很多，出貨速度也超快！", time: "昨天 14:20" },
             { name: "林雅婷", text: "推原子習慣這本，看完收穫良多！", time: "今天 09:15" }
@@ -510,6 +537,8 @@
             if (savedWishlist) wishlist = JSON.parse(savedWishlist);
             const savedOrders = localStorage.getItem('mok_hsiang_orders');
             if (savedOrders) orders = JSON.parse(savedOrders);
+            const savedInvites = localStorage.getItem('mok_hsiang_invites');
+            if (savedInvites) friendInvites = JSON.parse(savedInvites);
             const savedComments = localStorage.getItem('mok_hsiang_comments');
             if (savedComments) publicComments = JSON.parse(savedComments);
 
@@ -519,6 +548,7 @@
             updateBadges();
             renderOrders();
             renderSellerDashboard();
+            renderFriendInvites();
             renderComments();
         };
 
@@ -530,16 +560,17 @@
             localStorage.setItem('mok_hsiang_cart', JSON.stringify(cart));
             localStorage.setItem('mok_hsiang_wishlist', JSON.stringify(wishlist));
             localStorage.setItem('mok_hsiang_orders', JSON.stringify(orders));
+            localStorage.setItem('mok_hsiang_invites', JSON.stringify(friendInvites));
             localStorage.setItem('mok_hsiang_comments', JSON.stringify(publicComments));
         }
 
         function switchTab(tabId) {
-            ['shop', 'membership', 'seller', 'social', 'orders'].forEach(t => {
+            ['shop', 'membership', 'wallet', 'seller', 'social', 'orders'].forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 if (el) el.classList.add('hidden');
                 const navBtn = document.getElementById(`nav-${t}`);
                 if (navBtn) {
-                    navBtn.classList.remove('text-[#3b2219]', 'border-b-2', 'border-[#533324]', 'font-semibold');
+                    navBtn.classList.remove('text-amber-950', 'border-b-2', 'border-amber-800', 'font-semibold');
                     navBtn.classList.add('text-slate-600', 'font-medium');
                 }
             });
@@ -548,19 +579,19 @@
             const activeNav = document.getElementById(`nav-${tabId}`);
             if (activeNav) {
                 activeNav.classList.remove('text-slate-600', 'font-medium');
-                activeNav.classList.add('text-[#3b2219]', 'border-b-2', 'border-[#533324]', 'font-semibold');
+                activeNav.classList.add('text-amber-950', 'border-b-2', 'border-amber-800', 'font-semibold');
             }
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             if (tabId === 'membership') renderMembershipView();
             if (tabId === 'seller') renderSellerDashboard();
-            if (tabId === 'social') renderComments();
+            if (tabId === 'social') { renderFriendInvites(); renderComments(); }
         }
 
         function renderCategoryTabs() {
             const container = document.getElementById('category-tabs');
             container.innerHTML = categories.map(cat => `
-                <button onclick="filterByCategory('${cat}')" class="px-4 py-2 rounded-xl text-sm font-semibold transition ${currentCategory === cat ? 'bg-[#533324] text-white shadow' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
+                <button onclick="filterByCategory('${cat}')" class="px-4 py-2 rounded-xl text-sm font-semibold transition ${currentCategory === cat ? 'bg-amber-900 text-white shadow' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
                     ${cat}
                 </button>
             `).join('');
@@ -614,15 +645,15 @@
                                     <i class="fa-solid fa-star mr-1"></i><span class="font-bold">${b.rating || 4.8}</span>
                                     <span class="text-slate-400 ml-1.5">(${b.sales || 10}已售)</span>
                                 </div>
-                                <h4 onclick="openBookModal(${b.id})" class="serif-title font-bold text-slate-900 text-sm line-clamp-2 cursor-pointer hover:text-[#533324] transition">${b.title}</h4>
+                                <h4 onclick="openBookModal(${b.id})" class="serif-title font-bold text-slate-900 text-sm line-clamp-2 cursor-pointer hover:text-amber-800 transition">${b.title}</h4>
                                 <p class="text-xs text-slate-500 mt-1">${b.author}</p>
                             </div>
                             <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
                                 <div>
                                     ${discount < 1.0 ? `<span class="text-xs text-slate-400 line-through mr-1">NT$ ${b.price}</span>` : ''}
-                                    <span class="text-base font-bold text-[#3b2219]">NT$ ${finalPrice}</span>
+                                    <span class="text-base font-bold text-amber-950">NT$ ${finalPrice}</span>
                                 </div>
-                                <button onclick="addToCart(${b.id})" class="w-9 h-9 bg-[#533324] text-white rounded-xl flex items-center justify-center shadow hover:bg-[#3b2219] transition" title="加入購物車">
+                                <button onclick="addToCart(${b.id})" class="w-9 h-9 bg-amber-900 text-white rounded-xl flex items-center justify-center shadow hover:bg-amber-950 transition" title="加入購物車">
                                     <i class="fa-solid fa-cart-plus text-xs"></i>
                                 </button>
                             </div>
@@ -644,14 +675,14 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 md:p-8 items-center">
                     <div class="aspect-[3/4] rounded-2xl overflow-hidden shadow-md bg-slate-100"><img src="${b.cover}" class="w-full h-full object-cover"></div>
                     <div class="space-y-4">
-                        <span class="bg-amber-100 text-[#3b2219] text-xs font-semibold px-3 py-1 rounded-full">${b.category || '二手書'}</span>
+                        <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full">${b.category || '二手書'}</span>
                         <h3 class="serif-title text-2xl font-bold text-slate-900">${b.title}</h3>
                         <p class="text-sm text-slate-600 font-medium">作者：${b.author}</p>
                         <div class="flex items-center space-x-2 text-sm text-amber-600"><i class="fa-solid fa-star"></i><span class="font-bold">${b.rating || 4.8}</span><span class="text-slate-300">|</span><span class="text-slate-500">已售 ${b.sales || 10} 本</span></div>
                         <p class="text-xs text-slate-600 leading-relaxed">${b.desc || '優質二手好書，保存良好。'}</p>
-                        <div class="pt-4 border-t"><div class="text-2xl font-bold text-[#3b2219]">NT$ ${finalPrice}</div></div>
+                        <div class="pt-4 border-t"><div class="text-2xl font-bold text-amber-950">NT$ ${finalPrice}</div></div>
                         <div class="flex gap-3 pt-2">
-                            <button onclick="addToCart(${b.id}); closeBookModal();" class="flex-grow bg-[#533324] text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-[#3b2219]">加入購物車</button>
+                            <button onclick="addToCart(${b.id}); closeBookModal();" class="flex-grow bg-amber-900 text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-amber-950">加入購物車</button>
                             <button onclick="toggleWishlist(${b.id})" class="px-4 border rounded-xl text-slate-600"><i class="fa-regular fa-heart"></i></button>
                         </div>
                     </div>
@@ -714,7 +745,7 @@
                 return;
             }
             const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const isFreeShipping = (currentUser && currentUser.tier === '金卡會員') || subtotal >= 1000;
+            const isFreeShipping = (currentUser && currentUser.tier === '金卡會員') || subtotal >= 800;
             const shippingFee = isFreeShipping ? 0 : 80;
             const total = subtotal + shippingFee;
 
@@ -723,7 +754,7 @@
                     <img src="${item.cover}" class="w-16 h-20 object-cover rounded-xl shadow-sm">
                     <div class="flex-grow">
                         <h4 class="serif-title font-bold text-slate-900 text-sm line-clamp-1">${item.title}</h4>
-                        <p class="text-xs text-[#533324] font-bold mt-1">NT$ ${item.price}</p>
+                        <p class="text-xs text-amber-900 font-bold mt-1">NT$ ${item.price}</p>
                         <div class="flex items-center space-x-3 mt-2">
                             <button onclick="updateCartQuantity(${item.id}, -1)" class="w-6 h-6 bg-white border rounded-lg">-</button>
                             <span class="text-xs font-bold">${item.quantity}</span>
@@ -736,10 +767,10 @@
             footer.innerHTML = `
                 <div class="space-y-2 text-sm">
                     <div class="flex justify-between text-slate-600"><span>小計</span><span>NT$ ${subtotal}</span></div>
-                    <div class="flex justify-between text-slate-600"><span>運費 ${isFreeShipping ? '<span class="text-emerald-600 text-xs font-bold">(滿千免運)</span>' : ''}</span><span>${shippingFee === 0 ? '免費' : 'NT$ 80'}</span></div>
-                    <div class="flex justify-between text-base font-bold text-slate-900 pt-2 border-t"><span>總計</span><span class="text-[#3b2219]">NT$ ${total}</span></div>
+                    <div class="flex justify-between text-slate-600"><span>運費 ${isFreeShipping ? '<span class="text-emerald-600 text-xs font-bold">(免運)</span>' : ''}</span><span>${shippingFee === 0 ? '免費' : 'NT$ 80'}</span></div>
+                    <div class="flex justify-between text-base font-bold text-slate-900 pt-2 border-t"><span>總計</span><span class="text-amber-900">NT$ ${total}</span></div>
                 </div>
-                <button onclick="checkoutCart(${total})" class="w-full bg-[#533324] text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-[#3b2219]">前往結帳</button>
+                <button onclick="checkoutCart(${total})" class="w-full bg-amber-900 text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-amber-950">前往結帳 (支援書香幣扣款)</button>
             `;
         }
 
@@ -772,28 +803,28 @@
                 <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
                     <div class="flex items-center space-x-3">
                         <img src="${item.cover}" class="w-12 h-16 object-cover rounded-lg">
-                        <div><h4 class="serif-title font-bold text-slate-900 text-sm line-clamp-1">${item.title}</h4><p class="text-xs text-[#533324] font-bold">NT$ ${item.price}</p></div>
+                        <div><h4 class="serif-title font-bold text-slate-900 text-sm line-clamp-1">${item.title}</h4><p class="text-xs text-amber-900 font-bold">NT$ ${item.price}</p></div>
                     </div>
                     <div class="flex space-x-2">
-                        <button onclick="addToCart(${item.id}); toggleWishlist(${item.id}); closeWishlistModal();" class="p-2 bg-[#533324] text-white rounded-xl text-xs"><i class="fa-solid fa-cart-plus"></i></button>
+                        <button onclick="addToCart(${item.id}); toggleWishlist(${item.id}); closeWishlistModal();" class="p-2 bg-amber-900 text-white rounded-xl text-xs"><i class="fa-solid fa-cart-plus"></i></button>
                         <button onclick="toggleWishlist(${item.id})" class="p-2 bg-slate-200 text-slate-600 rounded-xl text-xs"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // ==================== 身份驗證與會員卡系統 ====================
+        // ==================== 身份驗證與經驗值升等系統 ====================
         function updateAuthNav() {
             const container = document.getElementById('auth-nav-container');
             if (currentUser) {
                 container.innerHTML = `
                     <button onclick="switchTab('membership')" class="flex items-center space-x-2 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full hover:bg-amber-100 transition">
-                        <div class="w-7 h-7 bg-[#533324] text-white rounded-full flex items-center justify-center text-xs font-bold">${currentUser.name.charAt(0)}</div>
-                        <span class="text-xs font-bold text-[#3b2219]">${currentUser.name} (${currentUser.tier})</span>
+                        <div class="w-7 h-7 bg-amber-900 text-white rounded-full flex items-center justify-center text-xs font-bold">${currentUser.name.charAt(0)}</div>
+                        <span class="text-xs font-bold text-amber-950">${currentUser.name} (${currentUser.tier})</span>
                     </button>
                 `;
             } else {
-                container.innerHTML = `<button onclick="openAuthModal('login')" class="bg-[#533324] text-white px-4 py-2 rounded-xl text-xs font-semibold shadow hover:bg-[#3b2219]">登入 / 註冊</button>`;
+                container.innerHTML = `<button onclick="openAuthModal('login')" class="bg-amber-900 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow hover:bg-amber-950">登入 / 註冊</button>`;
             }
         }
 
@@ -813,11 +844,11 @@
             const regTab = document.getElementById('auth-tab-register');
             if (mode === 'login') {
                 loginForm.classList.remove('hidden'); regForm.classList.add('hidden');
-                loginTab.className = "flex-1 pb-3 text-center font-bold text-[#533324] border-b-2 border-[#533324] text-sm";
+                loginTab.className = "flex-1 pb-3 text-center font-bold text-amber-900 border-b-2 border-amber-800 text-sm";
                 regTab.className = "flex-1 pb-3 text-center font-medium text-slate-500 text-sm";
             } else {
                 loginForm.classList.add('hidden'); regForm.classList.remove('hidden');
-                regTab.className = "flex-1 pb-3 text-center font-bold text-[#533324] border-b-2 border-[#533324] text-sm";
+                regTab.className = "flex-1 pb-3 text-center font-bold text-amber-900 border-b-2 border-amber-800 text-sm";
                 loginTab.className = "flex-1 pb-3 text-center font-medium text-slate-500 text-sm";
             }
         }
@@ -831,17 +862,18 @@
             const password = document.getElementById('reg-password').value.trim();
             const address = document.getElementById('reg-address').value.trim();
 
+            // 為每個人動態產生獨一無二的專屬邀請碼 (MK-XXXX)
             const uniqueInviteCode = 'MK-' + Math.floor(1000 + Math.random() * 9000);
 
             currentUser = {
                 name, phone, birthday, email, address,
-                tier: '銅卡會員', discount: 0.95, exp: 100, spent: 0,
+                tier: '銅卡會員', discount: 0.95, exp: 100, wallet: 500, spent: 0,
                 idCode: 'MK-2026-' + Math.floor(1000 + Math.random() * 9000),
                 inviteCode: uniqueInviteCode,
                 isBirthdayMonth: checkIsBirthdayMonth(birthday)
             };
             saveState(); updateAuthNav(); closeAuthModal();
-            alert(`註冊成功！已為您發放會員卡與專屬邀請碼：${uniqueInviteCode}`);
+            alert(`註冊成功！您的專屬邀請碼為 ${uniqueInviteCode}，已贈送 500 書香幣與 100 點經驗值！`);
             switchTab('membership');
         }
 
@@ -853,13 +885,13 @@
             currentUser = {
                 name: email.split('@')[0], phone: '0912-345-678', birthday: '1995-10-15',
                 email: email, address: '台北市大安區信義路四段 100 號',
-                tier: '銅卡會員', discount: 0.95, exp: 120, spent: 0,
+                tier: '銅卡會員', discount: 0.95, exp: 120, wallet: 800, spent: 0,
                 idCode: 'MK-2026-' + Math.floor(1000 + Math.random() * 9000),
                 inviteCode: uniqueInviteCode,
                 isBirthdayMonth: true
             };
             saveState(); updateAuthNav(); closeAuthModal();
-            alert(`登入成功！`);
+            alert(`登入成功！您的專屬邀請碼為 ${uniqueInviteCode}`);
             switchTab('membership');
         }
 
@@ -928,7 +960,13 @@
             openPaymentModal(fee, 'membership', { tierName, fee, discount });
         }
 
-        // ==================== 賣家專區功能 ====================
+        // ==================== 書香幣錢包功能 ====================
+        function topUpWallet(amount, bonus) {
+            if (!currentUser) { alert('請先登入'); openAuthModal('login'); return; }
+            openPaymentModal(amount, 'wallet_topup', { amount, bonus });
+        }
+
+        // ==================== 賣家專區功能 (支援本地圖片上傳) ====================
         function handlePublishBook(e) {
             e.preventDefault();
             if (!currentUser) { alert('請先登入才能上架二手書'); openAuthModal('login'); return; }
@@ -965,7 +1003,7 @@
             saveState();
             renderSellerDashboard();
             document.getElementById('sell-book-form').reset();
-            alert('二手書上架成功！');
+            alert('二手書上架成功！封面圖片已自您的裝置上傳，並同步至首頁圖書清單');
             switchTab('seller');
         }
 
@@ -1011,7 +1049,48 @@
             renderSellerDashboard();
         }
 
-        // ==================== 留言板功能 ====================
+        // ==================== 自主好友邀請與留言區功能 ====================
+        function sendFriendInvite() {
+            const code = document.getElementById('invite-code-input').value.trim();
+            if (!code) { alert('請輸入邀請碼'); return; }
+            friendInvites.push({ id: Date.now(), fromName: "好友 (" + code + ")", code: code, status: "pending" });
+            saveState();
+            renderFriendInvites();
+            document.getElementById('invite-code-input').value = '';
+            alert('已成功發送好友邀請！等待對方回應。');
+        }
+
+        function renderFriendInvites() {
+            const container = document.getElementById('friend-invites-list');
+            if (friendInvites.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">目前沒有好友邀請紀錄</p>`;
+                return;
+            }
+            container.innerHTML = friendInvites.map(f => `
+                <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
+                    <div>
+                        <p class="font-bold text-slate-900">${f.fromName}</p>
+                        <p class="text-[10px] text-slate-500">狀態：<strong class="${f.status==='agreed'?'text-emerald-600':(f.status==='rejected'?'text-rose-500':'text-amber-600')}">${f.status === 'pending' ? '等待確認中' : (f.status === 'agreed' ? '已同意互加好友' : '已不同意')}</strong></p>
+                    </div>
+                    <div class="flex gap-1.5">
+                        ${f.status === 'pending' ? `
+                            <button onclick="respondInvite(${f.id}, 'agreed')" class="bg-emerald-600 text-white px-2.5 py-1 rounded-lg">同意</button>
+                            <button onclick="respondInvite(${f.id}, 'rejected')" class="bg-rose-500 text-white px-2.5 py-1 rounded-lg">不同意</button>
+                        ` : `<span class="font-bold text-slate-400">已處理</span>`}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function respondInvite(id, status) {
+            const inv = friendInvites.find(x => x.id === id);
+            if (inv) {
+                inv.status = status;
+                saveState();
+                renderFriendInvites();
+            }
+        }
+
         function postComment() {
             const input = document.getElementById('comment-input');
             const text = input.value.trim();
@@ -1028,7 +1107,7 @@
             container.innerHTML = publicComments.map(c => `
                 <div class="p-3 bg-white rounded-xl border shadow-sm text-xs">
                     <div class="flex justify-between items-center mb-1">
-                        <span class="font-bold text-[#533324]">${c.name}</span>
+                        <span class="font-bold text-amber-900">${c.name}</span>
                         <span class="text-[10px] text-slate-400">${c.time}</span>
                     </div>
                     <p class="text-slate-700">${c.text}</p>
@@ -1036,7 +1115,7 @@
             `).join('');
         }
 
-        // ==================== 流暢的付款與結帳專區 ====================
+        // ==================== 付款專區與結帳 ====================
         function checkoutCart(totalAmount) {
             closeCartDrawer();
             openPaymentModal(totalAmount, 'cart');
@@ -1047,91 +1126,61 @@
             const content = document.getElementById('payment-modal-content');
             modal.classList.remove('hidden'); modal.classList.add('flex');
 
+            const myWallet = currentUser ? currentUser.wallet : 0;
+
             content.innerHTML = `
                 <div class="text-center mb-6">
-                    <span class="bg-amber-100 text-[#533324] text-xs font-semibold px-3 py-1 rounded-full">Secure Checkout</span>
+                    <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full">Secure Checkout</span>
                     <h3 class="serif-title text-2xl font-bold text-slate-900 mt-2">選擇付款方式</h3>
-                    <p class="text-2xl font-bold text-[#3b2219] mt-1">NT$ ${amount}</p>
+                    <p class="text-2xl font-bold text-amber-900 mt-1">NT$ ${amount}</p>
                 </div>
                 <div class="space-y-3 mb-6">
-                    <button onclick="selectPaymentMethod('credit', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-[#533324] transition">
-                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-amber-100 text-[#533324] rounded-xl flex items-center justify-center"><i class="fa-solid fa-credit-card"></i></div><div class="text-left"><p class="font-bold text-sm">信用卡線上付款 (填寫卡號)</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
+                    ${currentUser ? `
+                    <button onclick="payWithWallet(${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border-2 border-amber-600 bg-amber-50 hover:bg-amber-100 transition">                         <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-amber-800 text-white rounded-xl flex items-center justify-center"><i class="fa-solid fa-coins"></i></div><div class="text-left"><p class="font-bold text-sm text-slate-900">使用「書香幣」扣款 (餘額: $${myWallet})</p><p class="text-xs text-amber-800">秒速扣款免手續費</p></div></div>
+                        <i class="fa-solid fa-chevron-right text-slate-400"></i>
+                    </button>` : ''}
+                    <button onclick="selectPaymentMethod('credit', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-amber-800 transition">
+                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-amber-100 text-amber-800 rounded-xl flex items-center justify-center"><i class="fa-solid fa-credit-card"></i></div><div class="text-left"><p class="font-bold text-sm">信用卡線上付款</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
                     </button>
-                    <button onclick="selectPaymentMethod('atm', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-[#533324] transition">
-                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-blue-100 text-blue-800 rounded-xl flex items-center justify-center"><i class="fa-solid fa-building-columns"></i></div><div class="text-left"><p class="font-bold text-sm">ATM 轉帳 (填寫匯款資訊)</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
+                    <button onclick="selectPaymentMethod('atm', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-amber-800 transition">
+                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-blue-100 text-blue-800 rounded-xl flex items-center justify-center"><i class="fa-solid fa-building-columns"></i></div><div class="text-left"><p class="font-bold text-sm">ATM 轉帳</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
                     </button>
-                    <button onclick="selectPaymentMethod('cvs', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-[#533324] transition">
-                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-emerald-100 text-emerald-800 rounded-xl flex items-center justify-center"><i class="fa-solid fa-store"></i></div><div class="text-left"><p class="font-bold text-sm">超商代碼繳費 (填寫取件資料)</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
-                    </button>
-                    <button onclick="selectPaymentMethod('linepay', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-[#533324] transition">
-                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center"><i class="fa-brands fa-line"></i></div><div class="text-left"><p class="font-bold text-sm">LINE Pay 授權結帳</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
-                    </button>
-                    <button onclick="selectPaymentMethod('applepay', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-[#533324] transition">
-                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-black text-white rounded-xl flex items-center justify-center"><i class="fa-brands fa-apple-pay"></i></div><div class="text-left"><p class="font-bold text-sm">Apple Pay 快速支付</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
+                    <button onclick="selectPaymentMethod('linepay', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-amber-800 transition">
+                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center"><i class="fa-brands fa-line"></i></div><div class="text-left"><p class="font-bold text-sm">LINE Pay</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
                     </button>
                 </div>
                 <button onclick="closePaymentModal()" class="w-full bg-slate-100 text-slate-600 py-3 rounded-xl font-semibold text-sm">取消返回</button>
             `;
         }
 
+        function payWithWallet(amount, type, meta) {
+            if (currentUser.wallet < amount) { alert('書香幣餘額不足，請先至書香幣錢包儲值！'); return; }
+            currentUser.wallet -= amount;
+            confirmPayment('書香幣扣款', amount, type, meta);
+        }
+
         function selectPaymentMethod(method, amount, type, meta) {
             const content = document.getElementById('payment-modal-content');
-            let formHtml = '';
-
-            if (method === 'credit') {
-                formHtml = `
-                    <div class="space-y-3 text-left">
-                        <div><label class="block text-xs font-semibold mb-1">持卡人姓名</label><input type="text" id="pay-cc-name" required placeholder="王小明" class="w-full px-3 py-2 border rounded-xl text-sm"></div>
-                        <div><label class="block text-xs font-semibold mb-1">信用卡卡號</label><input type="text" id="pay-cc-num" required placeholder="4321 0000 0000 0000" class="w-full px-3 py-2 border rounded-xl text-sm" maxlength="19"></div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div><label class="block text-xs font-semibold mb-1">有效期限 (MM/YY)</label><input type="text" id="pay-cc-exp" required placeholder="12/28" class="w-full px-3 py-2 border rounded-xl text-sm"></div>
-                            <div><label class="block text-xs font-semibold mb-1">安全碼 (CVV)</label><input type="password" id="pay-cc-cvv" required placeholder="388" class="w-full px-3 py-2 border rounded-xl text-sm" maxlength="4"></div>
-                        </div>
-                    </div>
-                `;
-            } else if (method === 'atm') {
-                formHtml = `
-                    <div class="space-y-3 text-left">
-                        <div class="bg-blue-50 p-3 rounded-xl text-xs text-blue-800">轉帳銀行：玉山銀行 (808) | 帳號：9882-3881-9920-4412</div>
-                        <div><label class="block text-xs font-semibold mb-1">您的匯款帳號末五碼</label><input type="text" id="pay-atm-last5" required placeholder="例：48821" class="w-full px-3 py-2 border rounded-xl text-sm" maxlength="5"></div>
-                        <div><label class="block text-xs font-semibold mb-1">匯款人姓名</label><input type="text" id="pay-atm-name" required placeholder="王小明" class="w-full px-3 py-2 border rounded-xl text-sm"></div>
-                    </div>
-                `;
-            } else if (method === 'cvs') {
-                formHtml = `
-                    <div class="space-y-3 text-left">
-                        <div class="bg-emerald-50 p-3 rounded-xl text-xs text-emerald-800">超商繳費代碼：LA20260410998 (請至 ibon 機台列印繳費)</div>
-                        <div><label class="block text-xs font-semibold mb-1">取件人手機號碼</label><input type="tel" id="pay-cvs-phone" required placeholder="0912345678" class="w-full px-3 py-2 border rounded-xl text-sm"></div>
-                        <div><label class="block text-xs font-semibold mb-1">選擇超商</label><select id="pay-cvs-store" class="w-full px-3 py-2 border rounded-xl text-sm"><option>7-11 ibon</option><option>全家 FamiPort</option></select></div>
-                    </div>
-                `;
-            } else if (method === 'linepay' || method === 'applepay') {
-                formHtml = `
-                    <div class="space-y-3 text-center py-2">
-                        <div class="w-16 h-16 bg-slate-900 text-white rounded-2xl mx-auto flex items-center justify-center text-3xl"><i class="fa-solid fa-mobile-screen-button"></i></div>
-                        <p class="text-xs text-slate-600">將使用 ${method.toUpperCase()} 授權扣款 NT$ ${amount}</p>
-                        <div><label class="block text-xs font-semibold mb-1 text-left">綁定手機 / 裝置號碼</label><input type="tel" id="pay-mobile" required value="0912345678" class="w-full px-3 py-2 border rounded-xl text-sm"></div>
-                    </div>
-                `;
-            }
-
             content.innerHTML = `
-                <h4 class="font-bold text-lg mb-4 text-slate-900">${method.toUpperCase()} 付款填寫專區</h4>
-                ${formHtml}
-                <div class="mt-6 flex space-x-3">
-                    <button onclick="confirmPayment('${method}', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="flex-grow bg-[#533324] text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-[#3b2219]">確認送出並完成付款</button>
-                    <button onclick="openPaymentModal(${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="px-4 py-3 bg-slate-100 text-slate-600 rounded-xl text-sm font-semibold">返回</button>
+                <div class="text-center space-y-4 py-4">
+                    <div class="w-16 h-16 bg-amber-900 text-white rounded-2xl mx-auto flex items-center justify-center text-3xl"><i class="fa-solid fa-lock"></i></div>
+                    <h4 class="font-bold text-lg">${method.toUpperCase()} 模擬付款</h4>
+                    <p class="text-sm text-slate-600">應付金額：NT$ ${amount}</p>
+                    <button onclick="confirmPayment('${method}', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full bg-amber-900 text-white py-3 rounded-xl font-semibold text-sm shadow">確認完成付款</button>
                 </div>
             `;
         }
 
         function confirmPayment(method, amount, type, meta) {
             closePaymentModal();
-            if (type === 'membership') {
+            if (type === 'wallet_topup') {
+                currentUser.wallet += (meta.amount + meta.bonus);
+                alert(`成功儲值 NT$ ${meta.amount}！獲得回饋金 ${meta.bonus} 書香幣！`);
+                switchTab('wallet');
+            } else if (type === 'membership') {
                 currentUser.tier = meta.tierName;
                 currentUser.discount = meta.discount;
                 currentUser.exp += 200;
-                saveState();
                 alert(`恭喜升級為「${meta.tierName}」！`);
                 switchTab('membership');
             } else {
@@ -1147,21 +1196,18 @@
                     }
                 });
 
-                if (currentUser) {
-                    currentUser.exp += Math.round(amount / 10);
-                    if (currentUser.exp >= 2000 && currentUser.tier !== '金卡會員') {
-                        currentUser.tier = '金卡會員'; currentUser.discount = 0.85;
-                    } else if (currentUser.exp >= 500 && currentUser.tier === '銅卡會員') {
-                        currentUser.tier = '銀卡會員'; currentUser.discount = 0.90;
-                    }
+                currentUser.exp += Math.round(amount / 10);
+                if (currentUser.exp >= 2000 && currentUser.tier !== '金卡會員') {
+                    currentUser.tier = '金卡會員'; currentUser.discount = 0.85;
+                    alert('🎉 恭喜您的經驗值達標，自動升級為【金卡會員】！');
+                } else if (currentUser.exp >= 500 && currentUser.tier === '銅卡會員') {
+                    currentUser.tier = '銀卡會員'; currentUser.discount = 0.90;
+                    alert('🎉 恭喜您的經驗值達標，自動升級為【銀卡會員】！');
                 }
 
                 orders.unshift({ id: 'ORD-' + Math.floor(100000 + Math.random() * 900000), date: new Date().toLocaleString(), itemsSummary: cart.map(i => `${i.title} x${i.quantity}`).join(', '), amount, method, status: '已付款' });
                 cart = [];
-                saveState(); 
-                updateBadges(); 
-                renderOrders(); 
-                renderSellerDashboard();
+                saveState(); updateBadges(); renderOrders(); renderSellerDashboard();
                 alert('付款成功！訂單已成立。');
                 switchTab('orders');
             }
@@ -1173,13 +1219,13 @@
             container.innerHTML = orders.map(o => `
                 <div class="bg-slate-50 rounded-2xl p-4 mb-4 border flex justify-between items-center text-xs">
                     <div>
-                        <p class="font-mono font-bold text-[#533324]">${o.id} <span class="text-emerald-600">(${o.status})</span></p>
+                        <p class="font-mono font-bold text-amber-900">${o.id} <span class="text-emerald-600">(${o.status})</span></p>
                         <p class="font-bold text-slate-900 mt-1">${o.itemsSummary}</p>
                     </div>
-                    <div class="text-right"><p class="text-slate-500">金額</p><p class="text-base font-bold text-[#3b2219]">NT$ ${o.amount}</p></div>
+                    <div class="text-right"><p class="text-slate-500">金額</p><p class="text-base font-bold text-amber-950">NT$ ${o.amount}</p></div>
                 </div>
             `).join('');
         }
     </script>
 </body>
-            </html>
+    </html>
