@@ -1,1231 +1,1085 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>墨香書廊 - 旗艦線上書店與社群會員中心</title>
-    <!-- Tailwind CSS CDN -->
+    <title>中信兄弟官方售票網 | 2026 台灣大賽專區</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- QRCode.js Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Google Fonts: Inter & Noto Sans TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brothers: {
+                            yellow: '#FFC700',
+                            yellowDark: '#D8990A',
+                            dark: '#111827',
+                            darker: '#0B0F19',
+                            card: '#1F2937',
+                            accent: '#F59E0B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', 'Noto Serif TC', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
+        body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #111827; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #374151; border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #4B5563; }
+        .seat-btn { transition: all 0.15s ease; }
+        .seat-btn:hover { transform: scale(1.1); }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(255, 199, 0, 0.4); }
+            50% { box-shadow: 0 0 25px rgba(255, 199, 0, 0.8); }
         }
-        .serif-title {
-            font-family: 'Noto Serif TC', serif;
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
+        .glow-effect { animation: pulseGlow 2s infinite; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="bg-brothers-darker text-gray-100 h-full flex flex-col justify-between custom-scrollbar">
 
-    <!-- 頂部通知列 -->
-    <div class="bg-amber-900 text-amber-50 text-xs py-2 px-4 text-center font-medium tracking-wide">
-        <i class="fa-solid fa-bullhorn mr-2"></i>歡慶墨香書廊升級！每位會員皆擁有獨一無二的專屬邀請碼、圖片上傳與賣家專區！
+    <!-- Toast Notification Modal / Floating Message -->
+    <div id="toast" class="fixed top-5 right-5 z-50 transform translate-x-full transition-transform duration-300 bg-brothers-card border border-brothers-yellow text-white px-6 py-4 rounded-xl shadow-2xl flex items-center space-x-3">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-brothers-yellow text-xl"></i>
+        <div>
+            <h4 id="toast-title" class="font-bold text-sm">提示訊息</h4>
+            <p id="toast-desc" class="text-xs text-gray-300">內容敘述...</p>
+        </div>
     </div>
 
-    <!-- 導覽列 -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <!-- Top Navigation Bar -->
+    <header class="bg-brothers-dark border-b border-gray-800 sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <!-- Logo -->
-            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('shop')">
-                <div class="w-11 h-11 bg-amber-800 rounded-xl flex items-center justify-center text-white text-xl shadow-md">
-                    <i class="fa-solid fa-book-open"></i>
+            <!-- Logo & Brand -->
+            <div class="flex items-center space-x-4 cursor-pointer" onclick="switchTab('taiwan-series')">
+                <div class="w-12 h-12 bg-brothers-yellow rounded-xl flex items-center justify-center shadow-lg transform rotate-3 hover:rotate-0 transition-transform">
+                    <span class="text-brothers-darker font-black text-2xl tracking-tighter">B</span>
                 </div>
                 <div>
-                    <h1 class="serif-title text-xl font-bold tracking-wider text-amber-950">墨香書廊</h1>
-                    <p class="text-xs text-slate-500">Mok-Hsiang Bookstore</p>
+                    <h1 class="font-black text-lg sm:text-xl tracking-wider text-white flex items-center gap-2">
+                        中信兄弟 <span class="text-xs px-2 py-0.5 bg-brothers-yellow text-brothers-darker rounded font-bold uppercase">2026 台灣大賽專區</span>
+                    </h1>
+                    <p class="text-xs text-gray-400">CTBC Brothers 總冠軍賽售票與無限賽程系統</p>
                 </div>
             </div>
 
-            <!-- 導覽按鈕 -->
-            <div class="hidden md:flex items-center space-x-6">
-                <button onclick="switchTab('shop')" id="nav-shop" class="text-sm font-semibold text-amber-950 border-b-2 border-amber-800 pb-1 transition">圖書首頁</button>
-                <button onclick="switchTab('membership')" id="nav-membership" class="text-sm font-medium text-slate-600 hover:text-amber-900 pb-1 transition">會員卡與方案</button>
-                <button onclick="switchTab('wallet')" id="nav-wallet" class="text-sm font-medium text-slate-600 hover:text-amber-900 pb-1 transition">書香幣錢包</button>
-                <button onclick="switchTab('seller')" id="nav-seller" class="text-sm font-medium text-slate-600 hover:text-amber-900 pb-1 transition">賣家專區</button>
-                <button onclick="switchTab('social')" id="nav-social" class="text-sm font-medium text-slate-600 hover:text-amber-900 pb-1 transition">好友與留言區</button>
-                <button onclick="switchTab('orders')" id="nav-orders" class="text-sm font-medium text-slate-600 hover:text-amber-900 pb-1 transition">訂單查詢</button>
-            </div>
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                <button onclick="switchTab('taiwan-series')" id="nav-taiwan-series" class="px-4 py-2 rounded-lg text-sm font-semibold transition-colors bg-brothers-yellow text-brothers-darker shadow">
+                    <i class="fa-solid fa-trophy mr-2 text-brothers-darker"></i>台灣大賽專區
+                </button>
+                <button onclick="switchTab('schedule')" id="nav-schedule" class="px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 transition-colors">
+                    <i class="fa-solid fa-infinity mr-2"></i>無限賽程查詢
+                </button>
+                <button onclick="switchTab('my-tickets')" id="nav-my-tickets" class="px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 transition-colors">
+                    <i class="fa-solid fa-ticket mr-2"></i>我的票券
+                </button>
+                <button onclick="switchTab('membership')" id="nav-membership" class="px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 transition-colors">
+                    <i class="fa-solid fa-id-card mr-2"></i>數位會員中心
+                </button>
+            </nav>
 
-            <!-- 右側功能圖示 -->
-            <div class="flex items-center space-x-4">
-                <button onclick="openWishlistModal()" class="relative p-2 text-slate-600 hover:text-amber-800 transition" title="願望清單">
-                    <i class="fa-regular fa-heart text-xl"></i>
-                    <span id="wishlist-badge" class="absolute top-0 right-0 bg-rose-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+            <!-- User Authentication Status & Mobile Menu Toggle -->
+            <div class="flex items-center space-x-3">
+                <div id="auth-nav-area">
+                    <!-- Dynamically populated via JS -->
+                </div>
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-gray-800 text-gray-300 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
                 </button>
-                <button onclick="openCartDrawer()" class="relative p-2 text-slate-600 hover:text-amber-800 transition" title="購物車">
-                    <i class="fa-solid fa-cart-shopping text-xl"></i>
-                    <span id="cart-badge" class="absolute top-0 right-0 bg-amber-800 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
-                </button>
-                <div id="auth-nav-container"></div>
             </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brothers-card border-b border-gray-800 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('taiwan-series'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-white bg-brothers-yellow text-brothers-darker">
+                <i class="fa-solid fa-trophy mr-2"></i>台灣大賽專區
+            </button>
+            <button onclick="switchTab('schedule'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800">
+                <i class="fa-solid fa-infinity mr-2"></i>無限賽程查詢
+            </button>
+            <button onclick="switchTab('my-tickets'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800">
+                <i class="fa-solid fa-ticket mr-2"></i>我的票券
+            </button>
+            <button onclick="switchTab('membership'); toggleMobileMenu();" class="block w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800">
+                <i class="fa-solid fa-id-card mr-2"></i>數位會員中心
+            </button>
         </div>
     </header>
 
-    <!-- 主要內容區 -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- ==================== 1. 圖書首頁 Tab ==================== -->
-        <div id="tab-shop" class="space-y-8">
-            <div class="relative bg-gradient-to-r from-amber-900 to-amber-950 rounded-2xl overflow-hidden shadow-xl text-white p-8 md:p-12">
-                <div class="absolute -right-10 -bottom-10 opacity-10 text-9xl"><i class="fa-solid fa-book-bookmark"></i></div>
-                <div class="relative z-10 max-w-xl">
-                    <span class="bg-amber-800 text-amber-100 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">旗艦精選書展</span>
-                    <h2 class="serif-title text-3xl md:text-4xl font-bold mt-3 mb-4 leading-tight">心靈的避難所：探索 40 本文學、商業與自我成長好書</h2>
-                    <p class="text-amber-100 text-sm md:text-base mb-6 opacity-90">獨一無二的專屬邀請碼、裝置圖片上傳、經驗值自動升等與書香幣結帳，打造您的專屬閱讀生態圈。</p>
-                    <div class="flex flex-wrap gap-4">
-                        <button onclick="filterByCategory('全部')" class="bg-white text-amber-950 font-semibold px-6 py-2.5 rounded-xl shadow hover:bg-amber-50 transition text-sm">立即選購</button>
-                        <button onclick="switchTab('seller')" class="border border-amber-300 text-amber-100 font-semibold px-6 py-2.5 rounded-xl hover:bg-amber-800/50 transition text-sm">我要上架二手書</button>
+    <!-- Main Container Content -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- TAB 1: 2026台灣大賽專區 (Taiwan Series Finals: 味全龍 vs 中信兄弟) -->
+        <section id="tab-taiwan-series" class="tab-content space-y-8">
+            <!-- Hero Banner -->
+            <div class="relative rounded-3xl overflow-hidden bg-gradient-to-r from-brothers-dark via-gray-900 to-brothers-card p-6 sm:p-10 border-2 border-brothers-yellow/60 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="absolute right-0 top-0 w-96 h-96 bg-brothers-yellow/15 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="space-y-4 max-w-xl z-10">
+                    <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-black bg-brothers-yellow text-brothers-darker uppercase tracking-wider shadow">
+                        <i class="fa-solid fa-trophy mr-1.5"></i> 2026 中華職棒總冠軍賽 • 七戰四勝制
+                    </span>
+                    <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+                        臺灣大賽 <span class="text-brothers-yellow">味全龍 vs 中信兄弟</span>
+                    </h2>
+                    <p class="text-gray-300 text-sm sm:text-base leading-relaxed">
+                        頂尖對決一觸即發！臺北大巨蛋與洲際主場聯手引爆黃潮。立即搶購總冠軍賽門票，見證中信兄弟登基榮耀時刻！
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <div class="flex items-center space-x-2 bg-gray-800/90 px-4 py-2 rounded-xl border border-gray-700 text-sm">
+                            <i class="fa-solid fa-building-columns text-brothers-yellow"></i>
+                            <span class="text-gray-200">主場：臺北大巨蛋 / 臺中洲際</span>
+                        </div>
+                        <div class="flex items-center space-x-2 bg-gray-800/90 px-4 py-2 rounded-xl border border-gray-700 text-sm">
+                            <i class="fa-solid fa-shield-halved text-brothers-yellow"></i>
+                            <span class="text-gray-200">龍象大戰 決戰巔峰</span>
+                        </div>
                     </div>
+                </div>
+                <div class="z-10 flex flex-col items-center justify-center bg-brothers-darker/90 p-6 rounded-2xl border border-brothers-yellow/50 backdrop-blur w-full md:w-auto text-center shadow-2xl">
+                    <span class="text-xs text-brothers-yellow font-extrabold uppercase tracking-widest mb-1">🔥 今日即時焦點 (10/17)</span>
+                    <div class="text-xl font-black text-white mb-1">2026/10/17 (六) 17:05</div>
+                    <div class="text-brothers-yellow font-bold text-base mb-3">味全龍 vs 中信兄弟 (G1 大巨蛋)</div>
+                    <button onclick="openBookingModal('TS-G1')" class="w-full px-6 py-3.5 bg-gradient-to-r from-brothers-yellow to-brothers-yellowDark text-brothers-darker font-black rounded-xl shadow-lg hover:brightness-110 transition-all flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-ticket-simple"></i>
+                        <span>立即搶購台灣大賽 G1 門票</span>
+                    </button>
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                <div id="category-tabs" class="flex flex-wrap gap-2 w-full md:w-auto"></div>
-                <div class="relative w-full md:w-72">
-                    <input type="text" id="search-input" oninput="handleSearch()" placeholder="搜尋書名、作者或關鍵字..." class="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-800/20 focus:border-amber-800">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+            <!-- Taiwan Series G1 - G7 Full Schedule Cards -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-black text-white flex items-center gap-2">
+                        <i class="fa-solid fa-calendar-star text-brothers-yellow"></i> 台灣大賽 G1 ~ G7 完整賽程表
+                    </h3>
+                    <span class="text-xs text-gray-400">點擊各場次按鈕即可即時選位購票</span>
+                </div>
+                <div id="taiwan-series-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated via JS -->
                 </div>
             </div>
+        </section>
 
-            <div>
-                <div class="flex justify-between items-center mb-4">
-                    <h3 id="current-category-title" class="serif-title text-xl font-bold text-slate-800">全部書籍</h3>
-                    <span id="book-count-label" class="text-sm text-slate-500">共 40 本書</span>
-                </div>
-                <div id="books-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
-            </div>
-        </div>
-
-        <!-- ==================== 2. 會員中心與方案 Tab ==================== -->
-        <div id="tab-membership" class="space-y-8 hidden">
-            <div id="member-guest-view" class="bg-white rounded-2xl shadow-sm border border-slate-100 p-8 text-center max-w-2xl mx-auto">
-                <div class="w-16 h-16 bg-amber-100 text-amber-800 rounded-full flex items-center justify-center mx-auto text-2xl mb-4"><i class="fa-solid fa-id-card"></i></div>
-                <h3 class="serif-title text-2xl font-bold text-slate-900 mb-2">解鎖專屬 QR Code 與個人邀請碼</h3>
-                <p class="text-slate-600 text-sm mb-6">請先註冊帳號並填寫真實基本資料與生日，即可擁有您獨一無二的邀請碼與自動升等系統！</p>
-                <div class="flex justify-center gap-4">
-                    <button onclick="openAuthModal('login')" class="bg-amber-900 text-white px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-amber-950">立即登入</button>
-                    <button onclick="openAuthModal('register')" class="border border-amber-900 text-amber-900 px-6 py-2.5 rounded-xl font-semibold text-sm hover:bg-amber-50">註冊新帳號</button>
-                </div>
-            </div>
-
-            <div id="member-logged-view" class="space-y-8 hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- 虛擬 QR Code 會員卡 -->
-                    <div id="virtual-card" class="bg-gradient-to-br from-slate-900 via-amber-950 to-slate-900 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden flex flex-col justify-between">
-                        <div class="absolute -right-10 -bottom-10 opacity-15 text-9xl"><i class="fa-solid fa-crown"></i></div>
-                        <div class="flex justify-between items-start relative z-10 mb-2">
-                            <div>
-                                <span class="text-[10px] uppercase tracking-widest text-amber-400 font-semibold">Mok-Hsiang VIP Card</span>
-                                <h4 class="serif-title text-base font-bold mt-0.5">墨香書廊虛擬會員卡</h4>
-                            </div>
-                            <span id="card-tier-badge" class="bg-amber-500 text-slate-950 font-bold text-xs px-2.5 py-0.5 rounded-full">銅卡會員</span>
-                        </div>
-                        <div class="bg-white p-2.5 rounded-2xl mx-auto my-1 w-28 h-28 flex items-center justify-center shadow-inner relative z-10">
-                            <div id="qrcode-container" class="w-full h-full flex items-center justify-center"></div>
-                        </div>
-                        <div class="relative z-10 text-center my-1">
-                            <p id="card-user-name" class="text-base font-bold tracking-wide">--</p>
-                            <p id="card-user-id" class="text-[11px] font-mono text-amber-200">MK-2026-0000</p>
-                        </div>
-                        <div class="relative z-10 pt-2 border-t border-white/10 text-xs space-y-1">
-                            <div class="flex justify-between"><span class="text-slate-400">經驗值 (Exp)</span><span id="card-user-exp" class="font-bold text-amber-300">0 / 500</span></div>
-                            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden"><div id="exp-progress-bar" class="bg-amber-400 h-full transition-all duration-500" style="width: 0%"></div></div>
-                        </div>
-                    </div>
-
-                    <!-- 會員資料編輯與生日禮金 -->
-                    <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm border border-slate-100 p-6 flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="serif-title text-lg font-bold text-slate-900">會員基本資料與壽星特權</h3>
-                                <button onclick="handleLogout()" class="text-rose-600 text-sm font-semibold hover:underline"><i class="fa-solid fa-right-from-bracket mr-1"></i>登出</button>
-                            </div>
-
-                            <div id="birthday-banner" class="hidden bg-gradient-to-r from-rose-500 to-pink-600 text-white p-4 rounded-2xl mb-4 shadow flex items-center justify-between">
-                                <div>
-                                    <h4 class="font-bold text-sm"><i class="fa-solid fa-cake-candles mr-2"></i>壽星專屬月優惠已解鎖！</h4>
-                                    <p class="text-xs opacity-90 mt-0.5">祝您生日快樂！本月享有全館書籍 8 折壽星特權。</p>
-                                </div>
-                                <span class="bg-white text-rose-600 font-bold text-xs px-3 py-1 rounded-xl shadow">8 折特權中</span>
-                            </div>
-
-                            <form id="profile-form" onsubmit="handleUpdateProfile(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-700 mb-1">真實姓名</label>
-                                    <input type="text" id="profile-name" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-700 mb-1">手機號碼</label>
-                                    <input type="tel" id="profile-phone" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-700 mb-1">真實生日</label>
-                                    <input type="date" id="profile-birthday" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-semibold text-slate-700 mb-1">電子信箱</label>
-                                    <input type="email" id="profile-email-input" disabled class="w-full px-3 py-2 bg-slate-100 border rounded-xl text-sm text-slate-500">
-                                </div>
-                                <div class="sm:col-span-2">
-                                    <label class="block text-xs font-semibold text-slate-700 mb-1">通訊地址</label>
-                                    <input type="text" id="profile-address" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm">
-                                </div>
-                                <div class="sm:col-span-2 flex justify-end">
-                                    <button type="submit" class="bg-amber-900 text-white px-5 py-2 rounded-xl text-xs font-semibold hover:bg-amber-950">儲存資料</button>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-900 flex justify-between items-center">
-                            <span>您的獨家專屬邀請碼：<strong id="my-invite-code" class="font-mono bg-white px-2 py-0.5 rounded border text-amber-900 font-bold">--</strong></span>
-                            <button onclick="copyInviteCode()" class="bg-amber-900 text-white px-3 py-1 rounded-lg text-xs font-semibold">複製邀請碼</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 會員方案區 -->
-                <div id="plans-section" class="space-y-6 pt-6">
-                    <div class="text-center max-w-xl mx-auto">
-                        <span class="text-xs font-semibold text-amber-800 uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">VIP Plans</span>
-                        <h3 class="serif-title text-2xl font-bold text-slate-900 mt-2">升級會員方案 (或透過經驗值自動升等)</h3>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="bg-white rounded-2xl shadow-sm border p-6 flex flex-col justify-between">
-                            <div>
-                                <h4 class="serif-title text-xl font-bold text-slate-900">銅卡會員方案</h4>
-                                <p class="text-xs text-slate-500 mt-1">初始級別 (Exp < 500)</p>
-                                <div class="my-6"><span class="text-3xl font-bold text-slate-900">NT$ 299</span></div>
-                                <ul class="space-y-2 text-sm text-slate-600 mb-6">
-                                    <li><i class="fa-solid fa-check text-emerald-600 mr-2"></i>全館 95 折</li>
-                                </ul>
-                            </div>
-                            <button onclick="upgradeMembership('銅卡會員', 299, 0.95)" class="w-full bg-slate-900 text-white py-2.5 rounded-xl text-sm font-semibold">選擇銅卡</button>
-                        </div>
-                        <div class="bg-white rounded-2xl shadow-md border-2 border-amber-800 p-6 flex flex-col justify-between relative">
-                            <div class="absolute top-0 right-0 bg-amber-800 text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl uppercase">熱門</div>
-                            <div>
-                                <h4 class="serif-title text-xl font-bold text-slate-900">銀卡會員方案</h4>
-                                <p class="text-xs text-slate-500 mt-1">達 500 Exp 自動或付費升級</p>
-                                <div class="my-6"><span class="text-3xl font-bold text-amber-900">NT$ 699</span></div>
-                                <ul class="space-y-2 text-sm text-slate-600 mb-6">
-                                    <li><i class="fa-solid fa-check text-emerald-600 mr-2"></i>全館 9 折</li>
-                                    <li><i class="fa-solid fa-check text-emerald-600 mr-2"></i>2% 紅利回饋</li>
-                                </ul>
-                            </div>
-                            <button onclick="upgradeMembership('銀卡會員', 699, 0.90)" class="w-full bg-amber-800 text-white py-2.5 rounded-xl text-sm font-semibold shadow">立即升級銀卡</button>
-                        </div>
-                        <div class="bg-white rounded-2xl shadow-sm border p-6 flex flex-col justify-between">
-                            <div>
-                                <h4 class="serif-title text-xl font-bold text-slate-900">金卡會員方案</h4>
-                                <p class="text-xs text-slate-500 mt-1">達 2000 Exp 或頂級禮遇</p>
-                                <div class="my-6"><span class="text-3xl font-bold text-slate-900">NT$ 1,499</span></div>
-                                <ul class="space-y-2 text-sm text-slate-600 mb-6">
-                                    <li><i class="fa-solid fa-check text-emerald-600 mr-2"></i>全館 85 折</li>
-                                    <li><i class="fa-solid fa-check text-emerald-600 mr-2"></i>常態免運 + 5% 紅利</li>
-                                </ul>
-                            </div>
-                            <button onclick="upgradeMembership('金卡會員', 1499, 0.85)" class="w-full bg-slate-900 text-white py-2.5 rounded-xl text-sm font-semibold">立即升級金卡</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== 3. 書香幣錢包 Tab ==================== -->
-        <div id="tab-wallet" class="space-y-8 hidden">
-            <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-xl border p-8 space-y-6">
-                <div class="text-center">
-                    <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full">Virtual Wallet</span>
-                    <h3 class="serif-title text-2xl font-bold text-slate-900 mt-2">書香幣虛擬錢包</h3>
-                    <p class="text-xs text-slate-500 mt-1">儲值享專屬回饋，結帳時直接使用書香幣秒速扣款！</p>
-                </div>
-                <div class="bg-gradient-to-r from-amber-900 to-amber-950 text-white p-6 rounded-2xl shadow flex justify-between items-center">
-                    <div>
-                        <p class="text-xs text-amber-200">目前可用書香幣餘額</p>
-                        <p id="wallet-balance" class="text-3xl font-bold mt-1">$ 0</p>
-                    </div>
-                    <div class="w-12 h-12 bg-amber-800 rounded-xl flex items-center justify-center text-2xl text-amber-200"><i class="fa-solid fa-coins"></i></div>
-                </div>
+        <!-- TAB 2: 無限賽程查詢系統 (Infinite Schedule System with Today-Forward Mechanism) -->
+        <section id="tab-schedule" class="tab-content hidden space-y-6">
+            <!-- Header & Date Status banner -->
+            <div class="bg-brothers-card p-6 rounded-3xl border border-gray-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
-                    <h4 class="font-bold text-sm text-slate-800 mb-3">快速線上儲值方案 (享回饋)</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <button onclick="topUpWallet(1000, 100)" class="p-4 border rounded-2xl hover:border-amber-800 hover:bg-amber-50 text-left transition">
-                            <p class="font-bold text-slate-900">儲值 $1,000</p>
-                            <p class="text-xs text-emerald-600 mt-1 font-semibold">+ 送 100 書香幣</p>
-                        </button>
-                        <button onclick="topUpWallet(3000, 400)" class="p-4 border rounded-2xl hover:border-amber-800 hover:bg-amber-50 text-left transition">
-                            <p class="font-bold text-slate-900">儲值 $3,000</p>
-                            <p class="text-xs text-emerald-600 mt-1 font-semibold">+ 送 400 書香幣</p>
-                        </button>
-                        <button onclick="topUpWallet(5000, 800)" class="p-4 border rounded-2xl hover:border-amber-800 hover:bg-amber-50 text-left transition">
-                            <p class="font-bold text-slate-900">儲值 $5,000</p>
-                            <p class="text-xs text-emerald-600 mt-1 font-semibold">+ 送 800 書香幣</p>
-                        </button>
+                    <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                        <i class="fa-solid fa-infinity text-brothers-yellow"></i> 每日無限賽程查詢系統
+                    </h2>
+                    <p class="text-xs sm:text-sm text-gray-400 mt-1">
+                        系統以「今天跳今天、明天跳明天、後天跳後天...以此類推」自動推進。目前基準日：<span id="current-simulation-date-label" class="text-brothers-yellow font-bold">2026/10/17 (今天)</span>
+                    </p>
+                </div>
+                <div class="flex items-center space-x-2 w-full md:w-auto">
+                    <button onclick="shiftSimulationDate(-1)" class="px-3.5 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1">
+                        <i class="fa-solid fa-chevron-left"></i> 前一天
+                    </button>
+                    <button onclick="resetSimulationToday()" class="px-4 py-2 bg-brothers-yellow text-brothers-darker rounded-xl text-xs font-black transition-all shadow">
+                        回到今天 (10/17)
+                    </button>
+                    <button onclick="shiftSimulationDate(1)" class="px-3.5 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1">
+                        後一天 <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Infinite Schedule Timeline List -->
+            <div id="infinite-schedule-container" class="space-y-4">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 3: 我的票券 (My Tickets) -->
+        <section id="tab-my-tickets" class="tab-content hidden space-y-6">
+            <div class="bg-brothers-card p-6 rounded-3xl border border-gray-800">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-gray-800 gap-4">
+                    <div>
+                        <h2 class="text-2xl font-black text-white flex items-center gap-2">
+                            <i class="fa-solid fa-ticket text-brothers-yellow"></i> 我的票券夾
+                        </h2>
+                        <p class="text-xs sm:text-sm text-gray-400 mt-1">管理您已購買的電子票券，入場時請出示 QR Code 進行驗票。</p>
+                    </div>
+                    <button onclick="switchTab('taiwan-series')" class="px-4 py-2 bg-brothers-yellow text-brothers-darker font-bold rounded-xl text-sm hover:brightness-110 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-plus"></i> 購買台灣大賽門票
+                    </button>
+                </div>
+                <div id="my-tickets-container" class="mt-6 space-y-4">
+                    <!-- Dynamically populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: 數位會員中心 (Membership) -->
+        <section id="tab-membership" class="tab-content hidden space-y-6">
+            <div class="max-w-2xl mx-auto space-y-6">
+                <!-- Digital Card UI -->
+                <div id="membership-card-view" class="bg-gradient-to-br from-gray-900 via-brothers-card to-brothers-darker rounded-3xl p-6 sm:p-8 border-2 border-brothers-yellow/70 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -right-16 -bottom-16 w-64 h-64 bg-brothers-yellow/20 rounded-full blur-2xl pointer-events-none"></div>
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="text-xs uppercase font-extrabold tracking-widest text-brothers-yellow bg-brothers-yellow/10 px-3 py-1 rounded-full border border-brothers-yellow/30">CTBC Brothers VIP</span>
+                            <h3 class="text-2xl font-black text-white mt-3">2026 台灣大賽超級金卡會員</h3>
+                        </div>
+                        <div class="w-12 h-12 bg-brothers-yellow rounded-xl flex items-center justify-center font-black text-brothers-darker text-xl shadow">
+                            B
+                        </div>
+                    </div>
+
+                    <div class="my-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                        <div>
+                            <p class="text-xs text-gray-400">會員姓名 / Member Name</p>
+                            <p id="member-card-name" class="text-lg font-bold text-white mt-0.5">尚未登入會員</p>
+                            <p class="text-xs text-gray-400 mt-3">會員編號 / Card ID</p>
+                            <p id="member-card-id" class="text-sm font-mono text-brothers-yellow font-bold mt-0.5">CTBC-2026-XXXX</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-2xl shadow-inner flex flex-col items-center">
+                            <div class="w-32 h-12 flex items-center justify-center bg-gray-900 text-brothers-yellow font-mono text-xs font-bold tracking-widest rounded px-2">
+                                ||| | |||| || |
+                            </div>
+                            <span class="text-[10px] text-gray-500 mt-1">Scan for Entry</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-800 flex justify-between items-center text-sm">
+                        <div>
+                            <span class="text-gray-400 text-xs">象積分 / Elephant Points:</span>
+                            <span id="member-card-points" class="text-brothers-yellow font-black text-base ml-1">0 點</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 text-xs">效期至:</span>
+                            <span class="text-gray-200 font-semibold ml-1">2026/12/31</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Member Benefits & Perks -->
+                <div class="bg-brothers-card p-6 rounded-3xl border border-gray-800 space-y-4">
+                    <h4 class="font-bold text-lg text-white flex items-center gap-2">
+                        <i class="fa-solid fa-gift text-brothers-yellow"></i> 總冠軍賽會員專屬禮遇
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-brothers-darker p-4 rounded-2xl border border-gray-800 flex items-start space-x-3">
+                            <div class="p-2.5 bg-brothers-yellow/10 text-brothers-yellow rounded-xl">
+                                <i class="fa-solid fa-trophy text-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-sm text-white">台灣大賽優先搶票</h5>
+                                <p class="text-xs text-gray-400 mt-1">VIP 金卡會員享有提前 24 小時大巨蛋優先選位權。</p>
+                            </div>
+                        </div>
+                        <div class="bg-brothers-darker p-4 rounded-2xl border border-gray-800 flex items-start space-x-3">
+                            <div class="p-2.5 bg-brothers-yellow/10 text-brothers-yellow rounded-xl">
+                                <i class="fa-solid fa-percent text-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-sm text-white">總冠軍商品 88 折</h5>
+                                <p class="text-xs text-gray-400 mt-1">大巨蛋旗艦店與線上商城總冠軍紀念商品折扣。</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- ==================== 4. 賣家專區 Tab (二手書上架、圖片上傳與數量拉桿) ==================== -->
-        <div id="tab-seller" class="space-y-8 hidden">
-            <div class="bg-white rounded-3xl shadow-xl border p-8 space-y-6">
-                <div class="flex justify-between items-center border-b pb-4">
-                    <div>
-                        <h3 class="serif-title text-2xl font-bold text-slate-900"><i class="fa-solid fa-store mr-2 text-amber-800"></i>賣家專區與二手書上架</h3>
-                        <p class="text-xs text-slate-500 mt-1">在此上架您的二手書、自行上傳裝置圖片封面、調整庫存拉桿與查看銷售營收！</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-xs text-slate-500">賣家總營收</p>
-                        <p id="seller-total-revenue" class="text-xl font-bold text-amber-900">NT$ 0</p>
-                    </div>
-                </div>
-
-                <!-- 上架表單 (支援圖片上傳) -->
-                <form id="sell-book-form" onsubmit="handlePublishBook(event)" class="bg-slate-50 p-6 rounded-2xl border space-y-4">
-                    <h4 class="font-bold text-sm text-slate-900"><i class="fa-solid fa-circle-plus mr-1"></i>上架新二手書</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-xs font-semibold mb-1">書名</label>
-                            <input type="text" id="sell-title" required placeholder="請輸入書名" class="w-full px-3 py-2 bg-white border rounded-xl text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold mb-1">作者</label>
-                            <input type="text" id="sell-author" required placeholder="作者姓名" class="w-full px-3 py-2 bg-white border rounded-xl text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold mb-1">分類</label>
-                            <select id="sell-category" class="w-full px-3 py-2 bg-white border rounded-xl text-sm">
-                                <option>心理勵志</option><option>商業理財</option><option>人文史地</option><option>文學小說</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold mb-1">售價 (NT$)</label>
-                            <input type="number" id="sell-price" required min="50" placeholder="300" class="w-full px-3 py-2 bg-white border rounded-xl text-sm">
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label class="block text-xs font-semibold mb-1">庫存數量拉桿 (Slider)：<span id="slider-val" class="font-bold text-amber-900">5</span> 本</label>
-                            <input type="range" id="sell-stock" min="1" max="50" value="5" oninput="document.getElementById('slider-val').innerText=this.value" class="w-full accent-amber-800 mt-2">
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold mb-1">上架書籍封面圖片 (從您的裝置中選擇照片)</label>
-                        <input type="file" id="sell-image-file" accept="image/*" class="w-full px-3 py-2 bg-white border rounded-xl text-sm file:mr-4 file:py-1 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-100 file:text-amber-900 hover:file:bg-amber-200">
-                    </div>
-                    <button type="submit" class="bg-amber-900 text-white px-6 py-2.5 rounded-xl text-xs font-semibold shadow hover:bg-amber-950">確認上架販售</button>
-                </form>
-
-                <div>
-                    <h4 class="font-bold text-sm text-slate-900 mb-4">我上架的書籍與庫存管理</h4>
-                    <div id="my-published-books" class="space-y-3"></div>
-                </div>
-
-                <div class="border-t pt-4">
-                    <h4 class="font-bold text-sm text-slate-900 mb-3"><i class="fa-solid fa-bell mr-1 text-amber-800"></i>即時賣書通知記錄</h4>
-                    <div id="seller-notifications" class="space-y-2"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== 5. 好友邀請與留言區 Tab ==================== -->
-        <div id="tab-social" class="space-y-8 hidden">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- 左側：自主好友邀請區 -->
-                <div class="bg-white rounded-3xl shadow-xl border p-6 space-y-6">
-                    <h3 class="serif-title text-xl font-bold text-slate-900"><i class="fa-solid fa-user-plus mr-2 text-amber-800"></i>自主好友邀請區</h3>
-                    <p class="text-xs text-slate-500">您可以輸入好友的專屬邀請碼主動發送邀請，或查看別人發給您的邀請並點選同意或不同意。</p>
-                    <div>
-                        <label class="block text-xs font-semibold mb-1">輸入好友邀請碼</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="invite-code-input" placeholder="例：MK-9281" class="flex-grow px-3 py-2 border rounded-xl text-sm font-mono">
-                            <button onclick="sendFriendInvite()" class="bg-amber-900 text-white px-4 py-2 rounded-xl text-xs font-semibold">送出邀請</button>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-xs text-slate-700 uppercase mb-2">好友邀請列表與狀態</h4>
-                        <div id="friend-invites-list" class="space-y-2"></div>
-                    </div>
-                </div>
-
-                <!-- 右側：公開留言區 -->
-                <div class="bg-white rounded-3xl shadow-xl border p-6 flex flex-col h-[500px]">
-                    <h3 class="serif-title text-xl font-bold text-slate-900 mb-4"><i class="fa-solid fa-comments mr-2 text-amber-800"></i>書友公開留言板</h3>
-                    <div id="comments-container" class="flex-grow overflow-y-auto space-y-3 pr-2 mb-4 bg-slate-50 p-4 rounded-2xl border">
-                        <p class="text-center text-xs text-slate-400 py-16">大家一起來留言交流讀書心得吧！</p>
-                    </div>
-                    <div class="flex gap-2">
-                        <input type="text" id="comment-input" onkeypress="if(event.key==='Enter')postComment()" placeholder="寫下您的讀書心得或留言..." class="flex-grow px-4 py-2 border rounded-xl text-sm focus:outline-none focus:border-amber-800">
-                        <button onclick="postComment()" class="bg-amber-900 text-white px-5 py-2 rounded-xl text-sm font-semibold hover:bg-amber-950">發布留言</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ==================== 6. 訂單查詢 Tab ==================== -->
-        <div id="tab-orders" class="space-y-6 hidden">
-            <div class="bg-white rounded-2xl shadow-sm border p-6">
-                <h3 class="serif-title text-xl font-bold text-slate-900 mb-4">歷史訂單與繳費記錄</h3>
-                <div id="orders-container"></div>
-            </div>
-        </div>
-
+        </section>
     </main>
 
-    <!-- 頁尾 -->
-    <footer class="bg-slate-900 text-slate-300 mt-16 border-t border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center text-xs text-slate-500">
-            &copy; 2026 墨香書廊 Mok-Hsiang Bookstore. All rights reserved.
+    <!-- Footer -->
+    <footer class="bg-brothers-dark border-t border-gray-800 mt-12 py-8 text-center text-xs text-gray-400 space-y-3">
+        <div class="flex items-center justify-center space-x-6">
+            <span class="hover:text-brothers-yellow cursor-pointer" onclick="switchTab('taiwan-series')">台灣大賽專區</span>
+            <span class="hover:text-brothers-yellow cursor-pointer" onclick="switchTab('schedule')">無限賽程</span>
+            <span class="hover:text-brothers-yellow cursor-pointer" onclick="switchTab('my-tickets')">我的票券</span>
+            <span class="hover:text-brothers-yellow cursor-pointer" onclick="switchTab('membership')">數位會員</span>
         </div>
+        <p>© 2026 CTBC Brothers Baseball Club. 中信兄弟棒球隊官方售票系統 All Rights Reserved.</p>
     </footer>
 
-    <!-- 購物車 Drawer -->
-    <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden transition-opacity">
-        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
-            <div class="p-6 border-b flex justify-between items-center">
-                <h3 class="serif-title text-lg font-bold text-slate-900"><i class="fa-solid fa-cart-shopping mr-2 text-amber-800"></i>您的購物車</h3>
-                <button onclick="closeCartDrawer()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div id="cart-items-container" class="flex-grow overflow-y-auto p-6 space-y-4"></div>
-            <div id="cart-footer" class="p-6 border-t bg-slate-50 space-y-4"></div>
-        </div>
-    </div>
+    <!-- MODAL 1: Auth Modal (Login / Register) -->
+    <div id="auth-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-brothers-card border border-brothers-yellow/50 rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-2xl space-y-6">
+            <button onclick="closeAuthModal()" class="absolute right-5 top-5 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
 
-    <!-- 願望清單 Modal -->
-    <div id="wishlist-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-lg w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-6 border-b flex justify-between items-center">
-                <h3 class="serif-title text-lg font-bold text-slate-900"><i class="fa-solid fa-heart mr-2 text-rose-500"></i>我的願望清單</h3>
-                <button onclick="closeWishlistModal()" class="text-slate-400 text-lg"><i class="fa-solid fa-xmark"></i></button>
+            <!-- Tabs switcher for login/register -->
+            <div class="flex rounded-xl bg-brothers-darker p-1 border border-gray-800">
+                <button onclick="switchAuthMode('login')" id="auth-tab-login" class="flex-1 py-2 text-sm font-bold rounded-lg bg-brothers-yellow text-brothers-darker transition-all">會員登入</button>
+                <button onclick="switchAuthMode('register')" id="auth-tab-register" class="flex-1 py-2 text-sm font-bold rounded-lg text-gray-400 hover:text-white transition-all">註冊帳號</button>
             </div>
-            <div id="wishlist-items-container" class="p-6 overflow-y-auto space-y-4 flex-grow"></div>
-        </div>
-    </div>
 
-    <!-- 書籍詳情 Modal -->
-    <div id="book-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative">
-            <button onclick="closeBookModal()" class="absolute right-4 top-4 z-10 w-9 h-9 bg-white/85 rounded-full flex items-center justify-center text-slate-600 shadow"><i class="fa-solid fa-xmark"></i></button>
-            <div id="book-modal-content"></div>
-        </div>
-    </div>
-
-    <!-- 登入與註冊 Modal -->
-    <div id="auth-modal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-md w-full shadow-2xl overflow-hidden p-8 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeAuthModal()" class="absolute right-5 top-5 text-slate-400"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div class="flex border-b mb-6">
-                <button id="auth-tab-login" onclick="switchAuthTab('login')" class="flex-1 pb-3 text-center font-bold text-amber-900 border-b-2 border-amber-800 text-sm">會員登入</button>
-                <button id="auth-tab-register" onclick="switchAuthTab('register')" class="flex-1 pb-3 text-center font-medium text-slate-500 text-sm">註冊帳號</button>
-            </div>
-            <form id="form-login" onsubmit="handleLoginSubmit(event)" class="space-y-4">
-                <div><label class="block text-xs font-semibold mb-1">電子信箱</label><input type="email" id="login-email" required class="w-full px-4 py-2.5 bg-slate-50 border rounded-xl text-sm"></div>
-                <div><label class="block text-xs font-semibold mb-1">密碼</label><input type="password" id="login-password" required class="w-full px-4 py-2.5 bg-slate-50 border rounded-xl text-sm"></div>
-                <button type="submit" class="w-full bg-amber-900 text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-amber-950">登入帳戶</button>
+            <!-- Login Form -->
+            <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">電子郵件 / 手機號碼</label>
+                    <input type="text" id="login-account" required placeholder="請輸入帳號或手機" class="w-full px-4 py-3 bg-brothers-darker border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-brothers-yellow">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">密碼</label>
+                    <input type="password" id="login-password" required placeholder="請輸入密碼" class="w-full px-4 py-3 bg-brothers-darker border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-brothers-yellow">
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-brothers-yellow to-brothers-yellowDark text-brothers-darker font-black rounded-xl shadow-lg hover:brightness-110 transition-all">
+                    登入系統
+                </button>
+                <div class="text-center">
+                    <button type="button" onclick="fillDemoUser()" class="text-xs text-brothers-yellow hover:underline">一鍵填入測試帳號快速體驗</button>
+                </div>
             </form>
-            <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="space-y-3 hidden">
-                <p class="text-xs text-amber-800 bg-amber-50 p-2.5 rounded-xl"><i class="fa-solid fa-circle-info mr-1"></i>填寫真實基本資料與生日，系統將為您自動生成獨一無二的專屬邀請碼！</p>
-                <div><label class="block text-xs font-semibold mb-1">真實姓名</label><input type="text" id="reg-name" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
-                <div><label class="block text-xs font-semibold mb-1">手機號碼</label><input type="tel" id="reg-phone" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
-                <div><label class="block text-xs font-semibold mb-1">生日</label><input type="date" id="reg-birthday" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
-                <div><label class="block text-xs font-semibold mb-1">電子信箱</label><input type="email" id="reg-email" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
-                <div><label class="block text-xs font-semibold mb-1">密碼</label><input type="password" id="reg-password" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
-                <div><label class="block text-xs font-semibold mb-1">通訊地址</label><input type="text" id="reg-address" required class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm"></div>
-                <button type="submit" class="w-full bg-amber-900 text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-amber-950 mt-2">完成註冊</button>
+
+            <!-- Register Form -->
+            <form id="form-register" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">真實姓名</label>
+                    <input type="text" id="reg-name" required placeholder="請輸入真實姓名" class="w-full px-4 py-3 bg-brothers-darker border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-brothers-yellow">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">手機號碼</label>
+                    <input type="tel" id="reg-phone" required placeholder="0912345678" class="w-full px-4 py-3 bg-brothers-darker border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-brothers-yellow">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">電子郵件</label>
+                    <input type="email" id="reg-email" required placeholder="example@brothers.com" class="w-full px-4 py-3 bg-brothers-darker border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-brothers-yellow">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 uppercase tracking-wider mb-1">設定密碼</label>
+                    <input type="password" id="reg-password" required placeholder="至少 6 位數密碼" class="w-full px-4 py-3 bg-brothers-darker border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-brothers-yellow">
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-brothers-yellow to-brothers-yellowDark text-brothers-darker font-black rounded-xl shadow-lg hover:brightness-110 transition-all">
+                    立即註冊成為猛象會員
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- 專屬付款專區 Modal -->
-    <div id="payment-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden p-8 relative">
-            <button onclick="closePaymentModal()" class="absolute right-5 top-5 text-slate-400"><i class="fa-solid fa-xmark text-lg"></i></button>
-            <div id="payment-modal-content"></div>
+    <!-- MODAL 2: Booking Flow Modal (Step 1: Ticket Type -> Step 2: Interactive Seats -> Step 3: Contact & Checkout) -->
+    <div id="booking-modal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+        <div class="bg-brothers-card border border-brothers-yellow/50 rounded-3xl max-w-3xl w-full p-4 sm:p-8 relative shadow-2xl my-8 space-y-6">
+            <button onclick="closeBookingModal()" class="absolute right-5 top-5 text-gray-400 hover:text-white text-xl z-20">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Modal Header -->
+            <div id="booking-header" class="border-b border-gray-800 pb-4">
+                <span class="text-xs uppercase tracking-wider font-black text-brothers-yellow bg-brothers-yellow/10 px-3 py-1 rounded-full">Step 1: 選擇票種與張數</span>
+                <h3 id="booking-match-title" class="text-xl sm:text-2xl font-black text-white mt-2">味全龍 vs 中信兄弟 (台灣大賽 G1)</h3>
+                <p id="booking-match-info" class="text-xs sm:text-sm text-gray-400 mt-0.5">2026/10/17 (六) 17:05 | 臺北大巨蛋</p>
+            </div>
+
+            <!-- STEP 1: Ticket Category & Quantity Selection -->
+            <div id="booking-step-1" class="space-y-6">
+                <div class="space-y-3">
+                    <label class="block text-sm font-bold text-white">選擇票種與區域類型</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="ticket-types-container">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <div class="bg-brothers-darker p-4 rounded-2xl border border-gray-800 flex items-center justify-between">
+                    <div>
+                        <h4 class="font-bold text-sm text-white">購買張數</h4>
+                        <p class="text-xs text-gray-400">台灣大賽每筆訂單限購 4 張</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="adjustTicketCount(-1)" class="w-10 h-10 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-xl flex items-center justify-center">-</button>
+                        <span id="selected-ticket-count" class="text-xl font-black text-brothers-yellow w-8 text-center">2</span>
+                        <button onclick="adjustTicketCount(1)" class="w-10 h-10 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-xl flex items-center justify-center">+</button>
+                    </div>
+                </div>
+
+                <div class="flex justify-end pt-4">
+                    <button onclick="proceedToStep2()" class="px-8 py-3.5 bg-brothers-yellow text-brothers-darker font-black rounded-xl shadow-lg hover:brightness-110 transition-all flex items-center space-x-2">
+                        <span>下一步：大巨蛋互動選位</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 2: Interactive Seat Selection Map -->
+            <div id="booking-step-2" class="space-y-6 hidden">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-bold text-sm text-white">點擊選取您的專屬座位</h4>
+                        <p class="text-xs text-gray-400">目前選擇區塊：<span id="active-zone-name" class="text-brothers-yellow font-bold">大巨蛋內野本後熱區</span></p>
+                    </div>
+                    <div class="flex items-center space-x-3 text-xs">
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 bg-gray-700 rounded-full inline-block"></span> 可選</span>
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 bg-brothers-yellow rounded-full inline-block"></span> 已選</span>
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 bg-red-500 rounded-full inline-block"></span> 已售出</span>
+                    </div>
+                </div>
+
+                <!-- Visual Stadium Map Simulation -->
+                <div class="bg-brothers-darker p-4 rounded-2xl border border-gray-800 flex flex-col items-center justify-center space-y-6">
+                    <div class="w-48 py-1.5 bg-green-800/60 border border-green-600/50 text-green-300 text-xs font-bold rounded-lg text-center tracking-widest shadow">
+                        🏟️ 臺北大巨蛋球場內野 / 本壘板方向
+                    </div>
+
+                    <div id="seat-grid" class="grid grid-cols-8 sm:grid-cols-10 gap-2 p-4 bg-gray-900 rounded-2xl border border-gray-800 max-w-lg w-full justify-items-center">
+                        <!-- Dynamically generated seats -->
+                    </div>
+
+                    <div class="text-center text-xs text-gray-400">
+                        已選座位：<span id="chosen-seats-text" class="text-brothers-yellow font-bold">尚未選擇</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between pt-4">
+                    <button onclick="goToStep(1)" class="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-xl text-sm transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>上一步</span>
+                    </button>
+                    <button onclick="proceedToStep3()" class="px-8 py-3.5 bg-brothers-yellow text-brothers-darker font-black rounded-xl shadow-lg hover:brightness-110 transition-all flex items-center space-x-2">
+                        <span>下一步：填寫實名制與付款</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Contact & Real-name Information & Payment -->
+            <div id="booking-step-3" class="space-y-6 hidden">
+                <div>
+                    <h4 class="font-bold text-sm text-white">填寫取票人與實名制資訊</h4>
+                    <p class="text-xs text-gray-400">依據中華職棒台灣大賽實名制規定，請確實填寫入場人真實資料。</p>
+                </div>
+
+                <div class="space-y-4 bg-brothers-darker p-4 sm:p-6 rounded-2xl border border-gray-800">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">真實姓名 (Real Name)</label>
+                            <input type="text" id="buyer-name" placeholder="請輸入真實姓名" class="w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-brothers-yellow">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 uppercase mb-1">手機號碼 (Mobile)</label>
+                            <input type="tel" id="buyer-phone" placeholder="0912345678" class="w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-brothers-yellow">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 uppercase mb-1">身分證字號 / 護照號碼 (ID Number)</label>
+                        <input type="text" id="buyer-idno" placeholder="A123456789" class="w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-xl text-sm text-white focus:outline-none focus:border-brothers-yellow uppercase">
+                    </div>
+                </div>
+
+                <!-- Payment Method Simulation -->
+                <div class="space-y-3">
+                    <label class="block text-sm font-bold text-white">選擇多元付款方式</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <label class="flex items-center space-x-3 p-3.5 bg-brothers-darker border-2 border-brothers-yellow rounded-xl cursor-pointer">
+                            <input type="radio" name="payment-method" value="credit" checked class="text-brothers-yellow focus:ring-0">
+                            <div>
+                                <span class="block text-sm font-bold text-white">信用卡線上支付</span>
+                                <span class="block text-[10px] text-gray-400">支援 Visa / Master / JCB</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3.5 bg-brothers-darker border border-gray-700 rounded-xl cursor-pointer hover:border-gray-500">
+                            <input type="radio" name="payment-method" value="linepay" class="text-brothers-yellow focus:ring-0">
+                            <div>
+                                <span class="block text-sm font-bold text-white">LINE Pay</span>
+                                <span class="block text-[10px] text-gray-400">快速行動支付</span>
+                            </div>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3.5 bg-brothers-darker border border-gray-700 rounded-xl cursor-pointer hover:border-gray-500">
+                            <input type="radio" name="payment-method" value="ibon" class="text-brothers-yellow focus:ring-0">
+                            <div>
+                                <span class="block text-sm font-bold text-white">超商代碼繳費</span>
+                                <span class="block text-[10px] text-gray-400">7-11 ibon 機台</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Order Summary Box -->
+                <div class="bg-brothers-darker p-4 rounded-2xl border border-gray-800 space-y-2 text-sm">
+                    <div class="flex justify-between text-gray-300">
+                        <span>票種金額</span>
+                        <span id="summary-price-subtotal">NT$ 1,600 x 2</span>
+                    </div>
+                    <div class="flex justify-between text-gray-300">
+                        <span>手續費</span>
+                        <span>NT$ 0</span>
+                    </div>
+                    <div class="flex justify-between text-white font-black text-lg pt-2 border-t border-gray-800">
+                        <span>總計金額</span>
+                        <span id="summary-price-total" class="text-brothers-yellow">NT$ 3,200</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between pt-4">
+                    <button onclick="goToStep(2)" class="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white font-bold rounded-xl text-sm transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>上一步</span>
+                    </button>
+                    <button onclick="completeBooking()" class="px-8 py-3.5 bg-gradient-to-r from-brothers-yellow to-brothers-yellowDark text-brothers-darker font-black rounded-xl shadow-lg hover:brightness-110 transition-all flex items-center space-x-2">
+                        <i class="fa-solid fa-check"></i>
+                        <span>確認付款並完成台灣大賽購票</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- JavaScript 邏輯 -->
+    <!-- Application JavaScript Logic -->
     <script>
-        const books = [
-            { id: 1, title: "原子習慣：細微改變帶來巨大成就的致勝法則", author: "詹姆斯．克利爾", price: 360, category: "心理勵志", rating: 4.9, sales: 1420, cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600", desc: "微小的習慣累積，帶來驚人的複利效應。" },
-            { id: 2, title: "被討厭的勇氣", author: "岸見一郎", price: 300, category: "心理勵志", rating: 4.8, sales: 2150, cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=600", desc: "卸下人際枷鎖，勇敢獲得真正的自由。" },
-            { id: 3, title: "致富心態", author: "摩根．豪瑟", price: 380, category: "商業理財", rating: 4.9, sales: 1890, cover: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&q=80&w=600", desc: "關於財富、貪婪與幸福的寶貴理財課。" },
-            { id: 4, title: "窮查理的普通常識", author: "查理．蒙格", price: 650, category: "商業理財", rating: 4.9, sales: 980, cover: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=600", desc: "蒙格傳世智慧與多元思維模型。" },
-            { id: 5, title: "人類大歷史", author: "哈拉瑞", price: 500, category: "人文史地", rating: 4.8, sales: 1650, cover: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&q=80&w=600", desc: "探索智人如何成為地球主宰。" },
-            { id: 6, title: "斜槓青年", author: "Susan Kuang", price: 320, category: "商業理財", rating: 4.6, sales: 870, cover: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=600", desc: "打破單一職業限制，找回生命自主權。" },
-            { id: 7, title: "深度工作力", author: "卡爾．紐波特", price: 380, category: "心理勵志", rating: 4.7, sales: 1120, cover: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=600", desc: "在干擾時代創造無可取代的價值。" },
-            { id: 8, title: "蔡康永的情商課", author: "蔡康永", price: 350, category: "心理勵志", rating: 4.7, sales: 1340, cover: "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&q=80&w=600", desc: "為你自己活一次的高情商對話。" },
-            { id: 9, title: "子彈思考整理術", author: "萊德．卡洛", price: 420, category: "商業理財", rating: 4.6, sales: 750, cover: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&q=80&w=600", desc: "風靡全球的時間與筆記管理術。" },
-            { id: 10, title: "蛤蟆先生去看心理醫生", author: "羅伯特．戴博德", price: 350, category: "心理勵志", rating: 4.9, sales: 2300, cover: "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=600", desc: "溫馨童話包裝的深度心理諮商。" },
-            { id: 11, title: "思考，快與慢", author: "丹尼爾．卡納曼", price: 580, category: "心理勵志", rating: 4.8, sales: 1180, cover: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=600", desc: "快思考與慢思考的大腦運作透視。" },
-            { id: 12, title: "原則：生活與工作", author: "雷．達里歐", price: 600, category: "商業理財", rating: 4.7, sales: 920, cover: "https://images.unsplash.com/photo-1507842229433-26159261ffc6?auto=format&fit=crop&q=80&w=600", desc: "頂尖對沖基金創辦人的核心原則。" },
-            { id: 13, title: "槍炮、病菌與鋼鐵", author: "傑德．戴蒙", price: 550, category: "人文史地", rating: 4.8, sales: 1400, cover: "https://images.unsplash.com/photo-1447433589675-4aaa569f3e05?auto=format&fit=crop&q=80&w=600", desc: "人類社會命運的解答巨著。" },
-            { id: 14, title: "解憂雜貨店", author: "東野圭吾", price: 350, category: "文學小說", rating: 4.9, sales: 3400, cover: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&fit=crop&q=80&w=600", desc: "穿越時空的溫馨信件與人生救贖。" },
-            { id: 15, title: "百年孤寂", author: "賈布列．馬奎斯", price: 480, category: "文學小說", rating: 4.8, sales: 1800, cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=600", desc: "魔幻寫實主義不朽名作。" },
-            { id: 16, title: "房思琪的初戀樂園", author: "林奕含", price: 320, category: "文學小說", rating: 4.9, sales: 2900, cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600", desc: "直面社會陰暗面與受創靈魂。" },
-            { id: 17, title: "原子習慣實踐手冊", author: "詹姆斯．克利爾", price: 380, category: "心理勵志", rating: 4.8, sales: 1100, cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=600", desc: "實作工具書落實好習慣。" },
-            { id: 18, title: "給頂級決策者的管理學", author: "彼得．杜拉克", price: 520, category: "商業理財", rating: 4.7, sales: 650, cover: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&q=80&w=600", desc: "現代管理學之父的決策智慧。" },
-            { id: 19, title: "未來簡史", author: "哈拉瑞", price: 500, category: "人文史地", rating: 4.7, sales: 1300, cover: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&q=80&w=600", desc: "預測 AI 與基因工程如何重新定義人類。" },
-            { id: 20, title: "西方文明史", author: "諾曼．坎托", price: 680, category: "人文史地", rating: 4.8, sales: 820, cover: "https://images.unsplash.com/photo-1447433589675-4aaa569f3e05?auto=format&fit=crop&q=80&w=600", desc: "全景式解構西方文明兩千年。" },
-            { id: 21, title: "斜槓青年：實踐版", author: "Susan Kuang", price: 350, category: "商業理財", rating: 4.6, sales: 780, cover: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=600", desc: "轉型為多重收入斜槓者的具體方法。" },
-            { id: 22, title: "OKR：做最重要的事", author: "約翰．杜爾", price: 450, category: "商業理財", rating: 4.7, sales: 910, cover: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=600", desc: "矽谷巨擘背後的目標管理神器。" },
-            { id: 23, title: "被討厭的勇氣二部曲", author: "岸見一郎", price: 320, category: "心理勵志", rating: 4.8, sales: 1450, cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=600", desc: "阿德勒心理學實踐篇。" },
-            { id: 24, title: "極簡主義", author: "貝卡金斯", price: 320, category: "心理勵志", rating: 4.6, sales: 890, cover: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?auto=format&fit=crop&q=80&w=600", desc: "透過減法哲學找回心靈平靜。" },
-            { id: 25, title: "圖解世界史", author: "宮崎正勝", price: 420, category: "人文史地", rating: 4.8, sales: 1230, cover: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&q=80&w=600", desc: "用生動圖表看懂人類文明發展。" },
-            { id: 26, title: "白夜行", author: "東野圭吾", price: 390, category: "文學小說", rating: 4.9, sales: 2700, cover: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&fit=crop&q=80&w=600", desc: "令人窒息卻極度動人的悲戀。" },
-            { id: 27, title: "巴菲特的投資學", author: "羅伯特．海格斯通", price: 400, category: "商業理財", rating: 4.8, sales: 1150, cover: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&q=80&w=600", desc: "股神巴菲特的價值投資策略。" },
-            { id: 28, title: "刻意練習", author: "安德斯．艾瑞克森", price: 420, category: "心理勵志", rating: 4.9, sales: 1560, cover: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=600", desc: "從新手到大師的科學訓練法。" },
-            { id: 29, title: "設計思考美學", author: "提姆．布朗", price: 450, category: "商業理財", rating: 4.7, sales: 620, cover: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=600", desc: "創新設計思維。" },
-            { id: 30, title: "人類大命運", author: "哈拉瑞", price: 520, category: "人文史地", rating: 4.8, sales: 1500, cover: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&q=80&w=600", desc: "尋找明日的科技與人類走向。" },
-            { id: 31, title: "挪威的森林", author: "村上春樹", price: 380, category: "文學小說", rating: 4.8, sales: 3100, cover: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&fit=crop&q=80&w=600", desc: "村上春樹經典青春戀愛小說。" },
-            { id: 32, title: "快思慢想的創意思考", author: "愛德華．德波諾", price: 350, category: "心理勵志", rating: 4.6, sales: 540, cover: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600", desc: "水平思考法。" },
-            { id: 33, title: "影響力", author: "羅伯特．席爾迪尼", price: 420, category: "商業理財", rating: 4.9, sales: 1980, cover: "https://images.unsplash.com/photo-1553729459-efe14ef6055d?auto=format&fit=crop&q=80&w=600", desc: "洞察心理盲點的商戰經典。" },
-            { id: 34, title: "零規則", author: "里夫．哈斯廷斯", price: 400, category: "商業理財", rating: 4.8, sales: 890, cover: "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=600", desc: "顛覆傳統的矽谷管理學。" },
-            { id: 35, title: "臺灣地圖歷史", author: "王御風", price: 480, category: "人文史地", rating: 4.7, sales: 720, cover: "https://images.unsplash.com/photo-1447433589675-4aaa569f3e05?auto=format&fit=crop&q=80&w=600", desc: "從古地圖看臺灣四百年變遷。" },
-            { id: 36, title: "流浪者之歌", author: "赫曼．赫ッセ", price: 290, category: "文學小說", rating: 4.9, sales: 1320, cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=600", desc: "尋找自我靈性覺醒的印度之旅。" },
-            { id: 37, title: "高效能人士的七個習慣", author: "史蒂芬．柯維", price: 450, category: "心理勵志", rating: 4.8, sales: 2500, cover: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80&w=600", desc: "永恆的個人領導力聖經。" },
-            { id: 38, title: "金融煉金術", author: "喬治．索羅斯", price: 550, category: "商業理財", rating: 4.6, sales: 480, cover: "https://images.unsplash.com/photo-1507842229433-26159261ffc6?auto=format&fit=crop&q=80&w=600", desc: "傳奇投資大師的反身性理論。" },
-            { id: 39, title: "羅馬帝國衰亡史", author: "愛德華．吉本", price: 880, category: "人文史地", rating: 4.9, sales: 610, cover: "https://images.unsplash.com/photo-1461360370896-922624d12aa1?auto=format&fit=crop&q=80&w=600", desc: "歷史學不朽鉅著。" },
-            { id: 40, title: "小王子", author: "安東尼．聖修伯里", price: 280, category: "文學小說", rating: 5.0, sales: 4500, cover: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&fit=crop&q=80&w=600", desc: "獻給所有大人的童話詩篇。" }
+        // State Management
+        let currentUser = null; // { name, phone, email, points, cardId }
+        let currentTab = 'taiwan-series';
+        
+        // Infinite Schedule Date Simulation Base: Today is October 17, 2026
+        let baseSimulationDate = new Date(2026, 9, 17); // Month index 9 is October
+
+        // 2026 Taiwan Series (味全龍 vs 中信兄弟 7戰4勝) Full Schedule Data
+        const taiwanSeriesMatches = [
+            { id: 'TS-G1', game: 'G1', date: '2026/10/17 (六)', time: '17:05', opponent: '味全龍', stadium: '臺北大巨蛋', broadcast: '緯來體育台 / Twitch / Hami Video', status: '熱賣中 (今日開打)' },
+            { id: 'TS-G2', game: 'G2', date: '2026/10/18 (日)', time: '17:05', opponent: '味全龍', stadium: '臺北大巨蛋', broadcast: '緯來體育台 / ELTA / Hami Video', status: '熱賣中' },
+            { id: 'TS-G3', game: 'G3', date: '2026/10/20 (二)', time: '18:35', opponent: '味全龍', stadium: '臺中洲際棒球場', broadcast: '緯來體育台 / Hami Video', status: '熱賣中' },
+            { id: 'TS-G4', game: 'G4', date: '2026/10/21 (三)', time: '18:35', opponent: '味全龍', stadium: '臺中洲際棒球場', broadcast: '緯來體育台 / ELTA', status: '熱賣中' },
+            { id: 'TS-G5', game: 'G5*', date: '2026/10/23 (五)', time: '18:35', opponent: '味全龍', stadium: '臺北大巨蛋', broadcast: '如有必要加賽 / Live轉播', status: '預售登記' },
+            { id: 'TS-G6', game: 'G6*', date: '2026/10/24 (六)', time: '17:05', opponent: '味全龍', stadium: '臺北大巨蛋', broadcast: '如有必要加賽 / Live轉播', status: '預售登記' },
+            { id: 'TS-G7', game: 'G7*', date: '2026/10/25 (日)', time: '17:05', opponent: '味全龍', stadium: '臺中洲際棒球場', broadcast: '如有必要G7決戰 / Live轉播', status: '預售登記' }
         ];
 
-        const categories = ["全部", "心理勵志", "商業理財", "人文史地", "文學小說"];
-
-        let currentCategory = "全部";
-        let searchQuery = "";
-        let cart = [];
-        let wishlist = [];
-        let orders = [];
-        let currentUser = null; 
-        let myPublishedBooks = [];
-        let sellerNotifications = [];
-        let friendInvites = []; 
-        let publicComments = [
-            { name: "王小明", text: "墨香書廊的書真的很多，出貨速度也超快！", time: "昨天 14:20" },
-            { name: "林雅婷", text: "推原子習慣這本，看完收穫良多！", time: "今天 09:15" }
+        // Ticket Types Available for Taiwan Series
+        const ticketTypes = [
+            { id: 'ts_hot', name: '大巨蛋內野本後熱區 (PS女孩應援)', price: 1600, desc: '最震撼應援視野，贈送總冠軍應援毛巾' },
+            { id: 'ts_infield', name: '大巨蛋內野一般席', price: 1200, desc: '絕佳視野，共同吶喊黃潮總冠軍' },
+            { id: 'ts_outfield', name: '大巨蛋外野視野席', price: 800, desc: '高CP值超廣角熱血席次' },
+            { id: 'ts_box', name: 'VIP尊榮包廂', price: 3500, desc: '頂級冷氣房與專屬餐點尊榮禮遇' }
         ];
 
+        // User's booked tickets
+        let myTickets = [
+            {
+                orderId: 'TS-20261017-9912',
+                match: '味全龍 vs 中信兄弟 (台灣大賽 G1)',
+                date: '2026/10/17 (六) 17:05',
+                stadium: '臺北大巨蛋',
+                seat: '大巨蛋內野本後熱區 A區 10排 12, 13號',
+                count: 2,
+                totalPrice: 3200,
+                buyer: '陳大明',
+                qrCode: 'CTBC-TS2026-G1-9981'
+            }
+        ];
+
+        // Current Booking Process State
+        let activeBookingMatch = taiwanSeriesMatches[0];
+        let selectedTicketType = ticketTypes[0];
+        let ticketCount = 2;
+        let selectedSeats = ['A-10-12', 'A-10-13'];
+
+        // Initialization on Load
         window.onload = function() {
-            const savedUser = localStorage.getItem('mok_hsiang_user');
-            if (savedUser) currentUser = JSON.parse(savedUser);
-            const savedPub = localStorage.getItem('mok_hsiang_pub');
-            if (savedPub) myPublishedBooks = JSON.parse(savedPub);
-            const savedNotif = localStorage.getItem('mok_hsiang_notif');
-            if (savedNotif) sellerNotifications = JSON.parse(savedNotif);
-            const savedCart = localStorage.getItem('mok_hsiang_cart');
-            if (savedCart) cart = JSON.parse(savedCart);
-            const savedWishlist = localStorage.getItem('mok_hsiang_wishlist');
-            if (savedWishlist) wishlist = JSON.parse(savedWishlist);
-            const savedOrders = localStorage.getItem('mok_hsiang_orders');
-            if (savedOrders) orders = JSON.parse(savedOrders);
-            const savedInvites = localStorage.getItem('mok_hsiang_invites');
-            if (savedInvites) friendInvites = JSON.parse(savedInvites);
-            const savedComments = localStorage.getItem('mok_hsiang_comments');
-            if (savedComments) publicComments = JSON.parse(savedComments);
-
-            renderCategoryTabs();
-            renderBooks();
-            updateAuthNav();
-            updateBadges();
-            renderOrders();
-            renderSellerDashboard();
-            renderFriendInvites();
-            renderComments();
+            renderTaiwanSeriesList();
+            renderInfiniteSchedule();
+            renderAuthNav();
+            renderMyTickets();
+            renderMembershipInfo();
         };
 
-        function saveState() {
-            if (currentUser) localStorage.setItem('mok_hsiang_user', JSON.stringify(currentUser));
-            else localStorage.removeItem('mok_hsiang_user');
-            localStorage.setItem('mok_hsiang_pub', JSON.stringify(myPublishedBooks));
-            localStorage.setItem('mok_hsiang_notif', JSON.stringify(sellerNotifications));
-            localStorage.setItem('mok_hsiang_cart', JSON.stringify(cart));
-            localStorage.setItem('mok_hsiang_wishlist', JSON.stringify(wishlist));
-            localStorage.setItem('mok_hsiang_orders', JSON.stringify(orders));
-            localStorage.setItem('mok_hsiang_invites', JSON.stringify(friendInvites));
-            localStorage.setItem('mok_hsiang_comments', JSON.stringify(publicComments));
+        // Toast Notification helper
+        function showToast(title, desc, isSuccess = true) {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-desc').innerText = desc;
+            icon.className = isSuccess ? "fa-solid fa-circle-check text-brothers-yellow text-xl" : "fa-solid fa-circle-exclamation text-red-400 text-xl";
+            
+            toast.classList.remove('translate-x-full');
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+            }, 3500);
         }
 
+        // Navigation Tabs Switcher
         function switchTab(tabId) {
-            ['shop', 'membership', 'wallet', 'seller', 'social', 'orders'].forEach(t => {
-                const el = document.getElementById(`tab-${t}`);
-                if (el) el.classList.add('hidden');
-                const navBtn = document.getElementById(`nav-${t}`);
-                if (navBtn) {
-                    navBtn.classList.remove('text-amber-950', 'border-b-2', 'border-amber-800', 'font-semibold');
-                    navBtn.classList.add('text-slate-600', 'font-medium');
+            currentTab = tabId;
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            ['taiwan-series', 'schedule', 'my-tickets', 'membership'].forEach(t => {
+                const btn = document.getElementById(`nav-${t}`);
+                if (btn) {
+                    if (t === tabId) {
+                        btn.className = "px-4 py-2 rounded-lg text-sm font-semibold transition-colors bg-brothers-yellow text-brothers-darker shadow";
+                    } else {
+                        btn.className = "px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 hover:text-white hover:bg-gray-800 transition-colors";
+                    }
                 }
             });
-            const target = document.getElementById(`tab-${tabId}`);
-            if (target) target.classList.remove('hidden');
-            const activeNav = document.getElementById(`nav-${tabId}`);
-            if (activeNav) {
-                activeNav.classList.remove('text-slate-600', 'font-medium');
-                activeNav.classList.add('text-amber-950', 'border-b-2', 'border-amber-800', 'font-semibold');
-            }
             window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            if (tabId === 'membership') renderMembershipView();
-            if (tabId === 'seller') renderSellerDashboard();
-            if (tabId === 'social') { renderFriendInvites(); renderComments(); }
         }
 
-        function renderCategoryTabs() {
-            const container = document.getElementById('category-tabs');
-            container.innerHTML = categories.map(cat => `
-                <button onclick="filterByCategory('${cat}')" class="px-4 py-2 rounded-xl text-sm font-semibold transition ${currentCategory === cat ? 'bg-amber-900 text-white shadow' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
-                    ${cat}
-                </button>
-            `).join('');
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
         }
 
-        function filterByCategory(cat) {
-            currentCategory = cat;
-            renderCategoryTabs();
-            renderBooks();
-            document.getElementById('current-category-title').innerText = cat === '全部' ? '全部書籍' : `${cat}專區`;
-        }
+        // Render Taiwan Series List
+        function renderTaiwanSeriesList() {
+            const container = document.getElementById('taiwan-series-container');
+            container.innerHTML = '';
 
-        function handleSearch() {
-            searchQuery = document.getElementById('search-input').value.trim().toLowerCase();
-            renderBooks();
-        }
+            taiwanSeriesMatches.forEach(match => {
+                const card = document.createElement('div');
+                card.className = "bg-brothers-card p-6 rounded-3xl border border-gray-800 hover:border-brothers-yellow/60 transition-all flex flex-col justify-between space-y-4 shadow-xl";
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 rounded-full text-xs font-black bg-brothers-yellow text-brothers-darker">${match.game} 賽事</span>
+                        <span class="text-xs text-gray-400 font-semibold"><i class="fa-solid fa-location-dot mr-1"></i>${match.stadium}</span>
+                    </div>
 
-        function renderBooks() {
-            const grid = document.getElementById('books-grid');
-            const allBooksList = [...myPublishedBooks, ...books];
-            let filtered = allBooksList.filter(b => {
-                const matchCat = currentCategory === '全部' || b.category === currentCategory;
-                const matchSearch = b.title.toLowerCase().includes(searchQuery) || b.author.toLowerCase().includes(searchQuery);
-                return matchCat && matchSearch;
+                    <div class="space-y-1">
+                        <h4 class="font-black text-white text-lg">${match.opponent} vs 中信兄弟</h4>
+                        <p class="text-xs text-brothers-yellow font-bold">${match.date} ${match.time}</p>
+                        <p class="text-xs text-gray-400">直播/轉播：${match.broadcast}</p>
+                    </div>
+
+                    <div class="pt-2 border-t border-gray-800 flex items-center justify-between">
+                        <span class="text-xs text-emerald-400 font-bold flex items-center gap-1"><i class="fa-solid fa-circle text-[8px]"></i> ${match.status}</span>
+                        <button onclick="openBookingModal('${match.id}')" class="px-5 py-2.5 bg-gradient-to-r from-brothers-yellow to-brothers-yellowDark text-brothers-darker font-black text-sm rounded-xl shadow hover:brightness-110 transition-all flex items-center space-x-2">
+                            <i class="fa-solid fa-ticket"></i>
+                            <span>購票選位</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
             });
+        }
 
-            document.getElementById('book-count-label').innerText = `共 ${filtered.length} 本書`;
+        // Infinite Schedule Mechanism (Today-Forward)
+        function shiftSimulationDate(days) {
+            baseSimulationDate.setDate(baseSimulationDate.getDate() + days);
+            renderInfiniteSchedule();
+        }
+
+        function resetSimulationToday() {
+            baseSimulationDate = new Date(2026, 9, 17);
+            renderInfiniteSchedule();
+        }
+
+        function renderInfiniteSchedule() {
+            const container = document.getElementById('infinite-schedule-container');
+            container.innerHTML = '';
+
+            // Format simulation date label
+            const yyyy = baseSimulationDate.getFullYear();
+            const mm = String(baseSimulationDate.getMonth() + 1).padStart(2, '0');
+            const dd = String(baseSimulationDate.getDate()).padStart(2, '0');
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            const wk = weekdays[baseSimulationDate.getDay()];
+            const dateStr = `${yyyy}/${mm}/${dd} (${wk})`;
             
-            let discount = currentUser ? currentUser.discount : 1.0;
-            if (currentUser && currentUser.isBirthdayMonth && discount > 0.8) {
-                discount = 0.8;
-            }
+            // Is today check
+            const isToday = (yyyy === 2026 && mm === '10' && dd === '17');
+            const labelText = isToday ? `${dateStr} (今天)` : `${dateStr}`;
+            document.getElementById('current-simulation-date-label').innerText = labelText;
 
-            grid.innerHTML = filtered.map(b => {
-                const finalPrice = Math.round(b.price * discount);
-                const isWished = wishlist.some(item => item.id === b.id);
-                const isUserPub = b.isUserPublished ? `<span class="absolute top-3 left-3 bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm">二手書 (庫存:${b.stock})</span>` : `<span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-amber-950 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm">${b.category}</span>`;
+            // Generate an infinite stream of 7 days starting from baseSimulationDate
+            for (let i = 0; i < 7; i++) {
+                let curr = new Date(baseSimulationDate);
+                curr.setDate(curr.getDate() + i);
 
-                return `
-                    <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden flex flex-col justify-between group hover:shadow-lg transition">
-                        <div class="relative cursor-pointer overflow-hidden bg-slate-100 aspect-[3/4]" onclick="openBookModal(${b.id})">
-                            <img src="${b.cover}" alt="${b.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                            ${isUserPub}
-                            <button onclick="event.stopPropagation(); toggleWishlist(${b.id})" class="absolute top-3 right-3 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow transition ${isWished ? 'text-rose-500' : 'text-slate-400 hover:text-rose-500'}">
-                                <i class="fa-${isWished ? 'solid' : 'regular'} fa-heart"></i>
+                const cyyyy = curr.getFullYear();
+                const cmm = String(curr.getMonth() + 1).padStart(2, '0');
+                const cdd = String(curr.getDate()).padStart(2, '0');
+                const cwk = weekdays[curr.getDay()];
+                const fullDate = `${cyyyy}/${cmm}/${cdd} (${cwk})`;
+
+                // Determine match details based on date
+                let matchTitle = "中信兄弟 無賽事 / 訓練日";
+                let stadium = "中信兄弟公益園區";
+                let opponent = "自主訓練";
+                let status = "休息日";
+                let isMatchDay = false;
+
+                if (cmm === '10' && cdd >= '17' && cdd <= '25') {
+                    const tsMatch = taiwanSeriesMatches.find(m => m.date.includes(`${cmm}/${cdd}`));
+                    if (tsMatch) {
+                        matchTitle = `【台灣大賽 ${tsMatch.game}】味全龍 vs 中信兄弟`;
+                        stadium = tsMatch.stadium;
+                        opponent = tsMatch.opponent;
+                        status = tsMatch.status;
+                        isMatchDay = true;
+                    }
+                } else if (i % 2 === 0) {
+                    matchTitle = "中華職棒例行賽：富邦悍將 vs 中信兄弟";
+                    stadium = "臺中洲際棒球場";
+                    opponent = "富邦悍將";
+                    status = "熱賣中";
+                    isMatchDay = true;
+                }
+
+                const card = document.createElement('div');
+                card.className = `p-5 rounded-2xl border transition-all flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 ${isMatchDay ? 'bg-brothers-card border-brothers-yellow/50 shadow-lg' : 'bg-brothers-darker border-gray-800'}`;
+                card.innerHTML = `
+                    <div class="flex items-center space-x-4">
+                        <div class="w-16 h-16 rounded-2xl bg-gray-900 border border-gray-700 flex flex-col items-center justify-center text-center">
+                            <span class="text-[10px] text-gray-400 font-bold">${cmm}/${cdd}</span>
+                            <span class="text-lg font-black text-brothers-yellow">${cwk}</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold ${isMatchDay ? 'bg-brothers-yellow text-brothers-darker' : 'bg-gray-800 text-gray-400'}">${isMatchDay ? '賽事日' : '休兵日'}</span>
+                                <span class="text-xs text-gray-400"><i class="fa-solid fa-location-dot mr-1"></i>${stadium}</span>
+                            </div>
+                            <h4 class="text-base font-black text-white mt-1">${matchTitle}</h4>
+                            <p class="text-xs text-gray-400">開賽時間：17:05 | 轉播：緯來體育台</p>
+                        </div>
+                    </div>
+                    <div>
+                        ${isMatchDay ? `
+                            <button onclick="openBookingModal('TS-G1')" class="px-5 py-2.5 bg-brothers-yellow text-brothers-darker font-black text-xs rounded-xl shadow hover:brightness-110 transition-all flex items-center space-x-2">
+                                <i class="fa-solid fa-ticket"></i>
+                                <span>立即購票</span>
                             </button>
-                        </div>
-                        <div class="p-4 flex flex-col flex-grow justify-between">
-                            <div>
-                                <div class="flex items-center text-xs text-amber-600 mb-1">
-                                    <i class="fa-solid fa-star mr-1"></i><span class="font-bold">${b.rating || 4.8}</span>
-                                    <span class="text-slate-400 ml-1.5">(${b.sales || 10}已售)</span>
-                                </div>
-                                <h4 onclick="openBookModal(${b.id})" class="serif-title font-bold text-slate-900 text-sm line-clamp-2 cursor-pointer hover:text-amber-800 transition">${b.title}</h4>
-                                <p class="text-xs text-slate-500 mt-1">${b.author}</p>
-                            </div>
-                            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                                <div>
-                                    ${discount < 1.0 ? `<span class="text-xs text-slate-400 line-through mr-1">NT$ ${b.price}</span>` : ''}
-                                    <span class="text-base font-bold text-amber-950">NT$ ${finalPrice}</span>
-                                </div>
-                                <button onclick="addToCart(${b.id})" class="w-9 h-9 bg-amber-900 text-white rounded-xl flex items-center justify-center shadow hover:bg-amber-950 transition" title="加入購物車">
-                                    <i class="fa-solid fa-cart-plus text-xs"></i>
-                                </button>
-                            </div>
-                        </div>
+                        ` : `
+                            <span class="text-xs text-gray-500 font-semibold px-4 py-2">無售票賽事</span>
+                        `}
                     </div>
                 `;
-            }).join('');
-        }
-
-        function openBookModal(id) {
-            const allBooksList = [...myPublishedBooks, ...books];
-            const b = allBooksList.find(x => x.id === id);
-            if (!b) return;
-            let discount = currentUser ? currentUser.discount : 1.0;
-            if (currentUser && currentUser.isBirthdayMonth && discount > 0.8) discount = 0.8;
-            const finalPrice = Math.round(b.price * discount);
-
-            document.getElementById('book-modal-content').innerHTML = `
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 md:p-8 items-center">
-                    <div class="aspect-[3/4] rounded-2xl overflow-hidden shadow-md bg-slate-100"><img src="${b.cover}" class="w-full h-full object-cover"></div>
-                    <div class="space-y-4">
-                        <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full">${b.category || '二手書'}</span>
-                        <h3 class="serif-title text-2xl font-bold text-slate-900">${b.title}</h3>
-                        <p class="text-sm text-slate-600 font-medium">作者：${b.author}</p>
-                        <div class="flex items-center space-x-2 text-sm text-amber-600"><i class="fa-solid fa-star"></i><span class="font-bold">${b.rating || 4.8}</span><span class="text-slate-300">|</span><span class="text-slate-500">已售 ${b.sales || 10} 本</span></div>
-                        <p class="text-xs text-slate-600 leading-relaxed">${b.desc || '優質二手好書，保存良好。'}</p>
-                        <div class="pt-4 border-t"><div class="text-2xl font-bold text-amber-950">NT$ ${finalPrice}</div></div>
-                        <div class="flex gap-3 pt-2">
-                            <button onclick="addToCart(${b.id}); closeBookModal();" class="flex-grow bg-amber-900 text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-amber-950">加入購物車</button>
-                            <button onclick="toggleWishlist(${b.id})" class="px-4 border rounded-xl text-slate-600"><i class="fa-regular fa-heart"></i></button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            document.getElementById('book-modal').classList.remove('hidden');
-            document.getElementById('book-modal').classList.add('flex');
-        }
-
-        function closeBookModal() {
-            document.getElementById('book-modal').classList.add('hidden');
-            document.getElementById('book-modal').classList.remove('flex');
-        }
-
-        function addToCart(id) {
-            const allBooksList = [...myPublishedBooks, ...books];
-            const b = allBooksList.find(x => x.id === id);
-            let discount = currentUser ? currentUser.discount : 1.0;
-            if (currentUser && currentUser.isBirthdayMonth && discount > 0.8) discount = 0.8;
-            const price = Math.round(b.price * discount);
-
-            const existing = cart.find(item => item.id === id);
-            if (existing) existing.quantity += 1;
-            else cart.push({ ...b, price, quantity: 1 });
-            saveState();
-            updateBadges();
-            openCartDrawer();
-        }
-
-        function updateCartQuantity(id, delta) {
-            const item = cart.find(x => x.id === id);
-            if (!item) return;
-            item.quantity += delta;
-            if (item.quantity <= 0) cart = cart.filter(x => x.id !== id);
-            saveState();
-            updateBadges();
-            renderCartItems();
-        }
-
-        function openCartDrawer() { renderCartItems(); document.getElementById('cart-drawer').classList.remove('hidden'); }
-        function closeCartDrawer() { document.getElementById('cart-drawer').classList.add('hidden'); }
-
-        function updateBadges() {
-            const cartBadge = document.getElementById('cart-badge');
-            const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            if (totalCartCount > 0) { cartBadge.innerText = totalCartCount; cartBadge.classList.remove('hidden'); }
-            else cartBadge.classList.add('hidden');
-
-            const wishlistBadge = document.getElementById('wishlist-badge');
-            if (wishlist.length > 0) { wishlistBadge.innerText = wishlist.length; wishlistBadge.classList.remove('hidden'); }
-            else wishlistBadge.classList.add('hidden');
-        }
-
-        function renderCartItems() {
-            const container = document.getElementById('cart-items-container');
-            const footer = document.getElementById('cart-footer');
-            if (cart.length === 0) {
-                container.innerHTML = `<div class="py-16 text-center text-slate-400"><i class="fa-solid fa-cart-shopping text-4xl mb-3 text-slate-300"></i><p class="text-sm font-semibold">購物車是空的</p></div>`;
-                footer.innerHTML = `<button onclick="closeCartDrawer()" class="w-full bg-slate-200 text-slate-700 py-3 rounded-xl font-semibold text-sm">繼續逛逛</button>`;
-                return;
-            }
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const isFreeShipping = (currentUser && currentUser.tier === '金卡會員') || subtotal >= 800;
-            const shippingFee = isFreeShipping ? 0 : 80;
-            const total = subtotal + shippingFee;
-
-            container.innerHTML = cart.map(item => `
-                <div class="flex items-center space-x-4 p-3 bg-slate-50 rounded-2xl">
-                    <img src="${item.cover}" class="w-16 h-20 object-cover rounded-xl shadow-sm">
-                    <div class="flex-grow">
-                        <h4 class="serif-title font-bold text-slate-900 text-sm line-clamp-1">${item.title}</h4>
-                        <p class="text-xs text-amber-900 font-bold mt-1">NT$ ${item.price}</p>
-                        <div class="flex items-center space-x-3 mt-2">
-                            <button onclick="updateCartQuantity(${item.id}, -1)" class="w-6 h-6 bg-white border rounded-lg">-</button>
-                            <span class="text-xs font-bold">${item.quantity}</span>
-                            <button onclick="updateCartQuantity(${item.id}, 1)" class="w-6 h-6 bg-white border rounded-lg">+</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-
-            footer.innerHTML = `
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between text-slate-600"><span>小計</span><span>NT$ ${subtotal}</span></div>
-                    <div class="flex justify-between text-slate-600"><span>運費 ${isFreeShipping ? '<span class="text-emerald-600 text-xs font-bold">(免運)</span>' : ''}</span><span>${shippingFee === 0 ? '免費' : 'NT$ 80'}</span></div>
-                    <div class="flex justify-between text-base font-bold text-slate-900 pt-2 border-t"><span>總計</span><span class="text-amber-900">NT$ ${total}</span></div>
-                </div>
-                <button onclick="checkoutCart(${total})" class="w-full bg-amber-900 text-white py-3 rounded-xl font-semibold text-sm shadow hover:bg-amber-950">前往結帳 (支援書香幣扣款)</button>
-            `;
-        }
-
-        function toggleWishlist(id) {
-            const allBooksList = [...myPublishedBooks, ...books];
-            const index = wishlist.findIndex(x => x.id === id);
-            if (index > -1) wishlist.splice(index, 1);
-            else wishlist.push(allBooksList.find(x => x.id === id));
-            saveState();
-            updateBadges();
-            renderBooks();
-            renderWishlistItems();
-        }
-
-        function openWishlistModal() {
-            renderWishlistItems();
-            document.getElementById('wishlist-modal').classList.remove('hidden');
-            document.getElementById('wishlist-modal').classList.add('flex');
-        }
-
-        function closeWishlistModal() {
-            document.getElementById('wishlist-modal').classList.add('hidden');
-            document.getElementById('wishlist-modal').classList.remove('flex');
-        }
-
-        function renderWishlistItems() {
-            const container = document.getElementById('wishlist-items-container');
-            if (wishlist.length === 0) { container.innerHTML = `<p class="text-center text-slate-400 py-8 text-sm">願望清單是空的</p>`; return; }
-            container.innerHTML = wishlist.map(item => `
-                <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl">
-                    <div class="flex items-center space-x-3">
-                        <img src="${item.cover}" class="w-12 h-16 object-cover rounded-lg">
-                        <div><h4 class="serif-title font-bold text-slate-900 text-sm line-clamp-1">${item.title}</h4><p class="text-xs text-amber-900 font-bold">NT$ ${item.price}</p></div>
-                    </div>
-                    <div class="flex space-x-2">
-                        <button onclick="addToCart(${item.id}); toggleWishlist(${item.id}); closeWishlistModal();" class="p-2 bg-amber-900 text-white rounded-xl text-xs"><i class="fa-solid fa-cart-plus"></i></button>
-                        <button onclick="toggleWishlist(${item.id})" class="p-2 bg-slate-200 text-slate-600 rounded-xl text-xs"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // ==================== 身份驗證與經驗值升等系統 ====================
-        function updateAuthNav() {
-            const container = document.getElementById('auth-nav-container');
-            if (currentUser) {
-                container.innerHTML = `
-                    <button onclick="switchTab('membership')" class="flex items-center space-x-2 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-full hover:bg-amber-100 transition">
-                        <div class="w-7 h-7 bg-amber-900 text-white rounded-full flex items-center justify-center text-xs font-bold">${currentUser.name.charAt(0)}</div>
-                        <span class="text-xs font-bold text-amber-950">${currentUser.name} (${currentUser.tier})</span>
-                    </button>
-                `;
-            } else {
-                container.innerHTML = `<button onclick="openAuthModal('login')" class="bg-amber-900 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow hover:bg-amber-950">登入 / 註冊</button>`;
+                container.appendChild(card);
             }
         }
 
-        function openAuthModal(mode = 'login') {
+        // Authentication Handlers
+        function openAuthModal() {
             document.getElementById('auth-modal').classList.remove('hidden');
-            document.getElementById('auth-modal').classList.add('flex');
-            switchAuthTab(mode);
         }
+
         function closeAuthModal() {
             document.getElementById('auth-modal').classList.add('hidden');
-            document.getElementById('auth-modal').classList.remove('flex');
         }
-        function switchAuthTab(mode) {
+
+        function switchAuthMode(mode) {
+            const loginBtn = document.getElementById('auth-tab-login');
+            const regBtn = document.getElementById('auth-tab-register');
             const loginForm = document.getElementById('form-login');
             const regForm = document.getElementById('form-register');
-            const loginTab = document.getElementById('auth-tab-login');
-            const regTab = document.getElementById('auth-tab-register');
+
             if (mode === 'login') {
-                loginForm.classList.remove('hidden'); regForm.classList.add('hidden');
-                loginTab.className = "flex-1 pb-3 text-center font-bold text-amber-900 border-b-2 border-amber-800 text-sm";
-                regTab.className = "flex-1 pb-3 text-center font-medium text-slate-500 text-sm";
+                loginBtn.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brothers-yellow text-brothers-darker transition-all";
+                regBtn.className = "flex-1 py-2 text-sm font-bold rounded-lg text-gray-400 hover:text-white transition-all";
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
             } else {
-                loginForm.classList.add('hidden'); regForm.classList.remove('hidden');
-                regTab.className = "flex-1 pb-3 text-center font-bold text-amber-900 border-b-2 border-amber-800 text-sm";
-                loginTab.className = "flex-1 pb-3 text-center font-medium text-slate-500 text-sm";
+                regBtn.className = "flex-1 py-2 text-sm font-bold rounded-lg bg-brothers-yellow text-brothers-darker transition-all";
+                loginBtn.className = "flex-1 py-2 text-sm font-bold rounded-lg text-gray-400 hover:text-white transition-all";
+                regForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
             }
         }
 
-        function handleRegisterSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('reg-name').value.trim();
-            const phone = document.getElementById('reg-phone').value.trim();
-            const birthday = document.getElementById('reg-birthday').value.trim();
-            const email = document.getElementById('reg-email').value.trim();
-            const password = document.getElementById('reg-password').value.trim();
-            const address = document.getElementById('reg-address').value.trim();
-
-            // 為每個人動態產生獨一無二的專屬邀請碼 (MK-XXXX)
-            const uniqueInviteCode = 'MK-' + Math.floor(1000 + Math.random() * 9000);
-
-            currentUser = {
-                name, phone, birthday, email, address,
-                tier: '銅卡會員', discount: 0.95, exp: 100, wallet: 500, spent: 0,
-                idCode: 'MK-2026-' + Math.floor(1000 + Math.random() * 9000),
-                inviteCode: uniqueInviteCode,
-                isBirthdayMonth: checkIsBirthdayMonth(birthday)
-            };
-            saveState(); updateAuthNav(); closeAuthModal();
-            alert(`註冊成功！您的專屬邀請碼為 ${uniqueInviteCode}，已贈送 500 書香幣與 100 點經驗值！`);
-            switchTab('membership');
+        function fillDemoUser() {
+            document.getElementById('login-account').value = 'brother@brothers.com';
+            document.getElementById('login-password').value = 'brothers2026';
         }
 
-        function handleLoginSubmit(e) {
+        function handleLogin(e) {
             e.preventDefault();
-            const email = document.getElementById('login-email').value.trim();
-            const uniqueInviteCode = 'MK-' + Math.floor(1000 + Math.random() * 9000);
-
+            const account = document.getElementById('login-account').value;
             currentUser = {
-                name: email.split('@')[0], phone: '0912-345-678', birthday: '1995-10-15',
-                email: email, address: '台北市大安區信義路四段 100 號',
-                tier: '銅卡會員', discount: 0.95, exp: 120, wallet: 800, spent: 0,
-                idCode: 'MK-2026-' + Math.floor(1000 + Math.random() * 9000),
-                inviteCode: uniqueInviteCode,
-                isBirthdayMonth: true
+                name: '象迷小傑',
+                phone: '0988123456',
+                email: account,
+                points: 2500,
+                cardId: 'CTBC-2026-88192'
             };
-            saveState(); updateAuthNav(); closeAuthModal();
-            alert(`登入成功！您的專屬邀請碼為 ${uniqueInviteCode}`);
-            switchTab('membership');
+            closeAuthModal();
+            renderAuthNav();
+            renderMembershipInfo();
+            showToast('登入成功', '歡迎回來，總冠軍賽VIP猛象會員！');
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('reg-name').value;
+            const phone = document.getElementById('reg-phone').value;
+            const email = document.getElementById('reg-email').value;
+            currentUser = {
+                name: name,
+                phone: phone,
+                email: email,
+                points: 1000,
+                cardId: 'CTBC-2026-' + Math.floor(10000 + Math.random() * 90000)
+            };
+            closeAuthModal();
+            renderAuthNav();
+            renderMembershipInfo();
+            showToast('註冊成功', '已贈送 1,000 點總冠軍紀念象積分！');
         }
 
         function handleLogout() {
-            if (confirm('確定要登出嗎？')) {
-                currentUser = null; saveState(); updateAuthNav(); switchTab('shop'); alert('已登出');
-            }
+            currentUser = null;
+            renderAuthNav();
+            renderMembershipInfo();
+            showToast('已登出', '期待您再次為兄弟應援！', false);
         }
 
-        function checkIsBirthdayMonth(bdayStr) {
-            if (!bdayStr) return false;
-            const bMonth = new Date(bdayStr).getMonth() + 1;
-            const currentMonth = new Date().getMonth() + 1;
-            return bMonth === currentMonth;
-        }
-
-        function handleUpdateProfile(e) {
-            e.preventDefault();
-            if (!currentUser) return;
-            currentUser.name = document.getElementById('profile-name').value.trim();
-            currentUser.phone = document.getElementById('profile-phone').value.trim();
-            currentUser.birthday = document.getElementById('profile-birthday').value.trim();
-            currentUser.address = document.getElementById('profile-address').value.trim();
-            currentUser.isBirthdayMonth = checkIsBirthdayMonth(currentUser.birthday);
-
-            saveState(); updateAuthNav(); renderMembershipView();
-            alert('會員基本資料已更新！');
-        }
-
-        function copyInviteCode() {
-            if (!currentUser) return;
-            navigator.clipboard.writeText(currentUser.inviteCode);
-            alert(`已複製您的專屬邀請碼：${currentUser.inviteCode}`);
-        }
-
-        function renderMembershipView() {
-            const guestView = document.getElementById('member-guest-view');
-            const loggedView = document.getElementById('member-logged-view');
-            if (!currentUser) { guestView.classList.remove('hidden'); loggedView.classList.add('hidden'); return; }
-            guestView.classList.add('hidden'); loggedView.classList.remove('hidden');
-
-            document.getElementById('card-user-name').innerText = currentUser.name;
-            document.getElementById('card-user-id').innerText = currentUser.idCode;
-            document.getElementById('card-tier-badge').innerText = currentUser.tier;
-            document.getElementById('card-user-exp').innerText = `${currentUser.exp} / 500 Exp`;
-            document.getElementById('exp-progress-bar').style.width = `${Math.min(100, (currentUser.exp / 500) * 100)}%`;
-
-            document.getElementById('profile-name').value = currentUser.name;
-            document.getElementById('profile-phone').value = currentUser.phone;
-            document.getElementById('profile-birthday').value = currentUser.birthday || '1995-10-15';
-            document.getElementById('profile-email-input').value = currentUser.email;
-            document.getElementById('profile-address').value = currentUser.address;
-            document.getElementById('my-invite-code').innerText = currentUser.inviteCode || 'MK-8888';
-
-            const bBanner = document.getElementById('birthday-banner');
-            if (currentUser.isBirthdayMonth) bBanner.classList.remove('hidden');
-            else bBanner.classList.add('hidden');
-
-            const qrContainer = document.getElementById('qrcode-container');
-            qrContainer.innerHTML = '';
-            new QRCode(qrContainer, { text: `MOK-VIP:${currentUser.idCode}:${currentUser.inviteCode}`, width: 95, height: 95 });
-        }
-
-        function upgradeMembership(tierName, fee, discount) {
-            if (!currentUser) { alert('請先登入'); openAuthModal('login'); return; }
-            openPaymentModal(fee, 'membership', { tierName, fee, discount });
-        }
-
-        // ==================== 書香幣錢包功能 ====================
-        function topUpWallet(amount, bonus) {
-            if (!currentUser) { alert('請先登入'); openAuthModal('login'); return; }
-            openPaymentModal(amount, 'wallet_topup', { amount, bonus });
-        }
-
-        // ==================== 賣家專區功能 (支援本地圖片上傳) ====================
-        function handlePublishBook(e) {
-            e.preventDefault();
-            if (!currentUser) { alert('請先登入才能上架二手書'); openAuthModal('login'); return; }
-
-            const title = document.getElementById('sell-title').value.trim();
-            const author = document.getElementById('sell-author').value.trim();
-            const category = document.getElementById('sell-category').value;
-            const price = parseInt(document.getElementById('sell-price').value);
-            const stock = parseInt(document.getElementById('sell-stock').value);
-            const imageFile = document.getElementById('sell-image-file').files[0];
-
-            if (imageFile) {
-                const reader = new FileReader();
-                reader.onload = function(uploadEvent) {
-                    const base64Cover = uploadEvent.target.result;
-                    savePublishedBook(title, author, category, price, stock, base64Cover);
-                };
-                reader.readAsDataURL(imageFile);
+        function renderAuthNav() {
+            const area = document.getElementById('auth-nav-area');
+            if (!currentUser) {
+                area.innerHTML = `
+                    <button onclick="openAuthModal()" class="px-4 py-2 bg-brothers-yellow text-brothers-darker font-black text-sm rounded-xl shadow hover:brightness-110 transition-all flex items-center space-x-1.5">
+                        <i class="fa-solid fa-user"></i>
+                        <span>登入 / 註冊</span>
+                    </button>
+                `;
             } else {
-                const defaultCover = "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&q=80&w=600";
-                savePublishedBook(title, author, category, price, stock, defaultCover);
-            }
-        }
-
-        function savePublishedBook(title, author, category, price, stock, cover) {
-            const newPub = {
-                id: Date.now(),
-                title, author, category, price, stock, cover,
-                isUserPublished: true, sellerName: currentUser.name, rating: 5.0, sales: 0,
-                desc: `由賣家 ${currentUser.name} 親自上架的二手好書，品質保證。`
-            };
-
-            myPublishedBooks.push(newPub);
-            saveState();
-            renderSellerDashboard();
-            document.getElementById('sell-book-form').reset();
-            alert('二手書上架成功！封面圖片已自您的裝置上傳，並同步至首頁圖書清單');
-            switchTab('seller');
-        }
-
-        function renderSellerDashboard() {
-            const container = document.getElementById('my-published-books');
-            const notifContainer = document.getElementById('seller-notifications');
-            
-            let totalRev = sellerNotifications.reduce((sum, n) => sum + n.revenue, 0);
-            document.getElementById('seller-total-revenue').innerText = `NT$ ${totalRev}`;
-
-            if (myPublishedBooks.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 py-4">您目前尚無上架的二手書</p>`;
-            } else {
-                container.innerHTML = myPublishedBooks.map(b => `
-                    <div class="flex items-center justify-between p-3 bg-slate-50 rounded-2xl border">
-                        <div class="flex items-center space-x-3">
-                            <img src="${b.cover}" class="w-12 h-16 object-cover rounded-lg">
-                            <div>
-                                <h4 class="font-bold text-sm text-slate-900">${b.title}</h4>
-                                <p class="text-xs text-slate-500">售價：NT$ ${b.price} | 庫存：${b.stock} 本</p>
+                area.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div onclick="switchTab('membership')" class="cursor-pointer flex items-center space-x-2 bg-gray-800 px-3 py-1.5 rounded-xl border border-gray-700 hover:border-brothers-yellow">
+                            <div class="w-7 h-7 bg-brothers-yellow text-brothers-darker font-black rounded-lg flex items-center justify-center text-xs">B</div>
+                            <div class="hidden sm:block text-left">
+                                <span class="block text-xs font-bold text-white">${currentUser.name}</span>
+                                <span class="block text-[10px] text-brothers-yellow">${currentUser.points} 積分</span>
                             </div>
                         </div>
-                        <button onclick="removePublishedBook(${b.id})" class="text-xs text-rose-600 font-semibold hover:underline">下架</button>
+                        <button onclick="handleLogout()" class="p-2 text-gray-400 hover:text-white rounded-lg bg-gray-800" title="登出">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
                     </div>
-                `).join('');
+                `;
             }
+        }
 
-            if (sellerNotifications.length === 0) {
-                notifContainer.innerHTML = `<p class="text-xs text-slate-400 py-2">尚無賣書通知記錄</p>`;
+        function renderMembershipInfo() {
+            if (!currentUser) {
+                document.getElementById('member-card-name').innerText = '尚未登入會員 (請點擊右上角登入)';
+                document.getElementById('member-card-id').innerText = 'CTBC-2026-XXXX';
+                document.getElementById('member-card-points').innerText = '0 點';
             } else {
-                notifContainer.innerHTML = sellerNotifications.map(n => `
-                    <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl text-xs text-amber-900 flex justify-between items-center">
-                        <span><i class="fa-solid fa-circle-check mr-1.5 text-emerald-600"></i>您的二手書「<strong>${n.bookTitle}</strong>」已售出 ${n.qty} 本！獲得版稅收入 NT$ ${n.revenue}</span>
-                        <span class="text-[10px] text-slate-400">${n.time}</span>
-                    </div>
-                `).join('');
+                document.getElementById('member-card-name').innerText = currentUser.name;
+                document.getElementById('member-card-id').innerText = currentUser.cardId;
+                document.getElementById('member-card-points').innerText = currentUser.points + ' 點';
             }
         }
 
-        function removePublishedBook(id) {
-            myPublishedBooks = myPublishedBooks.filter(x => x.id !== id);
-            saveState();
-            renderSellerDashboard();
+        // Booking Workflow Logic
+        let currentBookingStep = 1;
+
+        function openBookingModal(matchId) {
+            activeBookingMatch = taiwanSeriesMatches.find(m => m.id === matchId) || taiwanSeriesMatches[0];
+            document.getElementById('booking-match-title').innerText = `${activeBookingMatch.opponent} vs 中信兄弟 (台灣大賽 ${activeBookingMatch.game})`;
+            document.getElementById('booking-match-info').innerText = `${activeBookingMatch.date} ${activeBookingMatch.time} | ${activeBookingMatch.stadium}`;
+            
+            if (currentUser) {
+                document.getElementById('buyer-name').value = currentUser.name;
+                document.getElementById('buyer-phone').value = currentUser.phone;
+            }
+
+            renderTicketTypes();
+            goToStep(1);
+            document.getElementById('booking-modal').classList.remove('hidden');
         }
 
-        // ==================== 自主好友邀請與留言區功能 ====================
-        function sendFriendInvite() {
-            const code = document.getElementById('invite-code-input').value.trim();
-            if (!code) { alert('請輸入邀請碼'); return; }
-            friendInvites.push({ id: Date.now(), fromName: "好友 (" + code + ")", code: code, status: "pending" });
-            saveState();
-            renderFriendInvites();
-            document.getElementById('invite-code-input').value = '';
-            alert('已成功發送好友邀請！等待對方回應。');
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.add('hidden');
         }
 
-        function renderFriendInvites() {
-            const container = document.getElementById('friend-invites-list');
-            if (friendInvites.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 py-4 text-center">目前沒有好友邀請紀錄</p>`;
+        function goToStep(step) {
+            currentBookingStep = step;
+            document.getElementById('booking-step-1').classList.add('hidden');
+            document.getElementById('booking-step-2').classList.add('hidden');
+            document.getElementById('booking-step-3').classList.add('hidden');
+            document.getElementById(`booking-step-${step}`).classList.remove('hidden');
+
+            const stepTitle = document.getElementById('booking-header').querySelector('span');
+            if (step === 1) stepTitle.innerText = "Step 1: 選擇票種與張數";
+            if (step === 2) {
+                stepTitle.innerText = "Step 2: 臺北大巨蛋互動選位";
+                renderSeatGrid();
+            }
+            if (step === 3) {
+                stepTitle.innerText = "Step 3: 填寫實名制資訊與付款";
+                updateSummary();
+            }
+        }
+
+        function renderTicketTypes() {
+            const container = document.getElementById('ticket-types-container');
+            container.innerHTML = '';
+            ticketTypes.forEach((type) => {
+                const isSelected = selectedTicketType.id === type.id;
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-2xl border-2 cursor-pointer transition-all ${isSelected ? 'border-brothers-yellow bg-brothers-yellow/10' : 'border-gray-800 bg-brothers-darker hover:border-gray-700'}`;
+                card.onclick = () => {
+                    selectedTicketType = type;
+                    renderTicketTypes();
+                };
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-1">
+                        <h5 class="font-bold text-sm text-white">${type.name}</h5>
+                        <span class="text-brothers-yellow font-black text-sm">NT$ ${type.price}</span>
+                    </div>
+                    <p class="text-xs text-gray-400">${type.desc}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function adjustTicketCount(delta) {
+            ticketCount += delta;
+            if (ticketCount < 1) ticketCount = 1;
+            if (ticketCount > 4) {
+                ticketCount = 4;
+                showToast('限購提醒', '台灣大賽每筆訂單最多限購 4 張門票', false);
+            }
+            document.getElementById('selected-ticket-count').innerText = ticketCount;
+            generateDefaultSeats();
+        }
+
+        function generateDefaultSeats() {
+            selectedSeats = [];
+            for (let i = 0; i < ticketCount; i++) {
+                selectedSeats.push(`A-10-${12 + i}`);
+            }
+        }
+
+        function proceedToStep2() {
+            generateDefaultSeats();
+            goToStep(2);
+        }
+
+        function renderSeatGrid() {
+            const grid = document.getElementById('seat-grid');
+            grid.innerHTML = '';
+            document.getElementById('active-zone-name').innerText = selectedTicketType.name;
+
+            for (let i = 1; i <= 40; i++) {
+                const seatCode = `A-10-${i < 10 ? '0' + i : i}`;
+                const isChosen = selectedSeats.includes(seatCode);
+                const isSold = (i * 3) % 4 === 0 && !isChosen;
+
+                const btn = document.createElement('button');
+                btn.className = `w-9 h-9 rounded-xl font-mono text-xs font-bold seat-btn flex items-center justify-center ${isSold ? 'bg-red-500/30 border border-red-500 text-red-300 cursor-not-allowed' : isChosen ? 'bg-brothers-yellow text-brothers-darker shadow-lg glow-effect' : 'bg-gray-800 text-gray-300 hover:bg-gray-700'}`;
+                btn.innerText = i;
+                
+                if (!isSold) {
+                    btn.onclick = () => toggleSeatSelection(seatCode);
+                }
+                grid.appendChild(btn);
+            }
+
+            document.getElementById('chosen-seats-text').innerText = selectedSeats.join(', ');
+        }
+
+        function toggleSeatSelection(seatCode) {
+            if (selectedSeats.includes(seatCode)) {
+                if (selectedSeats.length === 1) {
+                    showToast('提示', '至少需選擇一個座位', false);
+                    return;
+                }
+                selectedSeats = selectedSeats.filter(s => s !== seatCode);
+            } else {
+                if (selectedSeats.length >= ticketCount) {
+                    showToast('提示', `您目前選擇張數為 ${ticketCount} 張`, false);
+                    return;
+                }
+                selectedSeats.push(seatCode);
+            }
+            renderSeatGrid();
+        }
+
+        function proceedToStep3() {
+            if (selectedSeats.length === 0) {
+                showToast('提示', '請至少選擇一個座位', false);
                 return;
             }
-            container.innerHTML = friendInvites.map(f => `
-                <div class="p-3 bg-slate-50 rounded-xl border flex justify-between items-center text-xs">
-                    <div>
-                        <p class="font-bold text-slate-900">${f.fromName}</p>
-                        <p class="text-[10px] text-slate-500">狀態：<strong class="${f.status==='agreed'?'text-emerald-600':(f.status==='rejected'?'text-rose-500':'text-amber-600')}">${f.status === 'pending' ? '等待確認中' : (f.status === 'agreed' ? '已同意互加好友' : '已不同意')}</strong></p>
-                    </div>
-                    <div class="flex gap-1.5">
-                        ${f.status === 'pending' ? `
-                            <button onclick="respondInvite(${f.id}, 'agreed')" class="bg-emerald-600 text-white px-2.5 py-1 rounded-lg">同意</button>
-                            <button onclick="respondInvite(${f.id}, 'rejected')" class="bg-rose-500 text-white px-2.5 py-1 rounded-lg">不同意</button>
-                        ` : `<span class="font-bold text-slate-400">已處理</span>`}
-                    </div>
-                </div>
-            `).join('');
+            goToStep(3);
         }
 
-        function respondInvite(id, status) {
-            const inv = friendInvites.find(x => x.id === id);
-            if (inv) {
-                inv.status = status;
-                saveState();
-                renderFriendInvites();
+        function updateSummary() {
+            const subtotal = selectedTicketType.price * selectedSeats.length;
+            document.getElementById('summary-price-subtotal').innerText = `NT$ ${selectedTicketType.price} x ${selectedSeats.length}`;
+            document.getElementById('summary-price-total').innerText = `NT$ ${subtotal.toLocaleString()}`;
+        }
+
+        function completeBooking() {
+            const name = document.getElementById('buyer-name').value;
+            const phone = document.getElementById('buyer-phone').value;
+            const idno = document.getElementById('buyer-idno').value;
+
+            if (!name || !phone || !idno) {
+                showToast('填寫不完整', '請完整填寫台灣大賽實名制購票資料', false);
+                return;
             }
-        }
 
-        function postComment() {
-            const input = document.getElementById('comment-input');
-            const text = input.value.trim();
-            if (!text) return;
-            const authorName = currentUser ? currentUser.name : "訪客";
-            publicComments.unshift({ name: authorName, text, time: "剛剛" });
-            input.value = '';
-            saveState();
-            renderComments();
-        }
+            const subtotal = selectedTicketType.price * selectedSeats.length;
+            const newOrder = {
+                orderId: 'TS-2026-' + Math.floor(100000 + Math.random() * 900000),
+                match: `${activeBookingMatch.opponent} vs 中信兄弟 (台灣大賽 ${activeBookingMatch.game})`,
+                date: `${activeBookingMatch.date} ${activeBookingMatch.time}`,
+                stadium: activeBookingMatch.stadium,
+                seat: `${selectedTicketType.name} (${selectedSeats.join(', ')})`,
+                count: selectedSeats.length,
+                totalPrice: subtotal,
+                buyer: name,
+                qrCode: 'CTBC-TS-OK-' + Math.floor(100000 + Math.random() * 900000)
+            };
 
-        function renderComments() {
-            const container = document.getElementById('comments-container');
-            container.innerHTML = publicComments.map(c => `
-                <div class="p-3 bg-white rounded-xl border shadow-sm text-xs">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="font-bold text-amber-900">${c.name}</span>
-                        <span class="text-[10px] text-slate-400">${c.time}</span>
-                    </div>
-                    <p class="text-slate-700">${c.text}</p>
-                </div>
-            `).join('');
-        }
-
-        // ==================== 付款專區與結帳 ====================
-        function checkoutCart(totalAmount) {
-            closeCartDrawer();
-            openPaymentModal(totalAmount, 'cart');
-        }
-
-        function openPaymentModal(amount, type, meta = {}) {
-            const modal = document.getElementById('payment-modal');
-            const content = document.getElementById('payment-modal-content');
-            modal.classList.remove('hidden'); modal.classList.add('flex');
-
-            const myWallet = currentUser ? currentUser.wallet : 0;
-
-            content.innerHTML = `
-                <div class="text-center mb-6">
-                    <span class="bg-amber-100 text-amber-900 text-xs font-semibold px-3 py-1 rounded-full">Secure Checkout</span>
-                    <h3 class="serif-title text-2xl font-bold text-slate-900 mt-2">選擇付款方式</h3>
-                    <p class="text-2xl font-bold text-amber-900 mt-1">NT$ ${amount}</p>
-                </div>
-                <div class="space-y-3 mb-6">
-                    ${currentUser ? `
-                    <button onclick="payWithWallet(${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border-2 border-amber-600 bg-amber-50 hover:bg-amber-100 transition">                         <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-amber-800 text-white rounded-xl flex items-center justify-center"><i class="fa-solid fa-coins"></i></div><div class="text-left"><p class="font-bold text-sm text-slate-900">使用「書香幣」扣款 (餘額: $${myWallet})</p><p class="text-xs text-amber-800">秒速扣款免手續費</p></div></div>
-                        <i class="fa-solid fa-chevron-right text-slate-400"></i>
-                    </button>` : ''}
-                    <button onclick="selectPaymentMethod('credit', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-amber-800 transition">
-                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-amber-100 text-amber-800 rounded-xl flex items-center justify-center"><i class="fa-solid fa-credit-card"></i></div><div class="text-left"><p class="font-bold text-sm">信用卡線上付款</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
-                    </button>
-                    <button onclick="selectPaymentMethod('atm', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-amber-800 transition">
-                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-blue-100 text-blue-800 rounded-xl flex items-center justify-center"><i class="fa-solid fa-building-columns"></i></div><div class="text-left"><p class="font-bold text-sm">ATM 轉帳</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
-                    </button>
-                    <button onclick="selectPaymentMethod('linepay', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full flex items-center justify-between p-4 rounded-2xl border hover:border-amber-800 transition">
-                        <div class="flex items-center space-x-3"><div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center"><i class="fa-brands fa-line"></i></div><div class="text-left"><p class="font-bold text-sm">LINE Pay</p></div></div><i class="fa-solid fa-chevron-right text-slate-400"></i>
-                    </button>
-                </div>
-                <button onclick="closePaymentModal()" class="w-full bg-slate-100 text-slate-600 py-3 rounded-xl font-semibold text-sm">取消返回</button>
-            `;
-        }
-
-        function payWithWallet(amount, type, meta) {
-            if (currentUser.wallet < amount) { alert('書香幣餘額不足，請先至書香幣錢包儲值！'); return; }
-            currentUser.wallet -= amount;
-            confirmPayment('書香幣扣款', amount, type, meta);
-        }
-
-        function selectPaymentMethod(method, amount, type, meta) {
-            const content = document.getElementById('payment-modal-content');
-            content.innerHTML = `
-                <div class="text-center space-y-4 py-4">
-                    <div class="w-16 h-16 bg-amber-900 text-white rounded-2xl mx-auto flex items-center justify-center text-3xl"><i class="fa-solid fa-lock"></i></div>
-                    <h4 class="font-bold text-lg">${method.toUpperCase()} 模擬付款</h4>
-                    <p class="text-sm text-slate-600">應付金額：NT$ ${amount}</p>
-                    <button onclick="confirmPayment('${method}', ${amount}, '${type}', ${JSON.stringify(meta).replace(/"/g, '&quot;')})" class="w-full bg-amber-900 text-white py-3 rounded-xl font-semibold text-sm shadow">確認完成付款</button>
-                </div>
-            `;
-        }
-
-        function confirmPayment(method, amount, type, meta) {
-            closePaymentModal();
-            if (type === 'wallet_topup') {
-                currentUser.wallet += (meta.amount + meta.bonus);
-                alert(`成功儲值 NT$ ${meta.amount}！獲得回饋金 ${meta.bonus} 書香幣！`);
-                switchTab('wallet');
-            } else if (type === 'membership') {
-                currentUser.tier = meta.tierName;
-                currentUser.discount = meta.discount;
-                currentUser.exp += 200;
-                alert(`恭喜升級為「${meta.tierName}」！`);
-                switchTab('membership');
-            } else {
-                cart.forEach(item => {
-                    if (item.isUserPublished) {
-                        item.stock = Math.max(0, item.stock - item.quantity);
-                        sellerNotifications.unshift({
-                            bookTitle: item.title,
-                            qty: item.quantity,
-                            revenue: item.price * item.quantity,
-                            time: new Date().toLocaleTimeString()
-                        });
-                    }
-                });
-
-                currentUser.exp += Math.round(amount / 10);
-                if (currentUser.exp >= 2000 && currentUser.tier !== '金卡會員') {
-                    currentUser.tier = '金卡會員'; currentUser.discount = 0.85;
-                    alert('🎉 恭喜您的經驗值達標，自動升級為【金卡會員】！');
-                } else if (currentUser.exp >= 500 && currentUser.tier === '銅卡會員') {
-                    currentUser.tier = '銀卡會員'; currentUser.discount = 0.90;
-                    alert('🎉 恭喜您的經驗值達標，自動升級為【銀卡會員】！');
-                }
-
-                orders.unshift({ id: 'ORD-' + Math.floor(100000 + Math.random() * 900000), date: new Date().toLocaleString(), itemsSummary: cart.map(i => `${i.title} x${i.quantity}`).join(', '), amount, method, status: '已付款' });
-                cart = [];
-                saveState(); updateBadges(); renderOrders(); renderSellerDashboard();
-                alert('付款成功！訂單已成立。');
-                switchTab('orders');
+            myTickets.unshift(newOrder);
+            if (currentUser) {
+                currentUser.points += Math.floor(subtotal * 0.1); // 10% points reward for Taiwan Series
+                renderAuthNav();
+                renderMembershipInfo();
             }
+
+            closeBookingModal();
+            renderMyTickets();
+            switchTab('my-tickets');
+            showToast('台灣大賽購票成功！', '訂單已成立，獲得 10% 象積分回饋！');
         }
 
-        function renderOrders() {
-            const container = document.getElementById('orders-container');
-            if (orders.length === 0) { container.innerHTML = `<p class="text-center text-slate-400 py-8 text-sm">尚無歷史訂單</p>`; return; }
-            container.innerHTML = orders.map(o => `
-                <div class="bg-slate-50 rounded-2xl p-4 mb-4 border flex justify-between items-center text-xs">
-                    <div>
-                        <p class="font-mono font-bold text-amber-900">${o.id} <span class="text-emerald-600">(${o.status})</span></p>
-                        <p class="font-bold text-slate-900 mt-1">${o.itemsSummary}</p>
+        function renderMyTickets() {
+            const container = document.getElementById('my-tickets-container');
+            container.innerHTML = '';
+
+            if (myTickets.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-400 space-y-3">
+                        <i class="fa-solid fa-ticket text-4xl text-gray-600"></i>
+                        <p>目前尚無已購票券</p>
+                        <button onclick="switchTab('taiwan-series')" class="px-4 py-2 bg-brothers-yellow text-brothers-darker font-bold rounded-xl text-xs">立即前往台灣大賽購票</button>
                     </div>
-                    <div class="text-right"><p class="text-slate-500">金額</p><p class="text-base font-bold text-amber-950">NT$ ${o.amount}</p></div>
-                </div>
-            `).join('');
+                `;
+                return;
+            }
+
+            myTickets.forEach(ticket => {
+                const card = document.createElement('div');
+                card.className = "bg-brothers-darker p-6 rounded-2xl border border-gray-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-lg";
+                card.innerHTML = `
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2.5 py-0.5 bg-brothers-yellow text-brothers-darker text-xs font-black rounded">台灣大賽電子票券</span>
+                            <span class="text-xs text-gray-400 font-mono">訂單編號: ${ticket.orderId}</span>
+                        </div>
+                        <h4 class="text-lg font-black text-white">${ticket.match}</h4>
+                        <p class="text-xs text-gray-300"><i class="fa-solid fa-calendar-days text-brothers-yellow mr-1"></i>${ticket.date} | ${ticket.stadium}</p>
+                        <p class="text-xs text-gray-300"><i class="fa-solid fa-chair text-brothers-yellow mr-1"></i>${ticket.seat}</p>
+                        <p class="text-xs text-gray-400">取票人：${ticket.buyer} | 總金額：NT$ ${ticket.totalPrice.toLocaleString()}</p>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-2xl flex flex-col items-center justify-center shrink-0 w-full md:w-auto">
+                        <div class="w-28 h-12 bg-gray-900 text-brothers-yellow font-mono text-[10px] flex items-center justify-center font-bold tracking-widest rounded px-1">
+                            ${ticket.qrCode}
+                        </div>
+                        <span class="text-[10px] text-gray-600 font-bold mt-1">大巨蛋入場驗票 QR Code</span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
         }
     </script>
 </body>
-    </html>
+</html>
