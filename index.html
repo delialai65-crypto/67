@@ -1,861 +1,605 @@
 
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IRON FRONT 2.0 - ULTIMATE LUXURY</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>FLAG WAR 3D INFINITY</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Noto+Sans+TC:wght@400;600;800&display=swap');
-
-:root{
-  --gold:#f6c65b;
-  --gold2:#fff0b0;
-  --blue:#38caff;
-  --red:#ff5369;
-  --bg:#050811;
-}
 *{box-sizing:border-box}
-body{
-  margin:0;background:var(--bg);color:#fff;
-  font-family:'Noto Sans TC',sans-serif;
-  overflow-x:hidden;
-}
-button,select,input{font:inherit}
-button{cursor:pointer}
-#app{min-height:100vh;position:relative;overflow:hidden}
-.background{
-  position:fixed;inset:0;z-index:-2;
-  background:
-  radial-gradient(ellipse at 50% 30%,#27345a 0%,transparent 45%),
-  radial-gradient(ellipse at 10% 90%,#36210e 0%,transparent 40%),
-  linear-gradient(135deg,#03050c,#10182a 55%,#070910);
-}
-.background:before{
-  content:"";position:absolute;inset:0;
-  background-image:linear-gradient(#ffffff0b 1px,transparent 1px),
-  linear-gradient(90deg,#ffffff0b 1px,transparent 1px);
-  background-size:45px 45px;
-  transform:perspective(500px) rotateX(58deg) scale(1.8);
-  transform-origin:center bottom;
-  animation:gridmove 12s linear infinite;
-}
-@keyframes gridmove{to{background-position:0 45px,45px 0}}
-header{
-  height:76px;padding:0 5%;display:flex;align-items:center;
-  justify-content:space-between;border-bottom:1px solid #f6c65b40;
-  background:#050811d9;backdrop-filter:blur(14px);
-  position:sticky;top:0;z-index:20;
-}
-.logo{font-family:Orbitron,sans-serif;font-weight:900;letter-spacing:3px;color:var(--gold);font-size:21px}
-.logo span{color:#fff}
-nav{display:flex;gap:9px;flex-wrap:wrap}
-nav button,.small-btn{
-  background:transparent;border:1px solid #ffffff24;color:#ddd;
-  padding:9px 14px;border-radius:5px;font-size:12px;
-}
-nav button:hover,.small-btn:hover{border-color:var(--gold);color:var(--gold)}
-.page{display:none;min-height:calc(100vh - 76px);padding:36px 5% 65px}
-.page.active{display:block;animation:fade .35s ease}
-@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.hero{
-  min-height:570px;display:grid;grid-template-columns:1.1fr .9fr;
-  align-items:center;gap:25px;
-}
-.eyebrow{color:var(--gold);letter-spacing:5px;font:12px Orbitron}
-h1{
-  font:900 clamp(38px,6vw,76px)/1.05 Orbitron,sans-serif;
-  margin:20px 0;color:white;text-shadow:0 0 30px #e9b84b45;
-}
-h1 span{color:var(--gold)}
-.hero p{color:#aeb9ca;line-height:2;max-width:600px}
-.hero-art{
-  height:400px;position:relative;display:grid;place-items:center;
-  perspective:700px;
-}
-.core{
-  width:230px;height:230px;border-radius:50%;
-  border:2px solid var(--gold);position:relative;
-  background:radial-gradient(circle,#f6c65b45,#17223c 50%,#050811 72%);
-  box-shadow:0 0 35px #e6b84b70,inset 0 0 35px #e6b84b40;
-  animation:float 4s ease-in-out infinite;
-}
-.core:before,.core:after{
-  content:"";position:absolute;inset:-35px;border:1px solid #f6c65b90;
-  border-radius:50%;transform:rotateX(68deg);
-}
-.core:after{inset:-65px;transform:rotateY(65deg) rotateX(65deg);border-color:#39caff70}
-.core i{
-  position:absolute;inset:30%;border-radius:50%;
-  background:radial-gradient(circle,#fff,#f6c65b 25%,#a45c12 60%,transparent);
-  box-shadow:0 0 50px #ffce59;
-}
-@keyframes float{50%{transform:translateY(-15px) rotateY(15deg)}}
-.hero-label{
-  position:absolute;bottom:20px;right:4%;color:var(--gold);
-  font:12px Orbitron;letter-spacing:3px
-}
-.primary{
-  border:1px solid var(--gold);color:#1b1405;
-  background:linear-gradient(135deg,#fff1ae,#d99b31);
-  padding:15px 25px;border-radius:4px;font-weight:900;
-  box-shadow:0 0 25px #dba63b50;transition:.2s;
-}
-.primary:hover{transform:translateY(-3px);box-shadow:0 0 35px #dba63b90}
-.secondary{
-  border:1px solid #ffffff55;color:#fff;background:#ffffff0b;
-  padding:14px 22px;border-radius:4px
-}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
-.stats{
-  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:15px
-}
-.stat,.panel,.card{
-  border:1px solid #ffffff20;background:linear-gradient(145deg,#182238c9,#080d19e8);
-  padding:18px;border-radius:7px;
-}
-.stat strong{display:block;color:var(--gold);font:22px Orbitron}
-.stat small{color:#8492a8}
-.section-title{
-  font:800 25px Orbitron;color:var(--gold);
-  margin:8px 0 22px;letter-spacing:2px
-}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:15px}
-.card{transition:.2s;position:relative;overflow:hidden}
-.card:hover{border-color:var(--gold);transform:translateY(-3px)}
-.card h3{color:var(--gold);margin:4px 0 9px}
-.card p{font-size:13px;color:#aab5c8;line-height:1.7}
-.tag{font:10px Orbitron;color:#38caff;letter-spacing:2px}
-.price{color:#ffe09a;font-weight:800}
-.card button{margin-top:12px;width:100%}
-select,input{
-  background:#0b1323;border:1px solid #ffffff35;color:white;
-  border-radius:4px;padding:12px;width:100%;margin:7px 0 15px;
-}
-label{color:#c4ccda;font-size:13px}
-.form-box{max-width:510px;margin:auto}
-.notice{font-size:12px;color:#8795a9;line-height:1.8}
-#battlePage{padding:18px 3% 40px}
-.battle-layout{display:grid;grid-template-columns:1fr 260px;gap:14px}
-#gameCanvas{
-  width:100%;height:min(70vh,680px);display:block;
-  background:#101b2b;border:1px solid #d4a84480;border-radius:5px;
-  cursor:crosshair;
-}
-.hud{display:grid;gap:12px;align-content:start}
-.hud .panel{padding:14px}
-.hud strong{color:var(--gold)}
-.healthbar{height:9px;background:#273044;border-radius:9px;overflow:hidden;margin:8px 0}
-.healthfill{height:100%;width:100%;background:linear-gradient(90deg,#27d58c,#a5ffbd)}
-.teamline{display:flex;justify-content:space-between;margin:8px 0;font-size:13px}
-#gameMessage{
-  position:absolute;inset:0;display:none;place-items:center;
-  background:#030711d9;z-index:5;text-align:center;padding:20px;
-}
-#gameMessage .panel{max-width:450px;width:100%;padding:30px}
-#gameMessage h2{color:var(--gold);font:800 27px Orbitron}
-#battleArea{position:relative}
-#battleTop{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px;flex-wrap:wrap}
-#battleTop h2{font:800 20px Orbitron;color:var(--gold);margin:0}
-#toast{
-  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
-  background:#17243a;border:1px solid var(--gold);padding:12px 20px;
-  border-radius:5px;display:none;z-index:99;
-}
-footer{text-align:center;color:#5d6b81;font-size:11px;padding:25px;border-top:1px solid #ffffff12}
-@media(max-width:850px){
- .hero{grid-template-columns:1fr}.hero-art{height:270px}.core{width:160px;height:160px}
- .battle-layout{grid-template-columns:1fr}.hud{grid-template-columns:repeat(2,1fr)}
- header{height:auto;min-height:76px;gap:12px;flex-wrap:wrap;padding:14px 4%}
- nav{padding-bottom:8px}
-}
-@media(max-width:550px){
- .stats{grid-template-columns:repeat(2,1fr)}
- .hud{grid-template-columns:1fr 1fr}
- .page{padding:25px 4%}
+body{margin:0;background:#07101e;color:white;font-family:Arial;overflow-x:hidden}
+button{cursor:pointer;border:0;border-radius:8px;padding:12px 18px;font-weight:bold;color:white;background:#078fd0}
+button:disabled{opacity:.5;cursor:not-allowed}
+button:hover:not(:disabled){filter:brightness(1.2)}
+input{padding:12px;border-radius:7px;background:#091a2c;color:white;border:1px solid #45627d;width:100%}
+.hidden{display:none!important}
+header{height:auto;min-height:65px;padding:12px 3%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#071522;border-bottom:1px solid #ffffff22;position:relative;z-index:5}
+.logo{font-size:22px;font-weight:1000;color:#52d2ff}
+.logo span{color:white}
+nav{display:flex;gap:6px;flex-wrap:wrap}
+nav button{background:#172c42;border:1px solid #ffffff20;font-size:12px;padding:9px}
+.account{color:#ffd76a;font-size:13px}
+main{max-width:1200px;margin:auto;padding:22px}
+.hero{min-height:330px;padding:30px;border-radius:18px;border:1px solid #42bfff66;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,#071321 5%,#071321d9 55%,#07132122),url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=85') center/cover}
+.hero h1{font-size:clamp(38px,7vw,70px);margin:10px 0;color:#5ad2ff}
+.hero p{max-width:550px;line-height:1.7;color:#c2d9eb}
+.tag{letter-spacing:4px;color:#69dfff}
+.heroArt{font-size:130px}
+.primary{background:linear-gradient(100deg,#008bd5,#37caff);padding:15px 25px}
+.secondary{background:#172e45;border:1px solid #52caff}
+.section{margin-top:28px}
+.section h2{font-size:21px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.card,.panel{background:linear-gradient(145deg,#172c43,#0c1b2d);border:1px solid #ffffff20;border-radius:13px;padding:17px}
+.card{cursor:pointer;min-height:120px}
+.card .emoji{font-size:30px}
+.card p,.muted{color:#9eb5c9;font-size:13px;line-height:1.5}
+.two{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
+.stat{padding:11px 0;border-bottom:1px solid #ffffff18;display:flex;justify-content:space-between}
+.bar{height:9px;border-radius:9px;background:#293c50;overflow:hidden}
+.bar div{height:100%;background:#3bcaff}
+.item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid #ffffff18}
+.item button{padding:8px}
+footer{text-align:center;padding:30px;color:#7891aa;font-size:12px}
+.modal{position:fixed;inset:0;z-index:30;background:#000b;display:flex;align-items:center;justify-content:center;padding:15px}
+.modalbox{background:#10243a;border:1px solid #4abfff;border-radius:15px;padding:24px;width:min(500px,100%);max-height:85vh;overflow:auto}
+.modalbox h2{color:#62d8ff}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:50;background:#102d45;border:1px solid #52caff;padding:12px 20px;border-radius:9px;display:none}
+#gameScreen{position:fixed;inset:0;background:#101b27;z-index:20;display:none}
+#gameCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+#hud{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;pointer-events:none}
+.hudbox{background:#071522dd;border:1px solid #ffffff44;padding:9px;border-radius:8px;font-size:13px}
+#cross{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:28px;color:#5deaff;pointer-events:none}
+#gameButtons{position:absolute;top:75px;right:12px}
+#mobileControls{display:none;position:absolute;inset:0;pointer-events:none}
+#stick{position:absolute;bottom:25px;left:20px;width:120px;height:120px;border:2px solid #ffffff77;border-radius:50%;background:#ffffff15;pointer-events:auto;touch-action:none}
+#knob{width:45px;height:45px;border-radius:50%;background:#50cfffbb;position:absolute;left:35px;top:35px}
+#fire{position:absolute;right:25px;bottom:40px;width:85px;height:85px;border-radius:50%;pointer-events:auto;touch-action:none}
+#result{position:absolute;inset:0;background:#061321ed;display:flex;align-items:center;justify-content:center;padding:15px}
+#result .modalbox{text-align:center}
+@media(max-width:750px){
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .two{grid-template-columns:1fr}
+ .heroArt{display:none}
+ main{padding:13px}
+ header{gap:8px}
+ nav{width:100%;overflow:auto}
+ nav button{white-space:nowrap}
 }
 </style>
 </head>
 <body>
+
 <div id="app">
-<div class="background"></div>
 <header>
-  <div class="logo">IRON <span>FRONT</span> 2.0</div>
-  <nav>
-    <button onclick="showPage('home')">首頁</button>
-    <button onclick="showPage('battle')">戰鬥中心</button>
-    <button onclick="showPage('arsenal')">能量裝備</button>
-    <button onclick="showPage('characters')">角色</button>
-    <button onclick="showPage('membership')">會員中心</button>
-    <button onclick="showPage('account')">帳號</button>
-  </nav>
+ <div class="logo">FLAG WAR <span>3D INFINITY</span></div>
+ <nav>
+  <button onclick="page('home')">首頁</button>
+  <button onclick="page('missions')">任務</button>
+  <button onclick="page('shop')">商城</button>
+  <button onclick="page('equipment')">裝備</button>
+  <button onclick="page('maps')">地圖</button>
+  <button onclick="page('ranking')">排行榜</button>
+ </nav>
+ <div class="account">🪙 <b id="coins">1000</b>　⭐ Lv.<b id="level">1</b></div>
 </header>
 
 <main>
-<section id="home" class="page active">
-  <div class="hero">
-    <div>
-      <div class="eyebrow">THE NEXT GENERATION BATTLEFIELD</div>
-      <h1>IRON<br><span>FRONT</span><br>ULTIMATE</h1>
-      <p>進入未來科技戰場。組成 30 人隊伍，與 AI 戰隊展開大型科幻競技。選擇你的戰場、角色與專屬能量裝備，開始挑戰。</p>
-      <div class="actions">
-        <button class="primary" onclick="openBattleSetup()">立即進入戰場　➜</button>
-        <button class="secondary" onclick="showPage('arsenal')">探索 25 種裝備</button>
-      </div>
-    </div>
-    <div class="hero-art">
-      <div class="core"><i></i></div>
-      <div class="hero-label">ULTIMATE BATTLE SYSTEM</div>
-    </div>
+<section id="home">
+ <div class="hero">
+  <div>
+   <div class="tag">SEASON 01 · INFINITY BATTLE</div>
+   <h1>FLAG WAR<br>3D INFINITY</h1>
+   <p>加入大型 30 VS 30 競技場，完成任務、提升等級、收集外觀，爭奪旗幟與榮耀！</p>
+   <button class="primary" onclick="startGame()">▶ 開始戰鬥</button>
+   <button class="secondary" onclick="page('maps')">選擇戰場</button>
   </div>
-  <div class="stats">
-    <div class="stat"><strong>30 VS 30</strong><small>大型 AI 戰隊</small></div>
-    <div class="stat"><strong>05</strong><small>大型戰場地圖</small></div>
-    <div class="stat"><strong>25</strong><small>專屬能量裝備</small></div>
-    <div class="stat"><strong>03</strong><small>戰鬥模式</small></div>
+  <div class="heroArt">🏆</div>
+ </div>
+
+ <div class="section"><h2>玩家資料</h2>
+ <div class="two">
+  <div class="panel">
+   <h2 id="playerName">INFINITY PLAYER</h2>
+   <p>等級 <b id="profileLevel">1</b></p>
+   <div class="bar"><div id="expBar" style="width:0%"></div></div>
+   <p id="expText">0 / 100 EXP</p>
+   <div class="stat"><span>🏆 勝利</span><b id="wins">0</b></div>
+   <div class="stat"><span>⚔ 戰鬥</span><b id="games">0</b></div>
+   <div class="stat"><span>🎯 積分</span><b id="points">0</b></div>
+   <button class="secondary" onclick="editName()">修改暱稱</button>
   </div>
+  <div class="panel">
+   <h3>🎁 每日登入獎勵</h3>
+   <h2 style="color:#ffd76a">🪙 +200</h2>
+   <button class="primary" id="dailyBtn" onclick="daily()">領取獎勵</button>
+   <p id="dailyText" class="muted"></p>
+  </div>
+ </div>
+ </div>
+
+ <div class="section"><h2>快速入口</h2>
+ <div class="grid">
+  <div class="card" onclick="startGame()"><div class="emoji">⚔️</div><h3>30 VS 30</h3><p>60 名 AI 角色參與競技</p></div>
+  <div class="card" onclick="page('missions')"><div class="emoji">🎯</div><h3>每日任務</h3><p>完成任務取得遊戲幣</p></div>
+  <div class="card" onclick="page('shop')"><div class="emoji">🛒</div><h3>商城</h3><p>收集各種遊戲外觀</p></div>
+  <div class="card" onclick="page('ranking')"><div class="emoji">🏆</div><h3>排行榜</h3><p>查看個人戰績</p></div>
+ </div>
+ </div>
 </section>
 
-<section id="battle" class="page">
-  <div id="battleTop">
-    <h2>ULTIMATE BATTLE ARENA</h2>
-    <div>
-      <button class="small-btn" onclick="openBattleSetup()">戰鬥設定</button>
-      <button class="small-btn" onclick="pauseGame()">暫停 / 繼續</button>
-      <button class="small-btn" onclick="showPage('home')">返回首頁</button>
-    </div>
-  </div>
-  <div class="battle-layout">
-    <div id="battleArea">
-      <canvas id="gameCanvas" width="1100" height="680"></canvas>
-      <div id="gameMessage">
-        <div class="panel">
-          <h2 id="messageTitle">戰鬥結束</h2>
-          <p id="messageText"></p>
-          <button class="primary" onclick="openBattleSetup()">重新設定戰鬥</button>
-          <button class="secondary" onclick="showPage('home')">返回首頁</button>
-        </div>
-      </div>
-    </div>
-    <aside class="hud">
-      <div class="panel">
-        <div class="tag">PLAYER STATUS</div>
-        <h3 id="playerNameHud">COMMANDER</h3>
-        <div class="teamline"><span>生命值</span><strong id="hpText">100 / 100</strong></div>
-        <div class="healthbar"><div id="hpFill" class="healthfill"></div></div>
-        <div class="teamline"><span>個人擊敗</span><strong id="killsText">0</strong></div>
-        <div class="teamline"><span>目前裝備</span><strong id="gearHud">NOVA PULSE</strong></div>
-      </div>
-      <div class="panel">
-        <div class="tag">TEAM SCORE</div>
-        <div class="teamline"><span>藍方</span><strong id="blueScore">0</strong></div>
-        <div class="teamline"><span>紅方</span><strong id="redScore">0</strong></div>
-        <div class="teamline"><span>剩餘時間</span><strong id="timerText">04:00</strong></div>
-      </div>
-      <div class="panel">
-        <div class="tag">BATTLE INFORMATION</div>
-        <p id="modeHud">團隊殲滅戰</p>
-        <p id="mapHud">未來科技城市</p>
-        <p>隊友：29 名 AI</p>
-        <p>敵方：30 名 AI</p>
-      </div>
-      <div class="panel">
-        <div class="tag">CONTROLS</div>
-        <p class="notice">W A S D：移動<br>滑鼠：瞄準<br>滑鼠左鍵：發射能量彈<br>空白鍵：跳躍特效<br>P：暫停</p>
-      </div>
-    </aside>
-  </div>
+<section id="missions" class="hidden">
+ <h2>🎯 每日任務</h2><div id="missionList" class="grid"></div>
 </section>
 
-<section id="arsenal" class="page">
-  <div class="section-title">ELITE ENERGY ARSENAL</div>
-  <p class="notice">25 種專屬科幻能量裝備。裝備名稱與數值皆為遊戲虛構設定。</p>
-  <div id="gearGrid" class="grid"></div>
+<section id="shop" class="hidden">
+ <h2>🛒 遊戲商城</h2>
+ <p class="muted">虛擬遊戲幣購買，不涉及真實付款。</p>
+ <div id="shopList" class="grid"></div>
 </section>
 
-<section id="characters" class="page">
-  <div class="section-title">LEGENDARY CHARACTERS</div>
-  <div id="characterGrid" class="grid"></div>
+<section id="equipment" class="hidden">
+ <h2>🎒 我的裝備</h2>
+ <div class="panel"><div id="ownedList"></div><p id="equipped"></p></div>
 </section>
 
-<section id="membership" class="page">
-  <div class="section-title">VIP MEMBERSHIP SYSTEM</div>
-  <p class="notice">以下為遊戲內展示方案與模擬訂單，不會進行真實扣款。</p>
-  <div id="memberGrid" class="grid"></div>
-  <div class="panel form-box" style="margin-top:22px">
-    <h3 style="color:var(--gold)">會員模擬訂單</h3>
-    <label>玩家名稱</label><input id="payName" placeholder="輸入玩家名稱">
-    <label>電子郵件</label><input id="payEmail" type="email" placeholder="example@email.com">
-    <label>選擇方案</label><select id="payPlan"></select>
-    <button class="primary" style="width:100%" onclick="simulatePayment()">確認模擬訂單</button>
-    <p class="notice">請勿輸入信用卡號、銀行帳戶或其他付款敏感資料。本功能不會收款。</p>
-  </div>
+<section id="maps" class="hidden">
+ <h2>🗺 戰場選擇</h2>
+ <div class="grid">
+  <div class="card" onclick="chooseMap('城市競技場')"><div class="emoji">🏙️</div><h3>城市競技場</h3></div>
+  <div class="card" onclick="chooseMap('沙漠基地')"><div class="emoji">🏜️</div><h3>沙漠基地</h3></div>
+  <div class="card" onclick="chooseMap('森林營地')"><div class="emoji">🌲</div><h3>森林營地</h3></div>
+  <div class="card" onclick="chooseMap('星際要塞')"><div class="emoji">🌌</div><h3>星際要塞</h3></div>
+ </div>
+ <p>目前選擇：<b id="selectedMap"></b></p>
+ <button class="primary" onclick="startGame()">進入戰場</button>
 </section>
 
-<section id="account" class="page">
-  <div class="section-title">PLAYER ACCOUNT</div>
-  <div class="panel form-box">
-    <div class="tag">LOCAL DEMO ACCOUNT</div>
-    <h2 id="accountTitle">玩家登入</h2>
-    <label>玩家暱稱</label><input id="username" placeholder="輸入玩家暱稱">
-    <label>密碼</label><input id="password" type="password" placeholder="輸入密碼">
-    <div class="actions">
-      <button class="primary" onclick="login()">登入</button>
-      <button class="secondary" onclick="register()">註冊</button>
-      <button class="secondary" onclick="logout()">登出</button>
-    </div>
-    <p id="accountStatus" class="notice">目前尚未登入。</p>
-    <p class="notice">這是本機展示帳號功能，資料只保存在目前瀏覽器。正式帳號系統需要安全的伺服器與資料庫。</p>
-  </div>
+<section id="ranking" class="hidden">
+ <h2>🏆 排行榜</h2>
+ <div class="panel">
+  <div id="rankList"></div>
+  <p class="muted">目前為本機排行榜，全球排行榜需要連接線上伺服器。</p>
+ </div>
 </section>
 </main>
-
-<footer>IRON FRONT 2.0 · ULTIMATE LUXURY EDITION · FICTIONAL SCI-FI GAME</footer>
-<div id="toast"></div>
+<footer>FLAG WAR 3D INFINITY · ARCADE EDITION</footer>
 </div>
 
-<script>
-"use strict";
+<div id="nameModal" class="modal hidden">
+ <div class="modalbox">
+  <h2>玩家資料設定</h2>
+  <p>輸入你的遊戲暱稱</p>
+  <input id="nameInput" maxlength="18" placeholder="玩家暱稱">
+  <button onclick="saveName()">確認</button>
+  <button class="secondary" onclick="closeName()">取消</button>
+ </div>
+</div>
 
-/* =========================
-   GAME DATA
-========================= */
-const gears = [
- ["PHANTOM ZERO","幻影零式","隱匿型能量裝備",18,"#b78cff"],
- ["NOVA DESTROYER","新星毀滅者","高能量脈衝裝備",25,"#ffb84d"],
- ["QUANTUM RIFT","量子裂隙","量子能量裝備",22,"#50dfff"],
- ["SOLAR REAPER","烈陽收割者","太陽能量裝備",20,"#ff8c45"],
- ["FROST TITAN","極寒泰坦","冰霜能量裝備",19,"#9beaff"],
- ["VORTEX STORM","虛空風暴","旋渦能量裝備",23,"#a78bfa"],
- ["OMEGA PULSE","歐米伽脈衝","穩定型能量裝備",16,"#f6c65b"],
- ["THUNDER CORE","雷霆核心","電弧能量裝備",21,"#f8e66b"],
- ["STAR BREAKER","星辰破界者","星際能量裝備",24,"#ff7598"],
- ["INFINITY EDGE","無限之刃","光刃能量裝備",20,"#70f0c0"],
- ["NEBULA RAY","星雲射線","星雲能量裝備",17,"#d69cff"],
- ["TITAN NOVA","泰坦新星","重型脈衝裝備",26,"#e7b66c"],
- ["CYBER ECLIPSE","賽博日蝕","暗影能量裝備",22,"#7c9dff"],
- ["DRAGON FLARE","龍焰","烈焰能量裝備",23,"#ff7655"],
- ["AURORA STRIKE","極光打擊","極光能量裝備",19,"#6ef0d3"],
- ["GALAXY RIPPER","銀河裂解者","銀河能量裝備",25,"#c59bff"],
- ["CRYSTAL PHOENIX","水晶鳳凰","水晶能量裝備",18,"#ff9ecb"],
- ["VOID CANNON","虛空脈衝炮","虛空能量裝備",27,"#8b91ff"],
- ["METEOR RUSH","隕星奔流","隕星能量裝備",21,"#ffbd73"],
- ["ECLIPSE HUNTER","日蝕獵手","追蹤型能量裝備",20,"#9fb5ff"],
- ["COSMIC LANCE","宇宙長槍","聚焦能量裝備",24,"#6adfff"],
- ["RADIANT NOVA","耀光新星","光耀能量裝備",22,"#fff0a1"],
- ["DARK MATTER","暗物質核心","暗物質能量裝備",26,"#b29cff"],
- ["SKYFALL ENGINE","天幕引擎","高速能量裝備",19,"#69e6ff"],
- ["ETERNAL APEX","永恆巔峰","傳說級能量裝備",28,"#f6c65b"]
+<div id="gameScreen">
+ <canvas id="gameCanvas"></canvas>
+ <div id="hud">
+  <div class="hudbox">🔵 BLUE <b id="bs">0</b></div>
+  <div class="hudbox">🔴 RED <b id="rs">0</b></div>
+  <div class="hudbox">👥 <span id="bc">30</span> VS <span id="rc">30</span></div>
+  <div class="hudbox">⏱ <span id="timer">300</span></div>
+  <div class="hudbox">⭐ <span id="gamePoints">0</span></div>
+ </div>
+ <div id="cross">＋</div>
+ <div id="gameButtons">
+  <button onclick="pauseGame()">Ⅱ 暫停</button>
+  <button class="secondary" onclick="exitGame()">退出</button>
+ </div>
+ <div id="mobileControls">
+  <div id="stick"><div id="knob"></div></div>
+  <button id="fire">發射</button>
+ </div>
+ <div id="result" class="hidden">
+  <div class="modalbox">
+   <h1 id="winner">比賽結束</h1>
+   <h2 id="finalScore"></h2>
+   <p id="finalText"></p>
+   <button onclick="startGame()">再次比賽</button>
+   <button class="secondary" onclick="exitGame()">返回首頁</button>
+  </div>
+ </div>
+</div>
+<div id="toast"></div>
+
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+
+const $=id=>document.getElementById(id);
+const defaults={
+ name:"INFINITY PLAYER",coins:1000,level:1,exp:0,
+ wins:0,games:0,points:0,lastDaily:"",
+ owned:["標準藍色外觀"],equipped:"標準藍色外觀",
+ missions:{}
+};
+let data;
+try{data={...defaults,...JSON.parse(localStorage.getItem("fw_save")||"{}")}}
+catch(e){data={...defaults}}
+let selectedMap=localStorage.getItem("fw_map")||"城市競技場";
+
+function save(){
+ localStorage.setItem("fw_save",JSON.stringify(data));
+ render();
+}
+function toast(msg){
+ $("toast").textContent=msg;
+ $("toast").style.display="block";
+ setTimeout(()=>$("toast").style.display="none",2200);
+}
+function page(p){
+ document.querySelectorAll("main section").forEach(x=>x.classList.add("hidden"));
+ $(p).classList.remove("hidden");
+ if(p==="missions")renderMissions();
+ if(p==="shop")renderShop();
+ if(p==="equipment")renderEquipment();
+ if(p==="ranking")renderRanking();
+}
+function render(){
+ $("coins").textContent=data.coins;
+ $("level").textContent=data.level;
+ $("playerName").textContent=data.name;
+ $("profileLevel").textContent=data.level;
+ $("wins").textContent=data.wins;
+ $("games").textContent=data.games;
+ $("points").textContent=data.points;
+ $("expText").textContent=data.exp+" / 100 EXP";
+ $("expBar").style.width=Math.min(100,data.exp)+"%";
+ $("selectedMap").textContent=selectedMap;
+ let claimed=data.lastDaily===new Date().toDateString();
+ $("dailyBtn").disabled=claimed;
+ $("dailyBtn").textContent=claimed?"今日已領取":"領取獎勵";
+ $("dailyText").textContent=claimed?"明天再來領取":"今日獎勵尚未領取";
+}
+function editName(){
+ $("nameInput").value=data.name;
+ $("nameModal").classList.remove("hidden");
+}
+function closeName(){$("nameModal").classList.add("hidden")}
+function saveName(){
+ let n=$("nameInput").value.trim();
+ if(!n)return toast("請輸入暱稱");
+ data.name=n;save();closeName();toast("暱稱已更新");
+}
+function daily(){
+ if(data.lastDaily===new Date().toDateString())return toast("今天已領取");
+ data.lastDaily=new Date().toDateString();
+ data.coins+=200;save();toast("領取 200 遊戲幣");
+}
+const missions=[
+ {name:"完成一場戰鬥",desc:"進行一次 30 VS 30",reward:100},
+ {name:"累積 50 積分",desc:"獲得至少 50 個人積分",reward:150},
+ {name:"每日登入",desc:"領取每日登入獎勵",reward:80}
 ];
-
-const characters = [
- ["ASSAULT","突擊先鋒","平衡型角色，適合正面推進。","#e8b34d"],
- ["GUARDIAN","鋼鐵守護者","防禦型角色，擁有較高生命值。","#55caff"],
- ["SCOUT","疾風偵察者","敏捷型角色，移動速度較快。","#7ce2a2"],
- ["ENGINEER","科技工程師","支援型角色，擅長團隊支援。","#d5a0ff"],
- ["PHANTOM","暗影幻影","靈活型角色，擁有特殊移動效果。","#a5a5ff"],
- ["COMMANDER","星際指揮官","指揮型角色，全面型能力。","#ffcf65"]
+function renderMissions(){
+ $("missionList").innerHTML="";
+ missions.forEach((m,i)=>{
+  let done=!!data.missions[i];
+  let c=document.createElement("div");c.className="card";
+  c.innerHTML=`<h3>${m.name}</h3><p>${m.desc}</p><p>🪙 ${m.reward}</p>`;
+  let b=document.createElement("button");b.textContent=done?"已領取":"領取";
+  b.disabled=done;b.onclick=()=>claimMission(i);
+  c.append(b);$("missionList").append(c);
+ });
+}
+function claimMission(i){
+ if(data.missions[i])return;
+ if(i===0&&data.games<1)return toast("請先完成一場戰鬥");
+ if(i===1&&data.points<50)return toast("還需要更多積分");
+ if(i===2&&data.lastDaily!==new Date().toDateString())return toast("請先領取每日獎勵");
+ data.missions[i]=true;data.coins+=missions[i].reward;
+ save();renderMissions();toast("任務獎勵已領取");
+}
+const products=[
+ ["霓虹藍色外觀",300,"🔷"],["熾熱紅色外觀",300,"🔴"],
+ ["黃金冠軍外觀",700,"👑"],["星際傳說外觀",1000,"🌌"],
+ ["勝利者徽章",500,"🏅"],["閃耀旗幟",450,"🚩"],
+ ["鑽石稱號",1200,"💎"],["傳奇稱號",1800,"⭐"]
 ];
-
-const plans = [
- ["FREE","新兵體驗","免費"],
- ["ELITE","精英會員","NT$ 90"],
- ["COMMANDER","指揮官會員","NT$ 190"],
- ["SHADOW","暗影會員","NT$ 290"],
- ["LEGENDARY","傳奇會員","NT$ 490"],
- ["ULTIMATE","終極會員","NT$ 990"]
-];
-
-const maps = ["未來科技城市","沙漠太陽基地","極地冰雪基地","熱帶星際島嶼","現代都市戰區"];
-const modes = ["團隊殲滅戰","據點爭奪戰","限時混戰"];
-
-let selectedGear = 6;
-let selectedCharacter = 5;
-let currentUser = localStorage.getItem("iron_user") || "";
-let selectedMap = maps[0];
-let selectedMode = modes[0];
-
-/* =========================
-   PAGE NAVIGATION
-========================= */
-function showPage(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  const page=document.getElementById(id);
-  if(page) page.classList.add("active");
-  if(id==="battle") resizeCanvas();
-}
-function toast(message){
-  const el=document.getElementById("toast");
-  el.textContent=message;
-  el.style.display="block";
-  clearTimeout(toast.timer);
-  toast.timer=setTimeout(()=>el.style.display="none",2400);
-}
-function openBattleSetup(){
-  const mapChoice=prompt("選擇地圖：\n1 未來科技城市\n2 沙漠太陽基地\n3 極地冰雪基地\n4 熱帶星際島嶼\n5 現代都市戰區", "1");
-  if(mapChoice===null)return;
-  const mapIndex=Math.max(0,Math.min(4,Number(mapChoice)-1));
-  selectedMap=maps[Number.isFinite(mapIndex)?mapIndex:0];
-
-  const modeChoice=prompt("選擇模式：\n1 團隊殲滅戰\n2 據點爭奪戰\n3 限時混戰", "1");
-  if(modeChoice===null)return;
-  const modeIndex=Math.max(0,Math.min(2,Number(modeChoice)-1));
-  selectedMode=modes[Number.isFinite(modeIndex)?modeIndex:0];
-
-  startGame();
-}
-
-/* =========================
-   ARSENAL / CHARACTERS / VIP
-========================= */
-function renderGear(){
-  document.getElementById("gearGrid").innerHTML=gears.map((g,i)=>`
-    <div class="card">
-      <div class="tag">ENERGY CLASS ${String(i+1).padStart(2,"0")}</div>
-      <h3 style="color:${g[4]}">${g[0]}</h3>
-      <strong>${g[1]}</strong>
-      <p>${g[2]}<br>遊戲能量值：${g[3]}</p>
-      <button class="${selectedGear===i?'primary':'secondary'}" onclick="chooseGear(${i})">
-        ${selectedGear===i?'目前使用中':'選擇裝備'}
-      </button>
-    </div>`).join("");
-}
-function chooseGear(i){
-  selectedGear=i;
-  renderGear();
-  document.getElementById("gearHud").textContent=gears[i][0];
-  toast("已選擇 "+gears[i][0]);
-}
-function renderCharacters(){
-  document.getElementById("characterGrid").innerHTML=characters.map((c,i)=>`
-    <div class="card">
-      <div class="tag">HERO UNIT 0${i+1}</div>
-      <h3 style="color:${c[3]}">${c[0]}</h3>
-      <strong>${c[1]}</strong>
-      <p>${c[2]}</p>
-      <button class="${selectedCharacter===i?'primary':'secondary'}" onclick="chooseCharacter(${i})">
-        ${selectedCharacter===i?'已選擇':'選擇角色'}
-      </button>
-    </div>`).join("");
-}
-function chooseCharacter(i){
-  selectedCharacter=i;
-  renderCharacters();
-  toast("角色已切換："+characters[i][0]);
-}
-function renderPlans(){
-  document.getElementById("memberGrid").innerHTML=plans.map((p,i)=>`
-    <div class="card">
-      <div class="tag">MEMBERSHIP 0${i+1}</div>
-      <h3>${p[0]}</h3>
-      <strong>${p[1]}</strong>
-      <p class="price">${p[2]}</p>
-      <p>會員展示方案，提供遊戲內身份標示與專屬稱號。</p>
-      <button class="secondary" onclick="selectPlan(${i})">選擇方案</button>
-    </div>`).join("");
-  document.getElementById("payPlan").innerHTML=plans.map(p=>
-    `<option value="${p[0]}">${p[0]} - ${p[1]} (${p[2]})</option>`
-  ).join("");
-}
-function selectPlan(i){
-  document.getElementById("payPlan").value=plans[i][0];
-  toast("已選擇 "+plans[i][0]);
-}
-function simulatePayment(){
-  const name=document.getElementById("payName").value.trim();
-  const email=document.getElementById("payEmail").value.trim();
-  const plan=document.getElementById("payPlan").value;
-  if(!name||!email||!email.includes("@")){
-    toast("請填寫正確的玩家名稱及電子郵件");
-    return;
-  }
-  const order={
-    name,email,plan,
-    orderNo:"IF"+Date.now(),
-    status:"模擬訂單"
+function renderShop(){
+ $("shopList").innerHTML="";
+ products.forEach(([name,price,emoji])=>{
+  let c=document.createElement("div");c.className="card";
+  c.innerHTML=`<div class="emoji">${emoji}</div><h3>${name}</h3><p>🪙 ${price}</p>`;
+  let b=document.createElement("button");
+  let owned=data.owned.includes(name);
+  b.textContent=owned?"已擁有":"購買";b.disabled=owned;
+  b.onclick=()=>{
+   if(data.coins<price)return toast("遊戲幣不足");
+   data.coins-=price;data.owned.push(name);
+   save();renderShop();toast("購買成功");
   };
-  localStorage.setItem("iron_demo_order",JSON.stringify(order));
-  toast("模擬訂單建立成功："+order.orderNo);
-  alert("模擬訂單已建立\n方案："+plan+"\n訂單編號："+order.orderNo+"\n\n沒有進行真實付款。");
+  c.append(b);$("shopList").append(c);
+ });
+}
+function renderEquipment(){
+ $("ownedList").innerHTML="";
+ data.owned.forEach(name=>{
+  let row=document.createElement("div");row.className="item";
+  let label=document.createElement("b");label.textContent=name;
+  let b=document.createElement("button");
+  b.textContent=data.equipped===name?"使用中":"裝備";
+  b.onclick=()=>{data.equipped=name;save();renderEquipment()};
+  row.append(label,b);$("ownedList").append(row);
+ });
+ $("equipped").textContent="目前裝備："+data.equipped;
+}
+function renderRanking(){
+ $("rankList").innerHTML="";
+ let row=document.createElement("div");row.className="item";
+ let a=document.createElement("b");a.textContent="🥇 "+data.name;
+ let b=document.createElement("b");b.textContent=data.points+" 分";
+ row.append(a,b);$("rankList").append(row);
+}
+function chooseMap(m){
+ selectedMap=m;localStorage.setItem("fw_map",m);
+ render();toast("已選擇 "+m);
 }
 
-/* =========================
-   LOCAL DEMO ACCOUNT
-========================= */
-function register(){
-  const name=document.getElementById("username").value.trim();
-  const pass=document.getElementById("password").value;
-  if(name.length<2||pass.length<4){
-    toast("暱稱至少 2 個字，密碼至少 4 個字");
-    return;
-  }
-  const users=JSON.parse(localStorage.getItem("iron_users")||"{}");
-  if(users[name]){
-    toast("這個暱稱已經註冊");
-    return;
-  }
-  users[name]=pass;
-  localStorage.setItem("iron_users",JSON.stringify(users));
-  toast("本機展示帳號註冊成功");
-}
-function login(){
-  const name=document.getElementById("username").value.trim();
-  const pass=document.getElementById("password").value;
-  const users=JSON.parse(localStorage.getItem("iron_users")||"{}");
-  if(users[name]===pass){
-    currentUser=name;
-    localStorage.setItem("iron_user",name);
-    updateAccount();
-    toast("登入成功，歡迎 "+name);
-  }else{
-    toast("帳號或密碼不正確，請先註冊");
-  }
-}
-function logout(){
-  currentUser="";
-  localStorage.removeItem("iron_user");
-  updateAccount();
-  toast("已登出");
-}
-function updateAccount(){
-  document.getElementById("accountStatus").textContent=
-    currentUser?"目前登入玩家："+currentUser:"目前尚未登入。";
-  document.getElementById("playerNameHud").textContent=currentUser||"COMMANDER";
-}
+/* 3D GAME */
+let scene,camera,renderer,clock,player;
+let blue=[],red=[],orbs=[];
+let blueScore=0,redScore=0,myScore=0,time=300;
+let running=false,paused=false,yaw=0;
+let keys={},joy={x:0,y:0},lastShot=0;
+const mobile=matchMedia("(pointer:coarse)").matches;
+let animFrame=0;
 
-/* =========================
-   BATTLE ENGINE
-========================= */
-const canvas=document.getElementById("gameCanvas");
-const ctx=canvas.getContext("2d");
-let W=1100,H=680;
-let game={running:false,paused:false,ended:false,time:240,blue:0,red:0,kills:0};
-let player={x:0,y:0,hp:100,speed:3.5,angle:0};
-let agents=[];
-let projectiles=[];
-let keys={};
-let mouse={x:550,y:340,down:false};
-let lastTime=0;
-let spawnTimer=0;
-let camera={x:0,y:0};
-let worldSize=3000;
-let baseColor="#15263b";
-
-function resizeCanvas(){
-  const rect=canvas.getBoundingClientRect();
-  if(rect.width>0 && rect.height>0){
-    W=canvas.width=rect.width*devicePixelRatio;
-    H=canvas.height=rect.height*devicePixelRatio;
-    ctx.setTransform(1,0,0,1,0,0);
-  }
+function mat(c){return new THREE.MeshStandardMaterial({color:c,roughness:.75})}
+function makeBox(x,y,z,w,h,d,c){
+ let m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c));
+ m.position.set(x,y,z);m.castShadow=true;scene.add(m);return m;
 }
-window.addEventListener("resize",resizeCanvas);
-
-function makeAgent(team,index){
-  const side=team===0?-1:1;
-  return {
-    x:side*(250+Math.random()*650)+(Math.random()-.5)*200,
-    y:(Math.random()-.5)*1500,
-    team,index,hp:100,maxHp:100,
-    speed:1.05+Math.random()*.65,
-    angle:0,
-    cooldown:Math.random()*100,
-    alive:true,
-    radius:10,
-    target:null
-  };
+function character(color){
+ let g=new THREE.Group();
+ let body=new THREE.Mesh(new THREE.CapsuleGeometry(.35,.7,4,8),mat(color));
+ body.position.y=1;g.add(body);
+ let head=new THREE.Mesh(new THREE.SphereGeometry(.24,12,12),mat(0xd8aa86));
+ head.position.y=1.8;g.add(head);
+ let helmet=new THREE.Mesh(new THREE.SphereGeometry(.27,12,8),mat(color));
+ helmet.position.y=1.96;g.add(helmet);
+ return g;
+}
+function createWorld(){
+ scene=new THREE.Scene();
+ const backgrounds={
+  "城市競技場":0x7899a9,"沙漠基地":0xc49a62,
+  "森林營地":0x466b50,"星際要塞":0x202d58
+ };
+ scene.background=new THREE.Color(backgrounds[selectedMap]||0x7899a9);
+ scene.fog=new THREE.Fog(scene.background,55,110);
+ camera=new THREE.PerspectiveCamera(70,innerWidth/innerHeight,.1,150);
+ renderer=new THREE.WebGLRenderer({canvas:$("gameCanvas"),antialias:true});
+ renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+ renderer.setSize(innerWidth,innerHeight);
+ scene.add(new THREE.HemisphereLight(0xffffff,0x445566,2));
+ let sun=new THREE.DirectionalLight(0xffffff,2);
+ sun.position.set(15,25,10);scene.add(sun);
+ let groundColor=selectedMap==="沙漠基地"?0xb99b68:
+ selectedMap==="森林營地"?0x466c49:
+ selectedMap==="星際要塞"?0x303e68:0x536b55;
+ let ground=new THREE.Mesh(new THREE.PlaneGeometry(100,100),mat(groundColor));
+ ground.rotation.x=-Math.PI/2;scene.add(ground);
+ scene.add(new THREE.GridHelper(100,50,0x8aa9a0,0x738a80));
+ for(let i=0;i<24;i++){
+  let x=(Math.random()-.5)*48,z=(Math.random()-.5)*48;
+  if(Math.abs(x)<7&&Math.abs(z)<7)continue;
+  makeBox(x,1.5,z,3+Math.random()*2,3,3+Math.random()*2,0x526d83);
+ }
+ makeBox(0,2,0,.15,4,.15,0xffffff);
+ let flag=new THREE.Mesh(new THREE.PlaneGeometry(2,1),
+ new THREE.MeshStandardMaterial({color:0x22aaff,side:THREE.DoubleSide}));
+ flag.position.set(1,3,0);scene.add(flag);
+ let ring=new THREE.Mesh(new THREE.TorusGeometry(4,.1,8,48),
+ new THREE.MeshBasicMaterial({color:0x00cfff}));
+ ring.rotation.x=Math.PI/2;ring.position.y=.1;scene.add(ring);
+ player=character(0x087de0);player.position.set(0,0,22);scene.add(player);
+}
+function createTeam(name,color){
+ let arr=[];
+ for(let i=0;i<30;i++){
+  let g=character(color),side=name==="BLUE"?-1:1;
+  g.position.set(side*(8+Math.random()*12),0,(Math.random()-.5)*42);
+  scene.add(g);
+  arr.push({mesh:g,team:name,alive:true,cooldown:Math.random()*3,speed:1.5+Math.random()*1.5});
+ }
+ return arr;
 }
 function startGame(){
-  resizeCanvas();
-  game={running:true,paused:false,ended:false,time:240,blue:0,red:0,kills:0};
-  player={x:-80,y:0,hp:100,speed:3.5,angle:0};
-  agents=[];
-  projectiles=[];
-  for(let i=0;i<29;i++)agents.push(makeAgent(0,i));
-  for(let i=0;i<30;i++)agents.push(makeAgent(1,i));
-  document.getElementById("gameMessage").style.display="none";
-  document.getElementById("modeHud").textContent=selectedMode;
-  document.getElementById("mapHud").textContent=selectedMap;
-  document.getElementById("gearHud").textContent=gears[selectedGear][0];
-  document.getElementById("playerNameHud").textContent=currentUser||characters[selectedCharacter][0];
-  showPage("battle");
-  lastTime=performance.now();
-  requestAnimationFrame(gameLoop);
-  toast("戰鬥開始！30 VS 30");
-}
-function pauseGame(){
-  if(!game.running||game.ended)return;
-  game.paused=!game.paused;
-  toast(game.paused?"戰鬥已暫停":"戰鬥繼續");
-  if(!game.paused){
-    lastTime=performance.now();
-    requestAnimationFrame(gameLoop);
-  }
-}
-function endGame(title,text){
-  game.running=false;
-  game.ended=true;
-  document.getElementById("messageTitle").textContent=title;
-  document.getElementById("messageText").textContent=text;
-  document.getElementById("gameMessage").style.display="grid";
-}
-function nearestEnemy(entity,team){
-  let best=null,dist=Infinity;
-  for(const a of agents){
-    if(!a.alive||a.team===team)continue;
-    const d=Math.hypot(a.x-entity.x,a.y-entity.y);
-    if(d<dist){dist=d;best=a;}
-  }
-  return best;
-}
-function shoot(x,y,angle,team,damage=18){
-  projectiles.push({
-    x,y,vx:Math.cos(angle)*9,vy:Math.sin(angle)*9,
-    team,damage,life:100,color:team===0?"#55dfff":"#ff667a"
-  });
-}
-function updatePlayer(dt){
-  let dx=0,dy=0;
-  if(keys["w"]||keys["arrowup"])dy--;
-  if(keys["s"]||keys["arrowdown"])dy++;
-  if(keys["a"]||keys["arrowleft"])dx--;
-  if(keys["d"]||keys["arrowright"])dx++;
-  const len=Math.hypot(dx,dy)||1;
-  player.x+=dx/len*player.speed*dt;
-  player.y+=dy/len*player.speed*dt;
-  player.x=Math.max(-worldSize/2,Math.min(worldSize/2,player.x));
-  player.y=Math.max(-worldSize/2,Math.min(worldSize/2,player.y));
-
-  const sx=W/2+(player.x-camera.x);
-  const sy=H/2+(player.y-camera.y);
-  player.angle=Math.atan2(mouse.y*devicePixelRatio-sy,mouse.x*devicePixelRatio-sx);
-
-  if(mouse.down && game.fireCooldown<=0){
-    shoot(player.x,player.y,player.angle,0,gears[selectedGear][3]);
-    game.fireCooldown=13;
-  }
-  game.fireCooldown=Math.max(0,(game.fireCooldown||0)-dt);
-}
-function updateAgents(dt){
-  for(const a of agents){
-    if(!a.alive)continue;
-    a.cooldown-=dt;
-    const target=a.team===0?nearestEnemy(a,0):nearestEnemy(a,1);
-    if(!target)continue;
-    const dx=target.x-a.x,dy=target.y-a.y;
-    const d=Math.hypot(dx,dy)||1;
-    a.angle=Math.atan2(dy,dx);
-    const preferred=260;
-    if(d>preferred){
-      a.x+=dx/d*a.speed*dt;
-      a.y+=dy/d*a.speed*dt;
-    }else if(d<130){
-      a.x-=dx/d*a.speed*.55*dt;
-      a.y-=dy/d*a.speed*.55*dt;
-    }
-    if(d<520&&a.cooldown<=0){
-      shoot(a.x,a.y,a.angle,a.team,13);
-      a.cooldown=45+Math.random()*30;
-    }
-  }
-}
-function updateProjectiles(dt){
-  for(let i=projectiles.length-1;i>=0;i--){
-    const p=projectiles[i];
-    p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;
-    if(p.life<=0){projectiles.splice(i,1);continue;}
-    if(p.team===0){
-      for(const a of agents){
-        if(!a.alive||a.team===0)continue;
-        if(Math.hypot(a.x-p.x,a.y-p.y)<18){
-          a.hp-=p.damage;
-          if(a.hp<=0){
-            a.alive=false;game.blue++;
-            game.kills++;
-          }
-          projectiles.splice(i,1);
-          break;
-        }
-      }
-    }else{
-      for(const a of agents){
-        if(!a.alive||a.team===1)continue;
-        if(Math.hypot(a.x-p.x,a.y-p.y)<17){
-          a.hp-=p.damage;
-          if(a.hp<=0){a.alive=false;game.red++;}
-          projectiles.splice(i,1);
-          break;
-        }
-      }
-      if(projectiles[i]&&Math.hypot(player.x-p.x,player.y-p.y)<20){
-        player.hp-=p.damage*.65;
-        projectiles.splice(i,1);
-        if(player.hp<=0){
-          player.hp=0;
-          endGame("MISSION FAILED","你的角色已經失去戰鬥能力。重新設定戰鬥即可再次挑戰。");
-        }
-      }
-    }
-  }
-}
-function updateBattle(dt){
-  updatePlayer(dt);
-  updateAgents(dt);
-  updateProjectiles(dt);
-
-  if(selectedMode==="據點爭奪戰"){
-    const blueNear=agents.filter(a=>a.alive&&a.team===0&&Math.hypot(a.x,a.y)<230).length;
-    const redNear=agents.filter(a=>a.alive&&a.team===1&&Math.hypot(a.x,a.y)<230).length;
-    if(blueNear>redNear)game.blue+=.015*dt;
-    if(redNear>blueNear)game.red+=.015*dt;
-  }
-  if(selectedMode==="團隊殲滅戰"&&(game.blue>=30||game.red>=30)){
-    endGame(game.blue>game.red?"VICTORY":"DEFEAT","戰鬥分數："+Math.floor(game.blue)+" : "+Math.floor(game.red));
-  }
-  if(selectedMode==="限時混戰"&&(game.blue>=30||game.red>=30)){
-    endGame(game.blue>game.red?"VICTORY":"DEFEAT","達成戰場分數門檻。");
-  }
-  game.time-=dt/60;
-  if(game.time<=0){
-    game.time=0;
-    endGame(game.blue>=game.red?"VICTORY":"TIME UP","最終分數："+Math.floor(game.blue)+" : "+Math.floor(game.red));
-  }
-}
-function drawBackground(){
-  ctx.fillStyle=baseColor;
-  ctx.fillRect(0,0,W,H);
-  const grid=80*devicePixelRatio;
-  const ox=(-camera.x*devicePixelRatio)%grid;
-  const oy=(-camera.y*devicePixelRatio)%grid;
-  ctx.strokeStyle="#7fa2c51b";
-  ctx.lineWidth=1;
-  for(let x=ox;x<W;x+=grid){
-    ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();
-  }
-  for(let y=oy;y<H;y+=grid){
-    ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
-  }
-  // 城市建築
-  for(let i=0;i<55;i++){
-    const bx=((i*257)%worldSize-worldSize/2)-camera.x;
-    const by=((i*419)%worldSize-worldSize/2)-camera.y;
-    const x=W/2+bx*devicePixelRatio;
-    const y=H/2+by*devicePixelRatio;
-    if(x<-100||x>W+100||y<-100||y>H+100)continue;
-    const size=(35+(i%5)*12)*devicePixelRatio;
-    ctx.fillStyle=i%2?"#24354b":"#1c2a40";
-    ctx.fillRect(x-size/2,y-size/2,size,size);
-    ctx.strokeStyle="#d9b45b55";
-    ctx.strokeRect(x-size/2,y-size/2,size,size);
-    ctx.fillStyle="#5bdcff55";
-    ctx.fillRect(x-size*.3,y-size*.3,size*.6,3*devicePixelRatio);
-  }
-  // 中央據點
-  const cx=W/2-camera.x*devicePixelRatio;
-  const cy=H/2-camera.y*devicePixelRatio;
-  ctx.beginPath();ctx.arc(cx,cy,230*devicePixelRatio,0,Math.PI*2);
-  ctx.strokeStyle="#f6c65b88";ctx.lineWidth=3;ctx.stroke();
-  ctx.beginPath();ctx.arc(cx,cy,190*devicePixelRatio,0,Math.PI*2);
-  ctx.strokeStyle="#50dfff55";ctx.lineWidth=2;ctx.stroke();
-  ctx.fillStyle="#f6c65b";ctx.font=`${13*devicePixelRatio}px Orbitron`;
-  ctx.fillText("CONTROL ZONE",cx-48*devicePixelRatio,cy);
-}
-function drawUnit(x,y,team,isPlayer=false,angle=0,hp=100){
-  const sx=W/2+(x-camera.x)*devicePixelRatio;
-  const sy=H/2+(y-camera.y)*devicePixelRatio;
-  if(sx<-30||sx>W+30||sy<-30||sy>H+30)return;
-  const color=isPlayer?"#fff1a5":team===0?"#3ccfff":"#ff5369";
-  ctx.save();
-  ctx.translate(sx,sy);
-  ctx.rotate(angle);
-  ctx.shadowBlur=isPlayer?22:10;
-  ctx.shadowColor=color;
-  ctx.fillStyle=color;
-  ctx.beginPath();ctx.moveTo(16*devicePixelRatio,0);
-  ctx.lineTo(-10*devicePixelRatio,-9*devicePixelRatio);
-  ctx.lineTo(-6*devicePixelRatio,0);
-  ctx.lineTo(-10*devicePixelRatio,9*devicePixelRatio);
-  ctx.closePath();ctx.fill();
-  ctx.restore();
-  if(!isPlayer){
-    ctx.fillStyle="#0009";
-    ctx.fillRect(sx-11*devicePixelRatio,sy-17*devicePixelRatio,22*devicePixelRatio,3*devicePixelRatio);
-    ctx.fillStyle=team===0?"#42dcff":"#ff667a";
-    ctx.fillRect(sx-11*devicePixelRatio,sy-17*devicePixelRatio,22*devicePixelRatio*Math.max(0,hp/100),3*devicePixelRatio);
-  }
-}
-function drawBattle(){
-  drawBackground();
-  for(const a of agents){
-    if(a.alive)drawUnit(a.x,a.y,a.team,false,a.angle,a.hp);
-  }
-  drawUnit(player.x,player.y,0,true,player.angle,player.hp);
-  for(const p of projectiles){
-    const x=W/2+(p.x-camera.x)*devicePixelRatio;
-    const y=H/2+(p.y-camera.y)*devicePixelRatio;
-    ctx.beginPath();ctx.arc(x,y,4*devicePixelRatio,0,Math.PI*2);
-    ctx.fillStyle=p.color;ctx.shadowBlur=15;ctx.shadowColor=p.color;ctx.fill();ctx.shadowBlur=0;
-  }
-  // 瞄準環
-  ctx.beginPath();ctx.arc(mouse.x*devicePixelRatio,mouse.y*devicePixelRatio,9*devicePixelRatio,0,Math.PI*2);
-  ctx.strokeStyle="#ffe49a";ctx.lineWidth=1.5;ctx.stroke();
+ cancelAnimationFrame(animFrame);
+ $("result").classList.add("hidden");
+ $("app").classList.add("hidden");
+ $("gameScreen").style.display="block";
+ $("mobileControls").style.display=mobile?"block":"none";
+ $("cross").style.display="block";
+ blue=[];red=[];orbs=[];
+ blueScore=0;redScore=0;myScore=0;time=300;yaw=0;
+ paused=false;running=true;
+ createWorld();blue=createTeam("BLUE",0x137eff);red=createTeam("RED",0xe83f4d);
+ clock=new THREE.Clock();updateHUD();animate();
 }
 function updateHUD(){
-  document.getElementById("hpText").textContent=Math.ceil(player.hp)+" / 100";
-  document.getElementById("hpFill").style.width=Math.max(0,player.hp)+"%";
-  document.getElementById("killsText").textContent=game.kills;
-  document.getElementById("blueScore").textContent=Math.floor(game.blue);
-  document.getElementById("redScore").textContent=Math.floor(game.red);
-  const t=Math.max(0,Math.ceil(game.time));
-  document.getElementById("timerText").textContent=
-    String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0");
+ $("bs").textContent=Math.round(blueScore);
+ $("rs").textContent=Math.round(redScore);
+ $("bc").textContent=blue.filter(x=>x.alive).length;
+ $("rc").textContent=red.filter(x=>x.alive).length;
+ $("timer").textContent=Math.max(0,Math.ceil(time));
+ $("gamePoints").textContent=myScore;
 }
-function gameLoop(now){
-  if(!game.running||game.paused)return;
-  const dt=Math.min(2,(now-lastTime)/16.67);
-  lastTime=now;
-  camera.x+=(player.x-camera.x)*.12;
-  camera.y+=(player.y-camera.y)*.12;
-  updateBattle(dt);
-  drawBattle();
-  updateHUD();
-  if(game.running)requestAnimationFrame(gameLoop);
+function fire(){
+ if(!running||paused||performance.now()-lastShot<250)return;
+ lastShot=performance.now();
+ let dir=new THREE.Vector3(Math.sin(yaw),0,Math.cos(yaw));
+ let mesh=new THREE.Mesh(new THREE.SphereGeometry(.16,10,10),
+ new THREE.MeshBasicMaterial({color:0x43eaff}));
+ mesh.position.copy(player.position);mesh.position.y=1.3;
+ mesh.position.add(dir);scene.add(mesh);
+ orbs.push({mesh,dir,life:2});
 }
-
-/* =========================
-   INPUT
-========================= */
-window.addEventListener("keydown",e=>{
-  const key=e.key.toLowerCase();
-  keys[key]=true;
-  if(key===" "){
-    e.preventDefault();
-    if(game.running)toast("能量跳躍！");
+function updatePlayer(dt){
+ let f=0,s=0;
+ if(keys.KeyW)f++;if(keys.KeyS)f--;
+ if(keys.KeyA)s--;if(keys.KeyD)s++;
+ f-=joy.y;s+=joy.x;
+ let len=Math.hypot(f,s);if(len>1){f/=len;s/=len;}
+ player.position.x+=(Math.sin(yaw)*f+Math.cos(yaw)*s)*8*dt;
+ player.position.z+=(Math.cos(yaw)*f-Math.sin(yaw)*s)*8*dt;
+ player.position.x=THREE.MathUtils.clamp(player.position.x,-27,27);
+ player.position.z=THREE.MathUtils.clamp(player.position.z,-27,27);
+ let target=player.position.clone().add(
+ new THREE.Vector3(-Math.sin(yaw)*7,4,-Math.cos(yaw)*7));
+ camera.position.lerp(target,.15);
+ camera.lookAt(player.position.x,1.3,player.position.z);
+}
+function updateTeam(team,dt){
+ team.forEach(s=>{
+  if(!s.alive)return;
+  let enemies=s.team==="BLUE"?red:blue;
+  let target=null,best=Infinity;
+  for(let e of enemies){
+   if(!e.alive)continue;
+   let d=s.mesh.position.distanceTo(e.mesh.position);
+   if(d<best){best=d;target=e;}
   }
-  if(key==="p")pauseGame();
-});
-window.addEventListener("keyup",e=>keys[e.key.toLowerCase()]=false);
-canvas.addEventListener("mousemove",e=>{
-  const rect=canvas.getBoundingClientRect();
-  mouse.x=e.clientX-rect.left;
-  mouse.y=e.clientY-rect.top;
-});
-canvas.addEventListener("mousedown",e=>{
-  if(e.button===0)mouse.down=true;
-});
-window.addEventListener("mouseup",()=>mouse.down=false);
-canvas.addEventListener("contextmenu",e=>e.preventDefault());
+  if(!target)return;
+  let dx=target.mesh.position.x-s.mesh.position.x;
+  let dz=target.mesh.position.z-s.mesh.position.z;
+  let d=Math.hypot(dx,dz)||1;
+  s.mesh.rotation.y=Math.atan2(dx,dz);
+  if(d>5){
+   s.mesh.position.x+=dx/d*s.speed*dt;
+   s.mesh.position.z+=dz/d*s.speed*dt;
+  }
+  s.cooldown-=dt;
+  if(s.cooldown<=0&&d<18){
+   s.cooldown=2+Math.random()*2;
+   if(Math.random()<.25){
+    if(s.team==="BLUE")blueScore++;
+    else redScore++;
+   }
+  }
+ });
+}
+function updateOrbs(dt){
+ for(let i=orbs.length-1;i>=0;i--){
+  let o=orbs[i];o.mesh.position.addScaledVector(o.dir,25*dt);o.life-=dt;
+  let hit=false;
+  for(let enemy of red){
+   if(!enemy.alive)continue;
+   let p=enemy.mesh.position.clone();p.y+=1;
+   if(o.mesh.position.distanceTo(p)<1){
+    enemy.alive=false;enemy.mesh.visible=false;
+    myScore+=10;blueScore+=10;hit=true;break;
+   }
+  }
+  if(hit||o.life<=0){
+   scene.remove(o.mesh);orbs.splice(i,1);
+  }
+ }
+}
+function animate(){
+ if(!running||paused)return;
+ animFrame=requestAnimationFrame(animate);
+ let dt=Math.min(clock.getDelta(),.04);
+ updatePlayer(dt);updateTeam(blue,dt);updateTeam(red,dt);
+ updateOrbs(dt);
+ if(Math.hypot(player.position.x,player.position.z)<4)blueScore+=dt*2;
+ time-=dt;updateHUD();
+ if(time<=0){finishGame();return;}
+ renderer.render(scene,camera);
+}
+function finishGame(){
+ running=false;cancelAnimationFrame(animFrame);
+ let won=blueScore>redScore;
+ data.games++;
+ data.points+=myScore;
+ data.exp+=Math.floor(myScore/2)+20;
+ data.coins+=Math.max(50,Math.floor(myScore/2));
+ if(won)data.wins++;
+ while(data.exp>=100){data.exp-=100;data.level++;}
+ save();
+ $("winner").textContent=won?"🔵 藍隊勝利":"🔴 紅隊勝利";
+ if(blueScore===redScore)$("winner").textContent="🤝 平手";
+ $("finalScore").textContent=Math.round(blueScore)+" : "+Math.round(redScore);
+ $("finalText").textContent="個人積分："+myScore+"　獲得遊戲幣："+Math.max(50,Math.floor(myScore/2));
+ $("result").classList.remove("hidden");
+}
+function pauseGame(){
+ if(!running)return;
+ paused=!paused;
+ if(paused){
+  $("winner").textContent="遊戲暫停";
+  $("finalScore").textContent="按下繼續返回戰鬥";
+  $("finalText").textContent="";
+  $("result").classList.remove("hidden");
+  $("result").querySelector("button").textContent="繼續遊戲";
+  $("result").querySelector("button").onclick=resumeGame;
+  $("result").querySelectorAll("button")[1].classList.add("hidden");
+ }else resumeGame();
+}
+function resumeGame(){
+ $("result").classList.add("hidden");
+ $("result").querySelector("button").textContent="再次比賽";
+ $("result").querySelector("button").onclick=()=>startGame();
+ $("result").querySelectorAll("button")[1].classList.remove("hidden");
+ paused=false;clock.getDelta();animate();
+}
+function exitGame(){
+ running=false;paused=false;cancelAnimationFrame(animFrame);
+ $("gameScreen").style.display="none";$("app").classList.remove("hidden");
+ $("result").classList.add("hidden");page("home");
+}
+window.startGame=startGame;
+window.pauseGame=pauseGame;
+window.exitGame=exitGame;
+window.page=page;
+window.editName=editName;
+window.saveName=saveName;
+window.closeName=closeName;
+window.daily=daily;
+window.chooseMap=chooseMap;
 
-/* =========================
-   INITIALIZE
-========================= */
-renderGear();
-renderCharacters();
-renderPlans();
-updateAccount();
-resizeCanvas();
-document.getElementById("playerNameHud").textContent=
-  currentUser||characters[selectedCharacter][0];
+window.addEventListener("keydown",e=>keys[e.code]=true);
+window.addEventListener("keyup",e=>keys[e.code]=false);
+window.addEventListener("mousemove",e=>{
+ if(document.pointerLockElement&&running&&!mobile)yaw-=e.movementX*.003;
+});
+$("gameCanvas").addEventListener("click",()=>{
+ if(running&&!mobile){
+  $("gameCanvas").requestPointerLock?.();fire();
+ }
+});
+window.addEventListener("resize",()=>{
+ if(camera&&renderer){
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);
+ }
+});
+$("fire").addEventListener("pointerdown",e=>{e.preventDefault();fire()});
+const stick=$("stick"),knob=$("knob");
+let stickId=null;
+stick.addEventListener("pointerdown",e=>{
+ stickId=e.pointerId;stick.setPointerCapture(e.pointerId);moveStick(e);
+});
+stick.addEventListener("pointermove",e=>{if(e.pointerId===stickId)moveStick(e)});
+function moveStick(e){
+ let r=stick.getBoundingClientRect();
+ let x=e.clientX-r.left-60,y=e.clientY-r.top-60;
+ let l=Math.hypot(x,y);
+ if(l>40){x*=40/l;y*=40/l;}
+ joy.x=x/40;joy.y=y/40;
+ knob.style.transform=`translate(${x}px,${y}px)`;
+}
+function resetStick(){
+ stickId=null;joy={x:0,y:0};knob.style.transform="translate(0,0)";
+}
+stick.addEventListener("pointerup",resetStick);
+stick.addEventListener("pointercancel",resetStick);
+
+render();
 </script>
 </body>
 </html>
