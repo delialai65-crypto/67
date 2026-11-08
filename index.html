@@ -127,11 +127,11 @@
       <!-- Desktop Nav Links -->
       <div class="hidden lg:flex items-center space-x-8 text-xs uppercase tracking-[0.2em] font-medium text-gray-300">
         <a href="#rooms" class="hover:text-gold-400 transition-colors">房型套房</a>
+        <a href="#packages" class="text-gold-400 font-bold hover:text-gold-300 transition-colors"><i class="fa-solid fa-gift mr-1"></i>精選15大方案</a>
         <a href="#dining" class="hover:text-gold-400 transition-colors">星級美饌</a>
         <a href="#facilities" class="hover:text-gold-400 transition-colors">度假設施</a>
         <a href="#location" class="hover:text-gold-400 transition-colors">交通接駁</a>
         <a href="#faq" class="hover:text-gold-400 transition-colors">常見問答</a>
-        <a href="#reviews" class="hover:text-gold-400 transition-colors">住客評價</a>
       </div>
 
       <!-- Action Buttons: Wishlist & Member Area -->
@@ -160,6 +160,7 @@
     <!-- Mobile Drawer -->
     <div id="mobile-menu" class="hidden lg:hidden glass-dark border-b border-white/10 px-6 py-6 space-y-4 text-xs uppercase tracking-widest">
       <a href="#rooms" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-gold-400">房型套房</a>
+      <a href="#packages" onclick="toggleMobileMenu()" class="block text-gold-400 font-bold">精選15大專案</a>
       <a href="#dining" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-gold-400">星級美饌</a>
       <a href="#facilities" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-gold-400">度假設施</a>
       <a href="#location" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-gold-400">交通接駁</a>
@@ -262,6 +263,53 @@
     <!-- Rooms Dynamic Grid Container -->
     <div id="rooms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- Injected via JavaScript renderRooms() -->
+    </div>
+  </section>
+
+  <!-- ================= 4.5 SPECIALIZED 15 PACKAGES & OFFERS ================= -->
+  <section id="packages" class="py-24 bg-gradient-to-b from-navy-950 via-navy-900 to-navy-950 border-y border-gold-500/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-gold-400/40 bg-gold-500/10 mb-3 text-gold-300 text-xs font-semibold uppercase tracking-widest">
+          <i class="fa-solid fa-gem text-xs"></i> Curated Experiences & Offers
+        </div>
+        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl text-white font-bold tracking-tight">
+          15 大尊寵主題度假方案
+        </h2>
+        <p class="text-gray-400 text-xs sm:text-sm mt-3">
+          從一泊二食米其林珍饌、蜜月浪漫鋪陳、毛孩 VIP 假期到 Workation 長住方案，滿足您專屬的奢華想像。
+        </p>
+
+        <!-- Category Filters -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mt-8">
+          <button onclick="filterPackages('all')" id="pkg-btn-all" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-gold-500 text-navy-950 shadow-md transition-all">
+            全部方案 (15)
+          </button>
+          <button onclick="filterPackages('vacation')" id="pkg-btn-vacation" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-navy-800 text-gray-300 hover:text-white border border-white/10 hover:border-gold-400 transition-all">
+            🏖️ 休閒度假 (5)
+          </button>
+          <button onclick="filterPackages('dining')" id="pkg-btn-dining" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-navy-800 text-gray-300 hover:text-white border border-white/10 hover:border-gold-400 transition-all">
+            🍽️ 美食饗宴 (2)
+          </button>
+          <button onclick="filterPackages('business')" id="pkg-btn-business" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-navy-800 text-gray-300 hover:text-white border border-white/10 hover:border-gold-400 transition-all">
+            💼 商務長住與休憩 (3)
+          </button>
+          <button onclick="filterPackages('pet')" id="pkg-btn-pet" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-navy-800 text-gray-300 hover:text-white border border-white/10 hover:border-gold-400 transition-all">
+            🐾 毛孩專區 (1)
+          </button>
+          <button onclick="filterPackages('addons')" id="pkg-btn-addons" class="pkg-filter-btn px-4 py-2 rounded-full text-xs font-semibold bg-navy-800 text-gray-300 hover:text-white border border-white/10 hover:border-gold-400 transition-all">
+            ✨ 加值與禮券 (4)
+          </button>
+        </div>
+      </div>
+
+      <!-- Packages Grid Container -->
+      <div id="packages-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Injected via JavaScript renderPackages() -->
+      </div>
+
     </div>
   </section>
 
@@ -1077,7 +1125,7 @@
       <!-- Steps Forms -->
       <div class="p-6 overflow-y-auto space-y-4 text-xs">
         
-        <!-- STEP 1: Guest Info -->
+        <!-- STEP 1: Guest Info & Dynamic Package-Specific Fields -->
         <div id="checkout-step-1" class="space-y-4">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -1092,8 +1140,83 @@
               <label class="block text-gray-300 mb-1">電子信箱 * (發送入住憑證)</label>
               <input type="email" id="chk-guest-email" required placeholder="guest@example.com" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400">
             </div>
-            <div class="sm:col-span-2">
-              <label class="block text-gray-300 mb-1">特別需求備註（可多選）</label>
+
+            <!-- Dynamic Package Fields (conditionally revealed depending on active package) -->
+            <div id="pkg-custom-fields" class="sm:col-span-2 space-y-3 hidden p-4 rounded-xl border border-gold-500/30 bg-gold-500/5">
+              <div class="flex items-center gap-2 text-gold-400 font-bold mb-1">
+                <i class="fa-solid fa-sparkles"></i>
+                <span id="pkg-custom-title">此專案專屬偏好設定</span>
+              </div>
+              <div id="pkg-custom-inputs" class="space-y-3">
+                <!-- dynamic inputs like dinner time, spa time, pet weight, honeymoon card text -->
+              </div>
+            </div>
+
+            <!-- Add-ons Selection Section (方案 11, 13, 14 實作) -->
+            <div class="sm:col-span-2 pt-2 border-t border-white/10">
+              <h5 class="text-xs font-bold text-white uppercase tracking-wider mb-2 flex items-center justify-between">
+                <span><i class="fa-solid fa-plus-circle text-gold-400 mr-1.5"></i>結帳尊榮增值加購 (Add-ons)</span>
+                <span class="text-[10px] text-gold-400 font-normal">勾選後即刻為您更新總結帳額</span>
+              </h5>
+              
+              <div class="space-y-2.5">
+                <!-- Add-on 1: #11 Eco-friendly discount -->
+                <label class="flex items-start justify-between p-3 rounded-xl border border-white/10 bg-navy-950/80 hover:border-emerald-500/50 cursor-pointer transition-colors">
+                  <div class="flex items-start gap-2.5 pr-2">
+                    <input type="checkbox" id="addon-eco" onchange="recalculateCheckoutPricing()" class="mt-0.5 rounded bg-navy-900 border-white/20 text-emerald-500 focus:ring-emerald-400">
+                    <div>
+                      <div class="font-bold text-emerald-400 flex items-center gap-1.5">
+                        <i class="fa-solid fa-leaf text-xs"></i> 方案 11：無痛輕裝微旅行（綠色旅宿折抵）
+                      </div>
+                      <p class="text-[11px] text-gray-400">自備個人牙刷毛巾等盥洗備品，每晚房價立即現金折抵 NT$ 300。</p>
+                    </div>
+                  </div>
+                  <span class="text-emerald-400 font-bold shrink-0">- NT$ 300 / 晚</span>
+                </label>
+
+                <!-- Add-on 2: #13 Shuttle upgrade -->
+                <label class="flex items-start justify-between p-3 rounded-xl border border-white/10 bg-navy-950/80 hover:border-gold-500/50 cursor-pointer transition-colors">
+                  <div class="flex items-start gap-2.5 pr-2">
+                    <input type="checkbox" id="addon-shuttle" onchange="recalculateCheckoutPricing()" class="mt-0.5 rounded bg-navy-900 border-white/20 text-gold-500 focus:ring-gold-400">
+                    <div>
+                      <div class="font-bold text-gold-300 flex items-center gap-1.5">
+                        <i class="fa-solid fa-car text-xs"></i> 方案 13：專屬賓士 S-Class / 邁巴赫高鐵與機場接駁
+                      </div>
+                      <p class="text-[11px] text-gray-400">高鐵台東站或機場往返私人禮賓接送，尊榮礦泉水與行李直入客房。</p>
+                      <div id="addon-shuttle-memo" class="mt-2 hidden">
+                        <input type="text" id="chk-shuttle-details" placeholder="請填寫抵達班機號碼或高鐵車次（例：高鐵 0612 車次）" class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-[11px] text-white">
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-gold-400 font-bold shrink-0">+ NT$ 1,800</span>
+                </label>
+
+                <!-- Add-on 3: #14 Celebration package -->
+                <label class="flex items-start justify-between p-3 rounded-xl border border-white/10 bg-navy-950/80 hover:border-gold-500/50 cursor-pointer transition-colors">
+                  <div class="flex items-start gap-2.5 pr-2">
+                    <input type="checkbox" id="addon-party" onchange="recalculateCheckoutPricing()" class="mt-0.5 rounded bg-navy-900 border-white/20 text-gold-500 focus:ring-gold-400">
+                    <div>
+                      <div class="font-bold text-pink-300 flex items-center gap-1.5">
+                        <i class="fa-solid fa-cake-candles text-xs"></i> 方案 14：客製化慶生／週年派對驚喜包
+                      </div>
+                      <p class="text-[11px] text-gray-400">客廳空飄氣球奢華佈置、4吋法式手工主廚蛋糕、專人拍立得紀念寫真 3 張。</p>
+                      <div id="addon-party-theme" class="mt-2 hidden">
+                        <select id="chk-party-style" class="bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-[11px] text-white">
+                          <option>香檳金奢華慶祝風 (Champagne Gold)</option>
+                          <option>粉鑽浪漫玫瑰花瓣風 (Romantic Rose)</option>
+                          <option>星空黑金典雅風 (Midnight Stars)</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="text-gold-400 font-bold shrink-0">+ NT$ 2,600</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Standard Room Preferences -->
+            <div class="sm:col-span-2 pt-2">
+              <label class="block text-gray-300 mb-1">一般客房偏好（可多選）</label>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
                 <label class="flex items-center gap-1.5 text-gray-300 cursor-pointer">
                   <input type="checkbox" id="req-highfloor" class="rounded bg-navy-950 text-gold-500"> 高樓層安靜房
@@ -1102,15 +1225,21 @@
                   <input type="checkbox" id="req-babycot" class="rounded bg-navy-950 text-gold-500"> 嬰兒床／澡盆
                 </label>
                 <label class="flex items-center gap-1.5 text-gray-300 cursor-pointer">
-                  <input type="checkbox" id="req-honeymoon" class="rounded bg-navy-950 text-gold-500"> 蜜月迎賓佈置
+                  <input type="checkbox" id="req-quiet" class="rounded bg-navy-950 text-gold-500"> 遠離電梯靜謐間
                 </label>
                 <label class="flex items-center gap-1.5 text-gray-300 cursor-pointer">
-                  <input type="checkbox" id="req-shuttle" class="rounded bg-navy-950 text-gold-500"> 需高鐵接駁車
+                  <input type="checkbox" id="req-featherfree" class="rounded bg-navy-950 text-gold-500"> 防蟎低過敏枕頭
                 </label>
               </div>
             </div>
           </div>
-          <div class="pt-4 flex justify-end">
+
+          <!-- Checkout Real-time billing summary -->
+          <div class="p-3.5 rounded-xl bg-navy-950 border border-white/10 flex items-center justify-between text-xs mt-3">
+            <div>
+              <span class="text-gray-400">目前預估結帳總額 (含加購與折抵)：</span>
+              <div id="checkout-live-total" class="font-serif text-lg font-bold text-gold-400">NT$ 0</div>
+            </div>
             <button onclick="goToCheckoutStep(2)" class="px-6 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider">
               下一步：選擇支付方式 <i class="fa-solid fa-arrow-right ml-1"></i>
             </button>
@@ -1180,63 +1309,63 @@
           <p class="text-xs text-gray-300 max-w-md mx-auto leading-relaxed">
             感謝您選擇 AURELIA 度假酒店。訂房憑證與入住指引已寄送至您的電子信箱，此訂單同時已同步至您的「會員訂單中心」。
           </p>
-          <div class="p-4 rounded-xl bg-navy-950 border border-white/10 inline-block text-left text-xs space-y-1">
-            <p><strong class="text-gold-400">訂單編號：</strong><span id="confirmed-booking-id">#AUR-882910</span></p>
-            <p><strong class="text-gold-400">入住貴賓：</strong><span id="confirmed-guest-name">林先生</span></p>
-            <p><strong class="text-gold-400">房型項目：</strong><span id="confirmed-room-title">豪華海景客房</span></p>
-          </div>
-          <div class="pt-4">
-            <button onclick="closeCheckoutModal(); openMemberModal('bookings');" class="px-6 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs">
-              前往查看我的訂單紀錄
-            </button>
-          </div>
-        </div>
+  <!-- ================= 17.5 GIFT CARD MODAL (PACKAGE 15) ================= -->
+  <div id="giftcard-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full max-w-lg glass-dark border border-gold-400/40 rounded-2xl p-6 sm:p-8 shadow-2xl">
+      <button onclick="closeGiftCardModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
 
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ================= 17. RESTAURANT TABLE RESERVATION MODAL ================= -->
-  <div id="table-booking-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
-    <div class="relative w-full max-w-md glass-dark border border-gold-400/40 rounded-2xl p-6 shadow-2xl">
-      <button onclick="closeTableBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
-      
       <div class="text-center mb-6">
-        <i class="fa-solid fa-utensils text-2xl text-gold-400 mb-2"></i>
-        <h4 class="font-serif text-xl font-bold text-white" id="table-modal-restaurant-name">餐廳線上訂位</h4>
-        <p class="text-xs text-gray-400 mt-1">享用米其林星級主廚私房美饌</p>
+        <div class="w-12 h-12 rounded-full border border-gold-400 flex items-center justify-center text-gold-400 mx-auto mb-2">
+          <i class="fa-solid fa-gift text-lg"></i>
+        </div>
+        <h4 class="font-serif text-2xl font-bold text-white">方案 15：尊榮住宿禮品卡商城</h4>
+        <p class="text-xs text-gray-400 mt-1">贈予最重要的人一段難以忘懷的奢華旅程</p>
       </div>
 
-      <form onsubmit="handleTableReservationSubmit(event)" class="space-y-3 text-xs">
-        <div>
-          <label class="block text-gray-300 mb-1">用餐貴賓姓名</label>
-          <input type="text" required placeholder="王大明" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3.5 py-2 text-white">
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-gray-300 mb-1">預訂日期</label>
-            <input type="date" required id="table-date" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
-          </div>
-          <div>
-            <label class="block text-gray-300 mb-1">用餐時段</label>
-            <select class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
-              <option>12:00 午餐</option>
-              <option>18:00 晚宴 (第一輪)</option>
-              <option>20:00 晚宴 (第二輪)</option>
-            </select>
-          </div>
+      <!-- Simulated Gift Card Visual -->
+      <div class="h-40 rounded-2xl p-5 bg-gradient-to-tr from-gold-700 via-gold-500 to-amber-200 text-navy-950 shadow-xl mb-6 relative overflow-hidden flex flex-col justify-between">
+        <div class="flex justify-between items-start">
+          <span class="font-serif tracking-widest font-bold text-xs">AURELIA GIFT CERTIFICATE</span>
+          <i class="fa-solid fa-crown text-sm"></i>
         </div>
         <div>
-          <label class="block text-gray-300 mb-1">貴賓人數</label>
-          <select class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
-            <option>2 位貴賓</option>
-            <option>4 位貴賓</option>
-            <option>6 位以上 (獨立包廂)</option>
-          </select>
+          <span class="text-[10px] tracking-wider uppercase block font-semibold">禮券面額</span>
+          <span id="gc-card-preview-value" class="font-serif text-2xl font-black">NT$ 10,000</span>
         </div>
-        <button type="submit" class="w-full py-3 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider mt-2 transition-colors">
-          送出訂位需求
+        <div class="flex justify-between items-end text-[10px] font-bold">
+          <span id="gc-card-preview-to">致：珍貴親友</span>
+          <span>有效期限：自發行起 2 年</span>
+        </div>
+      </div>
+
+      <form onsubmit="handleGiftCardPurchase(event)" class="space-y-3.5 text-xs">
+        <div>
+          <label class="block text-gray-300 mb-1">選取禮券面額</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button type="button" onclick="selectGiftCardAmount(5000)" class="gc-btn py-2 rounded-lg border border-white/20 bg-navy-900 text-white font-bold hover:border-gold-400">NT$ 5,000</button>
+            <button type="button" onclick="selectGiftCardAmount(10000)" class="gc-btn py-2 rounded-lg border border-gold-500 bg-gold-500/20 text-gold-300 font-bold">NT$ 10,000</button>
+            <button type="button" onclick="selectGiftCardAmount(20000)" class="gc-btn py-2 rounded-lg border border-white/20 bg-navy-900 text-white font-bold hover:border-gold-400">NT$ 20,000</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-gray-300 mb-1">收件人姓名 *</label>
+            <input type="text" id="gc-recipient-name" oninput="document.getElementById('gc-card-preview-to').textContent = '致：' + (this.value || '珍貴親友')" required placeholder="例如：陳小姐" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
+          </div>
+          <div>
+            <label class="block text-gray-300 mb-1">收件人電子信箱 *</label>
+            <input type="email" id="gc-recipient-email" required placeholder="friend@example.com" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-gray-300 mb-1">自訂專屬祝福卡片內容</label>
+          <textarea id="gc-message" rows="2" placeholder="親愛的，生日快樂！期待你有一段放鬆美好的度假假期..." class="w-full bg-navy-950 border border-white/10 rounded-xl p-2.5 text-white"></textarea>
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider transition-all shadow-lg shadow-gold-500/20">
+          以信用卡支付並寄發電子禮券 (<span id="gc-pay-btn-label">NT$ 10,000</span>)
         </button>
       </form>
     </div>
@@ -1350,9 +1479,479 @@
     ];
     let selectedRoomForCheckout = ROOM_DATA[0];
     let selectedCheckoutNights = 2;
+    let selectedPackage = null;
+    let selectedGiftCardAmount = 10000;
 
     /* -------------------------------------------------------------
-       B. INITIALIZATION ON LOAD
+       THE 15 SPECIALIZED PACKAGES DATA
+    -------------------------------------------------------------- */
+    const PACKAGES_DATA = [
+      {
+        id: 'pkg-1',
+        category: 'dining',
+        name: '一泊二食頂級饗宴方案',
+        tag: '星級米其林美饌',
+        priceNote: '房價每晚 + NT$ 2,800 / 雙人',
+        badge: '超人氣熱門',
+        desc: '包含入住當晚主廚特別客製化晚宴與隔日豐盛星級海陸百匯早餐，免去出外尋找餐廳的奔波。',
+        features: ['主廚季節特選晚宴 (雙人份)', 'HARVEST 自助早餐雙人份', '侍酒師嚴選佐餐酒 2 杯'],
+        customType: 'dinner'
+      },
+      {
+        id: 'pkg-2',
+        category: 'vacation',
+        name: '晨鳥提早預訂特惠 (Early Bird)',
+        tag: '早鳥 30/60 天特惠',
+        priceNote: '全房型即享 8 折 ~ 85 折優惠',
+        badge: '最高省 $4,800',
+        desc: '提早為理想的假期做準備。凡提前 30 天以上預約住宿，系統自動套用早鳥專屬禮遇與無憂改期保證。',
+        features: ['官方保證最優早鳥折扣', '迎賓現剖鮮椰子水', '享優先安排高樓層景觀房'],
+        customType: 'earlybird'
+      },
+      {
+        id: 'pkg-3',
+        category: 'vacation',
+        name: '連住尊享方案 (Stay Longer, Save More)',
+        tag: '連住 3 晚以上專用',
+        priceNote: '享第 3 晚半價起 + 禮遇',
+        badge: '深度漫遊推薦',
+        desc: '慢下來體會海岸風光。連續入住 3 晚以上，贈送飯店每日精緻下午茶與免費專人乾洗熨燙服務。',
+        features: ['免費尊榮英式雙人下午茶乙套', '每日 2 件衣物免費專業乾洗', '水療 SPA 抵用券 NT$ 1,500'],
+        customType: 'staylonger'
+      },
+      {
+        id: 'pkg-4',
+        category: 'vacation',
+        name: '浪漫蜜月／週年紀念專案',
+        tag: '愛侶紀念日首選',
+        priceNote: '專案加價 NT$ 3,600',
+        badge: '浪漫心動',
+        desc: '精心佈置雙人玫瑰花瓣浴缸、贈送法國酩悅香檳、自訂賀卡祝福與保證延遲至 13:00 退房。',
+        features: ['Moët & Chandon 法國香檳乙瓶', '主廚客製手工甜點心型禮盒', '深浸玫瑰精油花瓣浴佈置', '保證 13:00 延遲退房'],
+        customType: 'honeymoon'
+      },
+      {
+        id: 'pkg-5',
+        category: 'vacation',
+        name: '奢華 SPA 舒壓療癒專案',
+        tag: '身心靈極致放鬆',
+        priceNote: '含 60 分鐘雙人精油療程',
+        badge: '芳療好評',
+        desc: '享受瑞士頂級抗老精油芳療，搭配喜馬拉雅頌缽靜心，讓長途旅行的疲勞在芳香中徹底釋放。',
+        features: ['極光芳療 SPA 60 分鐘 (雙人)', '專屬芳香精油禮盒帶回家', '天然草本養生舒活花茶'],
+        customType: 'spa'
+      },
+      {
+        id: 'pkg-6',
+        category: 'vacation',
+        name: '在地深度文化探索專案',
+        tag: '專車私房秘境遊',
+        priceNote: '含私人專車導覽半日遊',
+        badge: '文化采風',
+        desc: '由資深在地禮賓導遊駕駛專車，探索台東高山茶莊、私房海蝕洞與在地手作陶藝體驗。',
+        features: ['4 小時私人禮賓專車導覽', '私房茶園品茶門票 2 張', '手作體驗紀念禮物包'],
+        customType: 'tour'
+      },
+      {
+        id: 'pkg-7',
+        category: 'pet',
+        name: '毛小孩友善假期 (Pet-Friendly VIP)',
+        tag: '寵物專屬 Villa 專案',
+        priceNote: '每隻毛孩 NT$ 1,500 / 晚',
+        badge: '萌寵同樂',
+        desc: '獨棟專屬庭園別墅，備有高級寵物睡墊、鮮食慢食碗、無毒玩具及主廚特製鮮食餐盒。',
+        features: ['專屬記憶棉寵物睡墊與餐碗', '寵物無毒草皮運動放風區', '主廚手作鮮食蒸肉餐點'],
+        customType: 'pet'
+      },
+      {
+        id: 'pkg-8',
+        category: 'vacation',
+        name: '星空野奢露營 / Glamping 聯乘',
+        tag: '奢華戶外新體驗',
+        priceNote: '專案定價 NT$ 12,800 起',
+        badge: '自然奢華',
+        desc: '白天享受客房與泳池設施，夜晚漫步至專屬星空帳篷享用主廚炭烤 BBQ 和牛食材套組。',
+        features: ['戶外專屬獨立奢華星空帳篷', '專人備料炭烤和牛海鮮食材組', '星空戶外手動營火體驗'],
+        customType: 'glamping'
+      },
+      {
+        id: 'pkg-9',
+        category: 'business',
+        name: '遠距辦公度假 (Workation 專案)',
+        tag: '7天/14天 中長住特惠',
+        priceNote: '以週計費現折 35%',
+        badge: '數位遊牧首選',
+        desc: '專為高階商務與數位遊牧打造。房內配備 Herman Miller 人體工學椅、1000M 專用光纖與每日咖啡暢飲。',
+        features: ['Herman Miller 人體工學辦公椅', '每日專屬現磨莊園咖啡暢飲', '多功能黑白彩色無線列印服務', '行政酒廊靜音會議室每日 2 小時'],
+        customType: 'workation'
+      },
+      {
+        id: 'pkg-10',
+        category: 'business',
+        name: '日間短暫休憩方案 (Day-Use / Daycation)',
+        tag: '10:00 - 18:00 (4~8小時)',
+        priceNote: '標準房價 4 折起',
+        badge: '彈性鐘點',
+        desc: '非過夜彈性休憩！適合轉機旅客、臨時商務小憩或情侶共享午後泳池與奢華客房設施。',
+        features: ['客房使用 4~8 小時彈性挑選', '全館泳池、健身房與三溫暖通行', '附贈迎賓小點與下午茶券'],
+        customType: 'dayuse'
+      },
+      {
+        id: 'pkg-11',
+        category: 'business',
+        name: '無痛入住輕裝微旅行 (Eco-Friendly)',
+        tag: '綠色永續旅宿折抵',
+        priceNote: '每晚現折 NT$ 300 ~ 500',
+        badge: '減碳愛地球',
+        desc: '響應全球永續理念。旅客自備個人牙刷毛巾與盥洗備品，入住不更換布巾，立即享房價回饋折抵。',
+        features: ['直接折抵當次訂單房價', '贈送台東在地小農有機香皂乙塊', '為每位住客種植一棵樹守護海岸'],
+        customType: 'eco'
+      },
+      {
+        id: 'pkg-12',
+        category: 'dining',
+        name: '晚鳥即刻出發 (Last-Minute Flash Deal)',
+        tag: '每日 18:00 後限時釋出',
+        priceNote: '今日剩餘房型 55 折',
+        badge: '限時倒數中',
+        desc: '說走就走的說走微旅行！每日傍晚釋出當晚最後限量釋出空房，附贈次日兩客早餐。',
+        features: ['即訂即住無須漫長等待', '破盤特惠清庫存專案', '包含次日米其林雙人百匯早餐'],
+        customType: 'flash'
+      },
+      {
+        id: 'pkg-13',
+        category: 'addons',
+        name: '尊榮接送與高鐵聯票升級',
+        tag: '專車直達與車票折扣',
+        priceNote: '單程 NT$ 1,800 / 來回 NT$ 3,200',
+        badge: '白手套禮賓',
+        desc: '賓士 S-Class 或 Alphard 高級商務車專人車站直達接送，提供車載瓶裝氣泡水與專人行李搬運。',
+        features: ['賓士 / Alphard 專屬禮賓司機', '車內高速 Wi-Fi 與瓶裝斐濟水', '加購高鐵車票享 8 折聯票優惠'],
+        customType: 'shuttle'
+      },
+      {
+        id: 'pkg-14',
+        category: 'addons',
+        name: '客製化慶生派對加值包',
+        tag: '驚喜派對客製佈置',
+        priceNote: '專案定價 NT$ 2,600',
+        badge: '派對必備',
+        desc: '為壽星打造終生難忘的驚喜夜晚！提供空飄氣球、4 吋主廚手作蛋糕及拍立得紀念相框。',
+        features: ['主題空飄氣球與彩旗客廳佈置', '主廚特製 4 吋手工慶生蛋糕', '拍立得合照 3 張附精緻相框'],
+        customType: 'party'
+      },
+      {
+        id: 'pkg-15',
+        category: 'addons',
+        name: '電子禮券與住宿券商城 (Gift Cards)',
+        tag: '奢華禮贈親友首選',
+        priceNote: '面額 NT$ 5,000 / 10,000 / 20,000',
+        badge: '送禮無期限',
+        desc: '購買特定面額住宿或餐飲禮券，附帶精美電子禮品卡與專屬祝福語，直接寄送至收件人信箱。',
+        features: ['2 年超長效期隨時預訂', '可全額折抵房價與餐飲消費', '專屬客製化燙金卡面與祝福留言'],
+        customType: 'giftcard'
+      }
+    ];
+
+    /* -------------------------------------------------------------
+       RENDER PACKAGES WITH INTERACTIVE FILTER
+    -------------------------------------------------------------- */
+    function renderPackages(filter = 'all') {
+      const container = document.getElementById('packages-grid');
+      if (!container) return;
+
+      const filtered = filter === 'all' 
+        ? PACKAGES_DATA 
+        : PACKAGES_DATA.filter(p => p.category === filter);
+
+      container.innerHTML = filtered.map(pkg => {
+        let actionBtn = '';
+        if (pkg.customType === 'giftcard') {
+          actionBtn = `<button onclick="openGiftCardModal()" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-navy-950 font-bold text-xs uppercase tracking-wider transition-all">
+            <i class="fa-solid fa-gift mr-1"></i> 即刻選購禮品卡
+          </button>`;
+        } else {
+          actionBtn = `<button onclick="selectAndBookPackage('${pkg.id}')" class="w-full py-2.5 rounded-xl bg-gold-500/10 hover:bg-gold-500 text-gold-300 hover:text-navy-950 border border-gold-500/50 font-bold text-xs uppercase tracking-wider transition-all">
+            立即預訂此專案
+          </button>`;
+        }
+
+        // Live Countdown indicator for Package 12
+        let flashBadge = '';
+        if (pkg.customType === 'flash') {
+          flashBadge = `<div class="mb-3 px-3 py-1.5 rounded-lg bg-red-950/70 border border-red-500/40 text-[11px] text-red-300 flex items-center justify-between">
+            <span><i class="fa-solid fa-clock text-red-400 mr-1 animate-pulse"></i>今日倒數截止：</span>
+            <span id="flash-countdown-timer" class="font-mono font-bold text-red-200">03:42:18</span>
+          </div>`;
+        }
+
+        return `
+          <div class="glass-card border border-white/10 rounded-2xl p-6 hover:border-gold-400/60 transition-all flex flex-col justify-between group hover:-translate-y-1">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-[10px] text-gold-400 font-bold uppercase tracking-widest bg-gold-500/10 px-2.5 py-0.5 rounded-full border border-gold-400/20">
+                  ${pkg.tag}
+                </span>
+                <span class="text-[10px] bg-white/10 text-gray-200 px-2 py-0.5 rounded-full font-semibold">
+                  ${pkg.badge}
+                </span>
+              </div>
+
+              <h3 class="font-serif text-lg font-bold text-white group-hover:text-gold-300 transition-colors mb-2">
+                ${pkg.name}
+              </h3>
+
+              <div class="text-xs text-gold-400 font-semibold mb-3">
+                ${pkg.priceNote}
+              </div>
+
+              <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                ${pkg.desc}
+              </p>
+
+              ${flashBadge}
+
+              <div class="space-y-1.5 mb-6 pt-3 border-t border-white/5 text-[11px] text-gray-300">
+                ${pkg.features.map(f => `
+                  <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-check text-gold-400 text-[10px]"></i>
+                    <span>${f}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div>
+              ${actionBtn}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterPackages(category) {
+      document.querySelectorAll('.pkg-filter-btn').forEach(btn => {
+        btn.classList.remove('bg-gold-500', 'text-navy-950');
+        btn.classList.add('bg-navy-800', 'text-gray-300');
+      });
+      const activeBtn = document.getElementById(`pkg-btn-${category}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-navy-800', 'text-gray-300');
+        activeBtn.classList.add('bg-gold-500', 'text-navy-950');
+      }
+      renderPackages(category);
+    }
+
+    // Flash Deal Live Timer
+    setInterval(() => {
+      const timerEl = document.getElementById('flash-countdown-timer');
+      if (!timerEl) return;
+      const now = new Date();
+      const midnight = new Date();
+      midnight.setHours(24, 0, 0, 0);
+      const diff = midnight - now;
+      if (diff > 0) {
+        const hrs = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+        const mins = String(Math.floor((diff / 1000 / 60) % 60)).padStart(2, '0');
+        const secs = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+        timerEl.textContent = `${hrs}:${mins}:${secs}`;
+      }
+    }, 1000);
+
+    /* -------------------------------------------------------------
+       CUSTOMIZED PACKAGE CHECKOUT INTEGRATION
+    -------------------------------------------------------------- */
+    function selectAndBookPackage(pkgId) {
+      const pkg = PACKAGES_DATA.find(p => p.id === pkgId);
+      if (!pkg) return;
+      selectedPackage = pkg;
+
+      // Open checkout and customize step 1 fields
+      openCheckoutModal(selectedRoomForCheckout, selectedCheckoutNights);
+      setupCustomPackageInputs(pkg);
+      recalculateCheckoutPricing();
+      showToast(`已為您套用專案【${pkg.name}】！請填寫相應的專案偏好需求。`, 'info');
+    }
+
+    function setupCustomPackageInputs(pkg) {
+      const container = document.getElementById('pkg-custom-fields');
+      const title = document.getElementById('pkg-custom-title');
+      const inputs = document.getElementById('pkg-custom-inputs');
+      if (!container || !inputs) return;
+
+      container.classList.remove('hidden');
+      title.textContent = `專案指定設定：${pkg.name}`;
+
+      if (pkg.customType === 'dinner') {
+        inputs.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-gray-300 mb-1">精緻晚宴時段</label>
+              <select class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+                <option>17:30 - 19:30 (首輪晚宴)</option>
+                <option>19:45 - 21:45 (次輪晚宴)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-gray-300 mb-1">主廚套餐主餐偏好</label>
+              <select class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+                <option>日本頂級 A5 和牛熟成菲力</option>
+                <option>太平洋波士頓活龍蝦雙重奏</option>
+                <option>主廚時令鮮採蔬食純素套餐</option>
+              </select>
+            </div>
+          </div>
+        `;
+      } else if (pkg.customType === 'spa') {
+        inputs.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-gray-300 mb-1">預約 SPA 芳療時段</label>
+              <select class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+                <option>入住當日 16:00 (釋放旅途疲憊)</option>
+                <option>入住當晚 20:30 (助眠深層放鬆)</option>
+                <option>次日上午 10:00 (晨間活力甦醒)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-gray-300 mb-1">精油芳香偏好</label>
+              <select class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+                <option>瑞士雪松與薰衣草 (寧靜深睡)</option>
+                <option>大馬士革玫瑰與甜橙 (奢華舒潤)</option>
+              </select>
+            </div>
+          </div>
+        `;
+      } else if (pkg.customType === 'honeymoon') {
+        inputs.innerHTML = `
+          <div>
+            <label class="block text-gray-300 mb-1">紀念日祝賀小卡自訂內容</label>
+            <input type="text" placeholder="例：親愛的，五週年紀念快樂！永遠愛你。" class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+          </div>
+          <div class="pt-1">
+            <label class="block text-gray-300 mb-1">驚喜進房時間</label>
+            <select class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+              <option>辦理入住時香檳冰鎮即刻奉上</option>
+              <option>晚間 20:00 點燃香氛蠟燭與冰鎮香檳</option>
+            </select>
+          </div>
+        `;
+      } else if (pkg.customType === 'pet') {
+        inputs.innerHTML = `
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label class="block text-gray-300 mb-1">毛孩品種與名字</label>
+              <input type="text" placeholder="例如：黃金獵犬 Cooper" class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+            </div>
+            <div>
+              <label class="block text-gray-300 mb-1">體重 (kg)</label>
+              <input type="number" placeholder="例如：12" class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+            </div>
+            <div>
+              <label class="block text-gray-300 mb-1">數量</label>
+              <select class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+                <option>1 隻毛孩</option>
+                <option>2 隻毛孩 (加收清潔費)</option>
+              </select>
+            </div>
+          </div>
+          <div class="pt-1">
+            <label class="flex items-center gap-2 text-gold-400 cursor-pointer">
+              <input type="checkbox" checked required class="rounded bg-navy-950 text-gold-500">
+              <span class="text-[11px]">我已閱讀並同意遵守「AURELIA 寵物友善度假公約」（備有狂犬病預防接種證明）</span>
+            </label>
+          </div>
+        `;
+      } else if (pkg.customType === 'dayuse') {
+        inputs.innerHTML = `
+          <div>
+            <label class="block text-gray-300 mb-1">請選取日間客房使用時段 (Daycation)</label>
+            <select class="w-full bg-navy-900 border border-white/10 rounded-lg px-2.5 py-1.5 text-white">
+              <option>10:00 - 14:00 (晨光活力 4 小時)</option>
+              <option>12:00 - 18:00 (午後漫活 6 小時)</option>
+              <option>11:00 - 19:00 (全日海天 8 小時)</option>
+            </select>
+          </div>
+        `;
+      } else {
+        inputs.innerHTML = `<p class="text-[11px] text-gray-300">此專案優惠已自動套用至您的預約中，無需額外設定。</p>`;
+      }
+    }
+
+    /* -------------------------------------------------------------
+       REAL-TIME RE-CALCULATION WITH ADD-ONS
+    -------------------------------------------------------------- */
+    function recalculateCheckoutPricing() {
+      const eco = document.getElementById('addon-eco')?.checked || false;
+      const shuttle = document.getElementById('addon-shuttle')?.checked || false;
+      const party = document.getElementById('addon-party')?.checked || false;
+
+      // Reveal / hide memo sub-inputs
+      const shuttleMemo = document.getElementById('addon-shuttle-memo');
+      if (shuttleMemo) shuttleMemo.classList.toggle('hidden', !shuttle);
+      const partyTheme = document.getElementById('addon-party-theme');
+      if (partyTheme) partyTheme.classList.toggle('hidden', !party);
+
+      let baseRoomPrice = selectedRoomForCheckout.basePriceTWD * selectedCheckoutNights;
+
+      // Special package pricing modifications
+      if (selectedPackage) {
+        if (selectedPackage.customType === 'dinner') baseRoomPrice += (2800 * selectedCheckoutNights);
+        if (selectedPackage.customType === 'earlybird') baseRoomPrice *= 0.85;
+        if (selectedPackage.customType === 'honeymoon') baseRoomPrice += 3600;
+        if (selectedPackage.customType === 'dayuse') baseRoomPrice = Math.round(selectedRoomForCheckout.basePriceTWD * 0.45);
+        if (selectedPackage.customType === 'flash') baseRoomPrice *= 0.55;
+      }
+
+      // Add-ons
+      let addOnsTotal = 0;
+      if (eco) addOnsTotal -= (300 * selectedCheckoutNights);
+      if (shuttle) addOnsTotal += 1800;
+      if (party) addOnsTotal += 2600;
+
+      const finalEstimated = Math.max(1000, Math.round(baseRoomPrice * 1.05 + addOnsTotal));
+
+      const liveEl = document.getElementById('checkout-live-total');
+      const payBtnLabel = document.getElementById('checkout-final-pay-amount');
+      if (liveEl) liveEl.textContent = formatMoney(finalEstimated);
+      if (payBtnLabel) payBtnLabel.textContent = `(${formatMoney(finalEstimated)})`;
+    }
+
+    /* -------------------------------------------------------------
+       GIFT CARD PURCHASE (PACKAGE 15)
+    -------------------------------------------------------------- */
+    function openGiftCardModal() {
+      const modal = document.getElementById('giftcard-modal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeGiftCardModal() {
+      document.getElementById('giftcard-modal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function selectGiftCardAmount(amount) {
+      selectedGiftCardAmount = amount;
+      document.getElementById('gc-card-preview-value').textContent = `NT$ ${amount.toLocaleString()}`;
+      document.getElementById('gc-pay-btn-label').textContent = formatMoney(amount);
+
+      document.querySelectorAll('.gc-btn').forEach(b => {
+        b.classList.remove('border-gold-500', 'bg-gold-500/20', 'text-gold-300');
+        b.classList.add('border-white/20', 'bg-navy-900', 'text-white');
+      });
+      event.target.classList.remove('border-white/20', 'bg-navy-900', 'text-white');
+      event.target.classList.add('border-gold-500', 'bg-gold-500/20', 'text-gold-300');
+    }
+
+    function handleGiftCardPurchase(e) {
+      e.preventDefault();
+      const name = document.getElementById('gc-recipient-name').value;
+      const email = document.getElementById('gc-recipient-email').value;
+      closeGiftCardModal();
+      showToast(`恭喜！面額 NT$ ${selectedGiftCardAmount.toLocaleString()} 之電子禮品卡已成功寄送給 ${name} (${email})！`);
+    }
+
+    /* -------------------------------------------------------------
+       INITIALIZATION EXTENSION
     -------------------------------------------------------------- */
     window.addEventListener('DOMContentLoaded', () => {
       // Set default dates to Tomorrow & Day After Tomorrow
@@ -1390,6 +1989,7 @@
 
       // Render Dynamic Views
       renderRooms();
+      renderPackages('all'); // Initialize the 15 packages
       populateCalculatorSelect();
       runPriceCalculation();
       updateWishlistUI();
