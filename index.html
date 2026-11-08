@@ -1,605 +1,2111 @@
-
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant" class="scroll-smooth">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>FLAG WAR 3D INFINITY</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;background:#07101e;color:white;font-family:Arial;overflow-x:hidden}
-button{cursor:pointer;border:0;border-radius:8px;padding:12px 18px;font-weight:bold;color:white;background:#078fd0}
-button:disabled{opacity:.5;cursor:not-allowed}
-button:hover:not(:disabled){filter:brightness(1.2)}
-input{padding:12px;border-radius:7px;background:#091a2c;color:white;border:1px solid #45627d;width:100%}
-.hidden{display:none!important}
-header{height:auto;min-height:65px;padding:12px 3%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:#071522;border-bottom:1px solid #ffffff22;position:relative;z-index:5}
-.logo{font-size:22px;font-weight:1000;color:#52d2ff}
-.logo span{color:white}
-nav{display:flex;gap:6px;flex-wrap:wrap}
-nav button{background:#172c42;border:1px solid #ffffff20;font-size:12px;padding:9px}
-.account{color:#ffd76a;font-size:13px}
-main{max-width:1200px;margin:auto;padding:22px}
-.hero{min-height:330px;padding:30px;border-radius:18px;border:1px solid #42bfff66;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,#071321 5%,#071321d9 55%,#07132122),url('https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=85') center/cover}
-.hero h1{font-size:clamp(38px,7vw,70px);margin:10px 0;color:#5ad2ff}
-.hero p{max-width:550px;line-height:1.7;color:#c2d9eb}
-.tag{letter-spacing:4px;color:#69dfff}
-.heroArt{font-size:130px}
-.primary{background:linear-gradient(100deg,#008bd5,#37caff);padding:15px 25px}
-.secondary{background:#172e45;border:1px solid #52caff}
-.section{margin-top:28px}
-.section h2{font-size:21px}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
-.card,.panel{background:linear-gradient(145deg,#172c43,#0c1b2d);border:1px solid #ffffff20;border-radius:13px;padding:17px}
-.card{cursor:pointer;min-height:120px}
-.card .emoji{font-size:30px}
-.card p,.muted{color:#9eb5c9;font-size:13px;line-height:1.5}
-.two{display:grid;grid-template-columns:1.3fr 1fr;gap:14px}
-.stat{padding:11px 0;border-bottom:1px solid #ffffff18;display:flex;justify-content:space-between}
-.bar{height:9px;border-radius:9px;background:#293c50;overflow:hidden}
-.bar div{height:100%;background:#3bcaff}
-.item{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid #ffffff18}
-.item button{padding:8px}
-footer{text-align:center;padding:30px;color:#7891aa;font-size:12px}
-.modal{position:fixed;inset:0;z-index:30;background:#000b;display:flex;align-items:center;justify-content:center;padding:15px}
-.modalbox{background:#10243a;border:1px solid #4abfff;border-radius:15px;padding:24px;width:min(500px,100%);max-height:85vh;overflow:auto}
-.modalbox h2{color:#62d8ff}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:50;background:#102d45;border:1px solid #52caff;padding:12px 20px;border-radius:9px;display:none}
-#gameScreen{position:fixed;inset:0;background:#101b27;z-index:20;display:none}
-#gameCanvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-#hud{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;pointer-events:none}
-.hudbox{background:#071522dd;border:1px solid #ffffff44;padding:9px;border-radius:8px;font-size:13px}
-#cross{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:28px;color:#5deaff;pointer-events:none}
-#gameButtons{position:absolute;top:75px;right:12px}
-#mobileControls{display:none;position:absolute;inset:0;pointer-events:none}
-#stick{position:absolute;bottom:25px;left:20px;width:120px;height:120px;border:2px solid #ffffff77;border-radius:50%;background:#ffffff15;pointer-events:auto;touch-action:none}
-#knob{width:45px;height:45px;border-radius:50%;background:#50cfffbb;position:absolute;left:35px;top:35px}
-#fire{position:absolute;right:25px;bottom:40px;width:85px;height:85px;border-radius:50%;pointer-events:auto;touch-action:none}
-#result{position:absolute;inset:0;background:#061321ed;display:flex;align-items:center;justify-content:center;padding:15px}
-#result .modalbox{text-align:center}
-@media(max-width:750px){
- .grid{grid-template-columns:repeat(2,1fr)}
- .two{grid-template-columns:1fr}
- .heroArt{display:none}
- main{padding:13px}
- header{gap:8px}
- nav{width:100%;overflow:auto}
- nav button{white-space:nowrap}
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AURELIA LUXE HOTEL & RESORT | 璀璨奢華度假酒店</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              100: '#faf3dd',
+              200: '#f5e4b3',
+              300: '#edd285',
+              400: '#e5c07b',
+              500: '#c8a265',
+              600: '#a37e42',
+              700: '#7a5a27',
+              800: '#523914',
+            },
+            navy: {
+              800: '#0b1322',
+              900: '#060a12',
+              950: '#030509',
+            }
+          },
+          fontFamily: {
+            serif: ['Cinzel', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Luxury Polish & Glassmorphism */
+    .glass-dark {
+      background: rgba(6, 10, 18, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .glass-card {
+      background: rgba(11, 19, 34, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fcedc5 0%, #c8a265 50%, #947228 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .gold-border {
+      border-color: rgba(200, 162, 101, 0.35);
+    }
+    /* Hide scrollbars gracefully */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
 </head>
-<body>
+<body class="bg-navy-950 text-gray-200 font-sans antialiased selection:bg-gold-500 selection:text-navy-950">
 
-<div id="app">
-<header>
- <div class="logo">FLAG WAR <span>3D INFINITY</span></div>
- <nav>
-  <button onclick="page('home')">首頁</button>
-  <button onclick="page('missions')">任務</button>
-  <button onclick="page('shop')">商城</button>
-  <button onclick="page('equipment')">裝備</button>
-  <button onclick="page('maps')">地圖</button>
-  <button onclick="page('ranking')">排行榜</button>
- </nav>
- <div class="account">🪙 <b id="coins">1000</b>　⭐ Lv.<b id="level">1</b></div>
-</header>
+  <!-- ================= 1. TOP UTILITY BAR ================= -->
+  <div class="bg-navy-950 border-b border-white/5 py-2 px-4 sm:px-8 text-xs text-gray-400">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-4">
+        <span class="flex items-center gap-1.5 text-gold-400">
+          <i class="fa-solid fa-crown text-[10px]"></i>
+          <span class="tracking-widest uppercase font-semibold">The Leading Hotels of the World</span>
+        </span>
+        <span class="hidden sm:inline text-gray-600">|</span>
+        <span class="hidden sm:inline"><i class="fa-solid fa-phone mr-1 text-gold-400"></i> +886 (02) 2345-8888</span>
+      </div>
 
-<main>
-<section id="home">
- <div class="hero">
-  <div>
-   <div class="tag">SEASON 01 · INFINITY BATTLE</div>
-   <h1>FLAG WAR<br>3D INFINITY</h1>
-   <p>加入大型 30 VS 30 競技場，完成任務、提升等級、收集外觀，爭奪旗幟與榮耀！</p>
-   <button class="primary" onclick="startGame()">▶ 開始戰鬥</button>
-   <button class="secondary" onclick="page('maps')">選擇戰場</button>
+      <!-- Currency & Language Selectors -->
+      <div class="flex items-center space-x-4">
+        <!-- Currency -->
+        <div class="flex items-center space-x-1">
+          <i class="fa-solid fa-coins text-gold-400 text-[11px]"></i>
+          <select id="currency-select" onchange="changeCurrency(this.value)" class="bg-transparent text-gray-300 text-xs focus:outline-none cursor-pointer">
+            <option value="TWD" class="bg-navy-900 text-white">TWD (NT$)</option>
+            <option value="USD" class="bg-navy-900 text-white">USD ($)</option>
+            <option value="JPY" class="bg-navy-900 text-white">JPY (¥)</option>
+          </select>
+        </div>
+        <!-- Language -->
+        <div class="flex items-center space-x-1">
+          <i class="fa-solid fa-globe text-gold-400 text-[11px]"></i>
+          <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-gray-300 text-xs focus:outline-none cursor-pointer">
+            <option value="zh" class="bg-navy-900 text-white">繁體中文</option>
+            <option value="en" class="bg-navy-900 text-white">English</option>
+            <option value="ja" class="bg-navy-900 text-white">日本語</option>
+          </select>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="heroArt">🏆</div>
- </div>
 
- <div class="section"><h2>玩家資料</h2>
- <div class="two">
-  <div class="panel">
-   <h2 id="playerName">INFINITY PLAYER</h2>
-   <p>等級 <b id="profileLevel">1</b></p>
-   <div class="bar"><div id="expBar" style="width:0%"></div></div>
-   <p id="expText">0 / 100 EXP</p>
-   <div class="stat"><span>🏆 勝利</span><b id="wins">0</b></div>
-   <div class="stat"><span>⚔ 戰鬥</span><b id="games">0</b></div>
-   <div class="stat"><span>🎯 積分</span><b id="points">0</b></div>
-   <button class="secondary" onclick="editName()">修改暱稱</button>
+  <!-- ================= 2. MAIN HEADER & NAVBAR ================= -->
+  <header id="main-header" class="sticky top-0 z-40 transition-all duration-300 bg-navy-950/90 glass-dark border-b border-white/10">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="flex items-center space-x-3 group">
+        <div class="w-10 h-10 rounded-full border border-gold-400/80 flex items-center justify-center text-gold-400 group-hover:bg-gold-500 group-hover:text-navy-950 transition-all duration-300 shadow-lg shadow-gold-500/10">
+          <i class="fa-solid fa-hotel text-sm"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-serif tracking-[0.2em] text-lg font-bold text-white group-hover:text-gold-300 transition-colors">AURELIA</span>
+          <span class="text-[8.5px] tracking-[0.3em] text-gold-400 uppercase font-medium">Grand Luxury Resort</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div class="hidden lg:flex items-center space-x-8 text-xs uppercase tracking-[0.2em] font-medium text-gray-300">
+        <a href="#rooms" class="hover:text-gold-400 transition-colors">房型套房</a>
+        <a href="#dining" class="hover:text-gold-400 transition-colors">星級美饌</a>
+        <a href="#facilities" class="hover:text-gold-400 transition-colors">度假設施</a>
+        <a href="#location" class="hover:text-gold-400 transition-colors">交通接駁</a>
+        <a href="#faq" class="hover:text-gold-400 transition-colors">常見問答</a>
+        <a href="#reviews" class="hover:text-gold-400 transition-colors">住客評價</a>
+      </div>
+
+      <!-- Action Buttons: Wishlist & Member Area -->
+      <div class="flex items-center space-x-3">
+        <!-- Wishlist Button -->
+        <button onclick="openMemberModal('wishlist')" class="relative p-2.5 rounded-full border border-white/10 hover:border-gold-400 text-gray-300 hover:text-gold-400 transition-colors" title="心願單">
+          <i class="fa-regular fa-heart"></i>
+          <span id="wishlist-badge" class="absolute -top-1 -right-1 w-4 h-4 bg-gold-500 text-navy-950 font-bold text-[10px] rounded-full flex items-center justify-center scale-0 transition-transform">0</span>
+        </button>
+
+        <!-- Auth Button / Logged in Dropdown -->
+        <div id="nav-auth-container">
+          <button onclick="openLoginModal()" class="px-5 py-2.5 rounded-full border border-gold-500/70 bg-gold-500/10 hover:bg-gold-500 hover:text-navy-950 text-gold-300 text-xs uppercase tracking-widest transition-all duration-300 flex items-center gap-2 shadow-sm">
+            <i class="fa-regular fa-user"></i>
+            <span>會員登入</span>
+          </button>
+        </div>
+
+        <!-- Mobile Menu Toggle -->
+        <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-gold-400" aria-label="Toggle menu">
+          <i id="menu-icon" class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden lg:hidden glass-dark border-b border-white/10 px-6 py-6 space-y-4 text-xs uppercase tracking-widest">
+      <a href="#rooms" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-gold-400">房型套房</a>
+      <a href="#dining" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-gold-400">星級美饌</a>
+      <a href="#facilities" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-gold-400">度假設施</a>
+      <a href="#location" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-gold-400">交通接駁</a>
+      <a href="#faq" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-gold-400">常見問答</a>
+      <a href="#reviews" onclick="toggleMobileMenu()" class="block text-gray-300 hover:text-gold-400">住客評價</a>
+    </div>
+  </header>
+
+  <!-- ================= 3. HERO & FLOATING BOOKING BAR ================= -->
+  <section class="relative min-h-[92vh] flex items-center justify-center px-4 sm:px-6 pt-12 pb-32">
+    <!-- Background Image -->
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=2000&q=85" 
+           alt="AURELIA Resort" 
+           class="w-full h-full object-cover brightness-[0.35] scale-100 transition-transform duration-1000">
+      <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-navy-950/80"></div>
+    </div>
+
+    <!-- Hero Content -->
+    <div class="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gold-400/40 bg-navy-900/70 backdrop-blur-md mb-6">
+        <span class="w-2 h-2 rounded-full bg-gold-400 animate-ping"></span>
+        <span class="text-[11px] uppercase tracking-[0.25em] text-gold-300 font-semibold">2026 全球富豪首選頂級度假秘境</span>
+      </div>
+
+      <h1 class="font-serif text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-tight">
+        品味靜謐山海 <br>
+        <span class="gold-gradient-text">締造非凡尊寵旅程</span>
+      </h1>
+
+      <p class="max-w-2xl text-gray-300 text-sm sm:text-base font-light tracking-wide mb-8 leading-relaxed">
+        無微不至的私人管家服務、米其林星級饗宴與私人無邊際天際泳池。登入會員尊享官方預訂 9 折與客製化奢華禮遇。
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#rooms" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 font-bold text-xs tracking-widest uppercase hover:brightness-110 shadow-lg shadow-gold-500/20 transition-all">
+          探索頂級房型
+        </a>
+        <button onclick="openBookingCalculatorModal()" class="px-8 py-3.5 rounded-full border border-white/30 hover:border-gold-400 text-white hover:text-gold-300 text-xs tracking-widest uppercase backdrop-blur-sm transition-all flex items-center gap-2">
+          <i class="fa-solid fa-calculator text-gold-400"></i>
+          <span>房價試算與日曆</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Interactive Floating Booking Bar -->
+    <div class="absolute -bottom-20 sm:-bottom-12 left-4 right-4 max-w-6xl mx-auto z-20">
+      <div class="glass-dark border gold-border rounded-2xl shadow-2xl p-4 sm:p-6 text-gray-200">
+        <form onsubmit="handleQuickSearch(event)" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+          
+          <!-- Check-in -->
+          <div>
+            <label class="block text-[11px] uppercase tracking-wider text-gold-400 font-semibold mb-1">
+              <i class="fa-regular fa-calendar-check mr-1"></i>入住日期 (Check-in)
+            </label>
+            <input type="date" id="hero-checkin" required class="w-full bg-navy-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400">
+          </div>
+
+          <!-- Check-out -->
+          <div>
+            <label class="block text-[11px] uppercase tracking-wider text-gold-400 font-semibold mb-1">
+              <i class="fa-regular fa-calendar-xmark mr-1"></i>退房日期 (Check-out)
+            </label>
+            <input type="date" id="hero-checkout" required class="w-full bg-navy-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400">
+          </div>
+
+          <!-- Guests & Type -->
+          <div>
+            <label class="block text-[11px] uppercase tracking-wider text-gold-400 font-semibold mb-1">
+              <i class="fa-solid fa-user-group mr-1"></i>入住人數與房型偏好
+            </label>
+            <select id="hero-guests" class="w-full bg-navy-900 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400 cursor-pointer">
+              <option value="2">2 位貴賓 · 雙人套房</option>
+              <option value="4">4 位貴賓 · 家庭景觀套房</option>
+              <option value="6">6 位貴賓 · 私人泳池別墅</option>
+            </select>
+          </div>
+
+          <!-- Submit -->
+          <div>
+            <button type="submit" class="w-full h-11 bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-navy-950 font-bold rounded-xl text-xs uppercase tracking-widest flex items-center justify-center gap-2 shadow-lg shadow-gold-500/25 transition-all">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <span>即刻試算與查詢</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. ROOMS & SUITES SECTION ================= -->
+  <section id="rooms" class="pt-36 pb-24 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold">Accommodations</span>
+      <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mt-2 mb-4">典雅客房與頂級別墅</h2>
+      <div class="w-16 h-0.5 bg-gold-400 mx-auto mb-4"></div>
+      <p class="text-gray-400 text-xs sm:text-sm">精心配置 Dyson 旗艦吹風機、義大利高級織品、景觀深浸浴缸與全方位客製化迎賓備品。</p>
+    </div>
+
+    <!-- Rooms Dynamic Grid Container -->
+    <div id="rooms-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Injected via JavaScript renderRooms() -->
+    </div>
+  </section>
+
+  <!-- ================= 5. DINING & BUFFETS SECTION ================= -->
+  <section id="dining" class="py-24 bg-navy-900/60 border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold">Culinary Symphony</span>
+        <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mt-2 mb-4">餐飲與星級美饌</h2>
+        <div class="w-16 h-0.5 bg-gold-400 mx-auto mb-4"></div>
+        <p class="text-gray-400 text-xs sm:text-sm">由國際名廚傾心策劃，嚴選頂級當季食材，呈現視覺與味覺的雙重饗宴。</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Dining 1 -->
+        <div class="glass-card border border-white/10 rounded-2xl overflow-hidden group hover:border-gold-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="relative h-60 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80" 
+                   alt="HARVEST 全日星級自助百匯" 
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+              <span class="absolute top-3 left-3 bg-navy-950/80 backdrop-blur-md text-gold-300 text-[11px] px-3 py-1 rounded-full border border-gold-400/30">
+                06:30 - 21:30
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-serif text-xl font-bold text-white mb-2">HARVEST 全日星級自助百匯</h3>
+              <p class="text-gray-400 text-xs leading-relaxed mb-4">
+                極致海鮮冰吧、現切日本 A5 和牛與炙燒握壽司，法式精緻手工甜品推車巡迴服務。
+              </p>
+              <div class="flex flex-wrap gap-2 text-[11px] text-gray-300">
+                <span class="bg-navy-800 px-2 py-1 rounded">海鮮生蠔吧</span>
+                <span class="bg-navy-800 px-2 py-1 rounded">和牛熟成料理</span>
+                <span class="bg-navy-800 px-2 py-1 rounded">有機蔬果專區</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 pt-0 flex gap-3">
+            <button onclick="openTableBookingModal('HARVEST 全日星級自助百匯')" class="flex-1 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider transition-all">
+              線上訂位
+            </button>
+            <button onclick="downloadMenuPDF('HARVEST 百匯菜單')" class="px-4 py-2.5 rounded-xl border border-white/20 hover:border-gold-400 text-xs text-gray-300 hover:text-gold-400 transition-colors" title="下載菜單">
+              <i class="fa-solid fa-file-pdf"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dining 2 -->
+        <div class="glass-card border border-white/10 rounded-2xl overflow-hidden group hover:border-gold-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="relative h-60 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" 
+                   alt="AURA 頂樓星空景觀酒吧" 
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+              <span class="absolute top-3 left-3 bg-navy-950/80 backdrop-blur-md text-gold-300 text-[11px] px-3 py-1 rounded-full border border-gold-400/30">
+                18:00 - 02:00
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-serif text-xl font-bold text-white mb-2">AURA 頂樓星空景觀酒吧</h3>
+              <p class="text-gray-400 text-xs leading-relaxed mb-4">
+                360 度海天無死角夜景，世界頂級調酒大師駐店特調，每週五、六設有經典現場爵士 Live 表演。
+              </p>
+              <div class="flex flex-wrap gap-2 text-[11px] text-gray-300">
+                <span class="bg-navy-800 px-2 py-1 rounded">冠軍客製調酒</span>
+                <span class="bg-navy-800 px-2 py-1 rounded">爵士樂現場演奏</span>
+                <span class="bg-navy-800 px-2 py-1 rounded">戶外星空觀景台</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 pt-0 flex gap-3">
+            <button onclick="openTableBookingModal('AURA 頂樓星空景觀酒吧')" class="flex-1 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider transition-all">
+              預約酒吧包廂
+            </button>
+            <button onclick="downloadMenuPDF('AURA 酒單與佐酒餐點')" class="px-4 py-2.5 rounded-xl border border-white/20 hover:border-gold-400 text-xs text-gray-300 hover:text-gold-400 transition-colors">
+              <i class="fa-solid fa-file-pdf"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Dining 3 -->
+        <div class="glass-card border border-white/10 rounded-2xl overflow-hidden group hover:border-gold-500/40 transition-all flex flex-col justify-between">
+          <div>
+            <div class="relative h-60 overflow-hidden">
+              <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" 
+                   alt="LE JARDIN 典雅英式下午茶" 
+                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+              <span class="absolute top-3 left-3 bg-navy-950/80 backdrop-blur-md text-gold-300 text-[11px] px-3 py-1 rounded-full border border-gold-400/30">
+                13:30 - 17:00
+              </span>
+            </div>
+            <div class="p-6">
+              <h3 class="font-serif text-xl font-bold text-white mb-2">LE JARDIN 典雅英式下午茶</h3>
+              <p class="text-gray-400 text-xs leading-relaxed mb-4">
+                三層銀盤手工司康佐德文郡凝脂奶油、法式馬卡龍及 TWG 特級產區莊園茗茶。
+              </p>
+              <div class="flex flex-wrap gap-2 text-[11px] text-gray-300">
+                <span class="bg-navy-800 px-2 py-1 rounded">TWG 莊園精選茶</span>
+                <span class="bg-navy-800 px-2 py-1 rounded">正統現烤司康</span>
+                <span class="bg-navy-800 px-2 py-1 rounded">法式手工甜點</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 pt-0 flex gap-3">
+            <button onclick="openTableBookingModal('LE JARDIN 典雅英式下午茶')" class="flex-1 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider transition-all">
+              預約下午茶席位
+            </button>
+            <button onclick="downloadMenuPDF('LE JARDIN 下午茶菜單')" class="px-4 py-2.5 rounded-xl border border-white/20 hover:border-gold-400 text-xs text-gray-300 hover:text-gold-400 transition-colors">
+              <i class="fa-solid fa-file-pdf"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 6. RESORT FACILITIES ================= -->
+  <section id="facilities" class="py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold">Leisure & Wellness</span>
+      <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mt-2 mb-4">全方位頂級專屬設施</h2>
+      <div class="w-16 h-0.5 bg-gold-400 mx-auto mb-4"></div>
+      <p class="text-gray-400 text-xs sm:text-sm">在無邊際天際線與天然溫泉中釋放疲憊，感受身心極致的和諧昇華。</p>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div class="p-6 rounded-2xl bg-navy-900/60 border border-white/5 hover:border-gold-500/30 text-center transition-all hover:-translate-y-1">
+        <div class="w-14 h-14 rounded-full bg-gold-500/10 text-gold-400 flex items-center justify-center mx-auto mb-4 text-2xl">
+          <i class="fa-solid fa-water-ladder"></i>
+        </div>
+        <h4 class="font-serif text-base font-semibold text-white mb-2">無邊際恆溫泳池</h4>
+        <p class="text-gray-400 text-xs leading-relaxed">全日恆溫 28°C，池畔備有專人香檳與防曬冰鎮毛巾禮遇。</p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-navy-900/60 border border-white/5 hover:border-gold-500/30 text-center transition-all hover:-translate-y-1">
+        <div class="w-14 h-14 rounded-full bg-gold-500/10 text-gold-400 flex items-center justify-center mx-auto mb-4 text-2xl">
+          <i class="fa-solid fa-spa"></i>
+        </div>
+        <h4 class="font-serif text-base font-semibold text-white mb-2">極光芳療 SPA</h4>
+        <p class="text-gray-400 text-xs leading-relaxed">瑞士頂級抗老精油按摩，結合喜馬拉雅頌缽靜心療程。</p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-navy-900/60 border border-white/5 hover:border-gold-500/30 text-center transition-all hover:-translate-y-1">
+        <div class="w-14 h-14 rounded-full bg-gold-500/10 text-gold-400 flex items-center justify-center mx-auto mb-4 text-2xl">
+          <i class="fa-solid fa-dumbbell"></i>
+        </div>
+        <h4 class="font-serif text-base font-semibold text-white mb-2">全海景智能健身房</h4>
+        <p class="text-gray-400 text-xs leading-relaxed">配備 Technogym 頂級智能器材，支援一對一私教預約。</p>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-navy-900/60 border border-white/5 hover:border-gold-500/30 text-center transition-all hover:-translate-y-1">
+        <div class="w-14 h-14 rounded-full bg-gold-500/10 text-gold-400 flex items-center justify-center mx-auto mb-4 text-2xl">
+          <i class="fa-solid fa-charging-station"></i>
+        </div>
+        <h4 class="font-serif text-base font-semibold text-white mb-2">專屬車位與 EV 充電</h4>
+        <p class="text-gray-400 text-xs leading-relaxed">地下室室內平面車位，全面支援 Tesla 及 Type-2 快速充電樁。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 7. LOCATION & TRANSIT & EV PARKING ================= -->
+  <section id="location" class="py-24 bg-navy-900/40 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold">Location & Transit</span>
+        <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mt-2 mb-4">交通指南與立體停車</h2>
+        <div class="w-16 h-0.5 bg-gold-400 mx-auto mb-4"></div>
+        <p class="text-gray-400 text-xs sm:text-sm">提供高鐵與火車站專屬尊榮接駁車，並設有專屬電動車充電專區。</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Google Maps Embed Placeholder -->
+        <div class="lg:col-span-7 rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative h-[420px] bg-navy-900">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117565.65431604569!2d121.14441551640624!3d22.952932200000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346f059cbbf53265%3A0xe5f9ea32f1441315!2z5Y-w5p2x57ij5p2x5rKz6YSJ!5e0!3m2!1szh-TW!2stw!4v1710000000000!5m2!1szh-TW!2stw" 
+            width="100%" height="100%" style="border:0; filter: contrast(1.1) brightness(0.85) saturate(0.9);" allowfullscreen="" loading="lazy">
+          </iframe>
+          <div class="absolute bottom-4 left-4 bg-navy-950/90 backdrop-blur-md border border-gold-400/30 px-4 py-2.5 rounded-xl text-xs">
+            <p class="font-semibold text-white"><i class="fa-solid fa-location-dot text-gold-400 mr-1.5"></i>度假村座標位置</p>
+            <p class="text-gray-300 text-[11px]">台灣台東縣東河鄉海岸觀景大道 888 號</p>
+          </div>
+        </div>
+
+        <!-- Transit Info & Shuttle Schedule Table -->
+        <div class="lg:col-span-5 space-y-6">
+          <!-- Shuttle Schedule -->
+          <div class="glass-card border border-white/10 rounded-2xl p-6">
+            <h3 class="font-serif text-lg font-bold text-white mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-van-shuttle text-gold-400"></i>
+              <span>高鐵 / 台東火車站免費貴賓接駁車</span>
+            </h3>
+            <p class="text-xs text-gray-400 mb-4">房客享有免費來回接駁（請於入住前 24 小時向禮賓部登記保留位席）。</p>
+            
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr class="border-b border-white/10 text-gold-400 uppercase">
+                    <th class="py-2 font-medium">班次</th>
+                    <th class="py-2 font-medium">車站出發</th>
+                    <th class="py-2 font-medium">抵達飯店</th>
+                  </tr>
+                </thead>
+                <tbody class="text-gray-300 divide-y divide-white/5">
+                  <tr><td class="py-2.5 font-medium text-white">晨光 01 班次</td><td>10:30</td><td>11:15</td></tr>
+                  <tr><td class="py-2.5 font-medium text-white">午後 02 班次</td><td>14:00</td><td>14:45</td></tr>
+                  <tr><td class="py-2.5 font-medium text-white">夕陽 03 班次</td><td>16:30</td><td>17:15</td></tr>
+                  <tr><td class="py-2.5 font-medium text-white">星空 04 班次</td><td>19:00</td><td>19:45</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Parking & EV Stations -->
+          <div class="glass-card border border-white/10 rounded-2xl p-6 space-y-3">
+            <h3 class="font-serif text-lg font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-square-parking text-gold-400"></i>
+              <span>自行開車與地下停車場規範</span>
+            </h3>
+            <ul class="text-xs text-gray-300 space-y-2 leading-relaxed">
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-gold-400 mt-0.5"></i>
+                <span><strong>限高標示：</strong>地下停車場限高 <strong>2.1 公尺</strong>，休旅車及廂型車皆可順暢進出。</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-gold-400 mt-0.5"></i>
+                <span><strong>充電專區：</strong>設有 <strong>12 組專用 EV 充電樁</strong>（含 Tesla Type 2 及 CCS2 快充），住客免費預約充電。</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="fa-solid fa-check text-gold-400 mt-0.5"></i>
+                <span><strong>代客泊車：</strong>正門大廳 24 小時提供白手套禮賓代客泊車與取車禮遇。</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 8. GUEST REVIEWS & SOCIAL PROOF ================= -->
+  <section id="reviews" class="py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+      <div>
+        <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold">Guest Experiences</span>
+        <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mt-2">非凡住客真實評價</h2>
+        <div class="w-16 h-0.5 bg-gold-400 mt-4"></div>
+      </div>
+      <!-- Score summary -->
+      <div class="flex items-center gap-4 bg-navy-900 border border-gold-400/30 p-4 rounded-2xl">
+        <div class="text-3xl font-serif font-bold text-gold-400">4.95</div>
+        <div>
+          <div class="flex text-gold-400 text-xs mb-1">
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+          </div>
+          <p class="text-[11px] text-gray-400">來自 Google & Booking.com 2,480+ 則真實認證好評</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review Slider / Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="glass-card border border-white/10 rounded-2xl p-6 relative">
+        <div class="flex text-gold-400 text-xs mb-3">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed mb-6 italic">
+          「私人泳池別墅的隱私性與無邊際海景令人屏息！管家先生甚至在傍晚為我們點燃戶外壁爐並送上香檳，絕對是台灣最頂級的度假體驗。」
+        </p>
+        <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+          <div class="w-10 h-10 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold text-sm">
+            陳
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-white">陳董事長</h5>
+            <p class="text-[10px] text-gray-400">入住 AURA 私人泳池別墅 · 2026年3月</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card border border-white/10 rounded-2xl p-6 relative">
+        <div class="flex text-gold-400 text-xs mb-3">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed mb-6 italic">
+          「房內配置 Dyson 吹風機與頂級席夢思床墊，睡眠品質好到不行。自助百匯的現剖生蠔與熟成和牛更是驚豔，已經預約下季回訪！」
+        </p>
+        <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+          <div class="w-10 h-10 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold text-sm">
+            E
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-white">Elena S. (新加坡)</h5>
+            <p class="text-[10px] text-gray-400">入住 尊爵海景行政套房 · 2026年2月</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card border border-white/10 rounded-2xl p-6 relative">
+        <div class="flex text-gold-400 text-xs mb-3">
+          <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed mb-6 italic">
+          「從高鐵站的商務禮賓車接送，到退房時行李的細心安置，服務細節無懈可擊。特別感謝 SPA 芳療師讓我們彻底放鬆。」
+        </p>
+        <div class="flex items-center gap-3 pt-4 border-t border-white/5">
+          <div class="w-10 h-10 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold text-sm">
+            張
+          </div>
+          <div>
+            <h5 class="text-xs font-bold text-white">張建築師夫婦</h5>
+            <p class="text-[10px] text-gray-400">入住 典雅全景特大雙人房 · 2026年1月</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 9. FAQ ACCORDION ================= -->
+  <section id="faq" class="py-24 bg-navy-900/60 border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-16">
+        <span class="text-xs uppercase tracking-[0.3em] text-gold-400 font-semibold">Help & Questions</span>
+        <h2 class="font-serif text-3xl sm:text-4xl text-white font-bold mt-2 mb-4">常見住宿問答</h2>
+        <div class="w-16 h-0.5 bg-gold-400 mx-auto"></div>
+      </div>
+
+      <!-- Accordion Items -->
+      <div class="space-y-4">
+        
+        <div class="border border-white/10 rounded-2xl overflow-hidden bg-navy-950/70">
+          <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white hover:text-gold-400 transition-colors">
+            <span>最早入住時間與最晚退房時間為何？</span>
+            <i class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-white/5 pt-3">
+            本酒店之標準入住時間 (Check-in) 為 <strong>下午 15:00</strong> 起；退房時間 (Check-out) 為 <strong>上午 11:00</strong> 前。尊榮會員視當日房況可享免費延遲至 13:00 退房特權。
+          </div>
+        </div>
+
+        <div class="border border-white/10 rounded-2xl overflow-hidden bg-navy-950/70">
+          <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white hover:text-gold-400 transition-colors">
+            <span>是否提供提前或退房後的行李免費寄存？</span>
+            <i class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-white/5 pt-3">
+            是的，飯店一樓禮賓接待中心提供 <strong>24 小時免費行李安全保管服務</strong>。您亦可在辦理手續前後自由使用度假村無邊際泳池及大廳休閒酒廊。
+          </div>
+        </div>
+
+        <div class="border border-white/10 rounded-2xl overflow-hidden bg-navy-950/70">
+          <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white hover:text-gold-400 transition-colors">
+            <span>加床政策及兒童入住之收費標準為何？</span>
+            <i class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-white/5 pt-3">
+            6 歲（含）以下兒童不佔床可免費同住（每房限一位，含免費兒童早餐）。加床服務每晚收費 NT$ 2,200（含單人奢華羽絨床墊及星級自助早餐乙客）。
+          </div>
+        </div>
+
+        <div class="border border-white/10 rounded-2xl overflow-hidden bg-navy-950/70">
+          <button onclick="toggleFaq(this)" class="w-full p-5 text-left flex items-center justify-between text-sm font-semibold text-white hover:text-gold-400 transition-colors">
+            <span>是否接受攜帶寵物同行？</span>
+            <i class="fa-solid fa-chevron-down text-xs transition-transform duration-300"></i>
+          </button>
+          <div class="faq-content hidden px-5 pb-5 text-xs text-gray-400 leading-relaxed border-t border-white/5 pt-3">
+            度假村專設有 <strong>「Villa 寵物專屬友善別墅」</strong>，備有高級寵物睡墊、水碗及鮮食菜單。為維護公共衛生，一般本館套房謝絕攜帶寵物入內（合格導盲犬除外）。
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 10. FOOTER ================= -->
+  <footer class="bg-navy-950 border-t border-white/10 pt-16 pb-12 text-gray-400 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+      <div class="space-y-4">
+        <div class="flex items-center space-x-2">
+          <span class="w-8 h-8 rounded-full border border-gold-400 flex items-center justify-center text-gold-400">
+            <i class="fa-solid fa-hotel text-xs"></i>
+          </span>
+          <span class="font-serif tracking-widest text-base font-bold text-white">AURELIA GRAND</span>
+        </div>
+        <p class="text-gray-400 leading-relaxed">
+          全球頂級度假村成員。致力於為每位到訪貴賓營造靜謐、優雅、無與倫比的奢華生活享受。
+        </p>
+      </div>
+
+      <div>
+        <h5 class="font-serif text-white font-bold uppercase tracking-wider mb-4">客房與別墅</h5>
+        <ul class="space-y-2.5">
+          <li><a href="#rooms" class="hover:text-gold-400 transition-colors">典雅海景套房</a></li>
+          <li><a href="#rooms" class="hover:text-gold-400 transition-colors">尊爵行政雙人房</a></li>
+          <li><a href="#rooms" class="hover:text-gold-400 transition-colors">私人泳池獨棟別墅</a></li>
+          <li><button onclick="openBookingCalculatorModal()" class="hover:text-gold-400 transition-colors">房價試算日曆</button></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-serif text-white font-bold uppercase tracking-wider mb-4">住客條款與政策</h5>
+        <ul class="space-y-2.5">
+          <li><a href="javascript:void(0)" onclick="showToast('全館嚴格保障個人隱私，符合最高規格國際資安加密標準。')" class="hover:text-gold-400">個資隱私權保證</a></li>
+          <li><a href="javascript:void(0)" onclick="showToast('入住 7 天前免費取消，7 天內取消酌收首晚 30% 訂金。')" class="hover:text-gold-400">取消與退款準則</a></li>
+          <li><a href="#location" class="hover:text-gold-400">高鐵接駁時刻表</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-serif text-white font-bold uppercase tracking-wider mb-4">專屬迎賓優惠通訊</h5>
+        <p class="text-gray-400 mb-3">訂閱即刻獲取會員專屬 NT$ 1,000 折價抵用代碼。</p>
+        <div class="flex gap-2">
+          <input type="email" id="newsletter-email" placeholder="輸入您的 Email" class="bg-navy-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400 w-full">
+          <button onclick="handleNewsletterSubmit()" class="bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold px-4 py-2 rounded-lg text-xs shrink-0 transition-colors">
+            領取
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>© 2026 AURELIA Luxe Hotel & Resort. 版權所有，非經許可請勿轉載。</p>
+      <div class="flex items-center space-x-6 text-sm">
+        <a href="javascript:void(0)" class="hover:text-gold-400"><i class="fa-brands fa-instagram"></i></a>
+        <a href="javascript:void(0)" class="hover:text-gold-400"><i class="fa-brands fa-facebook"></i></a>
+        <a href="javascript:void(0)" class="hover:text-gold-400"><i class="fa-brands fa-line"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= 11. FLOATING AI CONCIERGE CHAT WIDGET ================= -->
+  <div class="fixed bottom-6 right-6 z-40 flex flex-col items-end">
+    <!-- Chatbox Window -->
+    <div id="ai-chat-window" class="hidden w-80 sm:w-96 glass-dark border border-gold-400/40 rounded-2xl shadow-2xl overflow-hidden mb-3 transition-all duration-300">
+      <!-- Header -->
+      <div class="p-4 bg-navy-900 border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-gold-500 text-navy-950 flex items-center justify-center font-bold text-xs">
+            <i class="fa-solid fa-bell-concierge"></i>
+          </div>
+          <div>
+            <h4 class="text-xs font-bold text-white">AURELIA 智能迎賓禮賓</h4>
+            <span class="text-[10px] text-emerald-400 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> 在線為您服務
+            </span>
+          </div>
+        </div>
+        <button onclick="toggleAiChat()" class="text-gray-400 hover:text-white text-sm"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Messages Stream -->
+      <div id="chat-messages" class="h-64 overflow-y-auto p-4 space-y-3 text-xs">
+        <div class="flex gap-2.5">
+          <div class="w-6 h-6 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center shrink-0 text-[10px]">
+            <i class="fa-solid fa-crown"></i>
+          </div>
+          <div class="bg-navy-900 border border-white/10 p-3 rounded-xl rounded-tl-none text-gray-300 leading-relaxed max-w-[85%]">
+            貴賓您好，我是 AURELIA 智能管家。請問有什麼可以為您協助的呢？點擊下方快捷鍵或直接輸入問題：
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Prompt Suggestions -->
+      <div class="px-3 py-2 bg-navy-950/60 border-t border-white/5 flex gap-1.5 overflow-x-auto no-scrollbar text-[10px]">
+        <button onclick="sendQuickPrompt('最早入住與退房時間？')" class="px-2.5 py-1 rounded-full bg-navy-800 text-gray-300 hover:border-gold-400 border border-white/5 shrink-0">⏰ 入住須知</button>
+        <button onclick="sendQuickPrompt('有高鐵接駁車嗎？')" class="px-2.5 py-1 rounded-full bg-navy-800 text-gray-300 hover:border-gold-400 border border-white/5 shrink-0">🚐 接駁車資訊</button>
+        <button onclick="sendQuickPrompt('推薦飯店特色餐廳')" class="px-2.5 py-1 rounded-full bg-navy-800 text-gray-300 hover:border-gold-400 border border-white/5 shrink-0">🍽️ 推薦餐廳</button>
+        <button onclick="sendQuickPrompt('聯絡專屬真人管家')" class="px-2.5 py-1 rounded-full bg-navy-800 text-gray-300 hover:border-gold-400 border border-white/5 shrink-0">📞 真人客服</button>
+      </div>
+
+      <!-- Input box -->
+      <form onsubmit="handleChatSubmit(event)" class="p-3 bg-navy-900 border-t border-white/10 flex gap-2">
+        <input type="text" id="chat-input" placeholder="請輸入您的問題..." class="flex-1 bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-gold-400">
+        <button type="submit" class="w-9 h-9 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 flex items-center justify-center text-xs transition-colors">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+    </div>
+
+    <!-- Floating Toggle Button -->
+    <button onclick="toggleAiChat()" class="h-14 px-5 rounded-full bg-gradient-to-r from-gold-500 to-gold-600 text-navy-950 font-bold shadow-2xl flex items-center gap-3 hover:scale-105 transition-all">
+      <i class="fa-solid fa-comment-dots text-lg"></i>
+      <span class="text-xs tracking-wider uppercase hidden sm:inline">線上禮賓顧問</span>
+    </button>
   </div>
-  <div class="panel">
-   <h3>🎁 每日登入獎勵</h3>
-   <h2 style="color:#ffd76a">🪙 +200</h2>
-   <button class="primary" id="dailyBtn" onclick="daily()">領取獎勵</button>
-   <p id="dailyText" class="muted"></p>
+
+  <!-- ================= 12. MEMBER AUTH MODAL (LOGIN / SIGNUP) ================= -->
+  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div id="auth-box" class="relative w-full max-w-md glass-dark border border-gold-400/40 rounded-2xl p-6 sm:p-8 shadow-2xl transform scale-95 transition-all duration-300">
+      
+      <button onclick="closeAuthModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-center mb-6">
+        <div class="w-12 h-12 rounded-full border border-gold-400 flex items-center justify-center text-gold-400 mx-auto mb-3">
+          <i class="fa-solid fa-crown text-base"></i>
+        </div>
+        <h3 class="font-serif text-2xl font-bold text-white" id="auth-title">尊榮會員登入</h3>
+        <p class="text-gray-400 text-xs mt-1" id="auth-subtitle">登入以享會員保證 9折 優惠、升等特權與迎賓點數</p>
+      </div>
+
+      <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+        <div id="auth-name-group" class="space-y-1 hidden">
+          <label class="block text-xs uppercase text-gray-300 font-medium">貴賓全名</label>
+          <input type="text" id="auth-name" placeholder="王大明 先生/小姐" class="w-full bg-navy-950/90 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400">
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-xs uppercase text-gray-300 font-medium">會員電子信箱</label>
+          <input type="email" id="auth-email" required placeholder="vip@aurelia.com" class="w-full bg-navy-950/90 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400">
+        </div>
+
+        <div class="space-y-1">
+          <label class="block text-xs uppercase text-gray-300 font-medium">登入密碼</label>
+          <div class="relative">
+            <input type="password" id="auth-password" required placeholder="••••••••" class="w-full bg-navy-950/90 border border-white/10 rounded-xl px-4 py-2.5 pr-10 text-xs text-white focus:outline-none focus:border-gold-400">
+            <button type="button" onclick="togglePasswordView()" class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-400 hover:text-gold-400">
+              <i class="fa-regular fa-eye" id="pwd-eye-icon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div id="auth-options" class="flex items-center justify-between text-xs pt-1">
+          <label class="flex items-center space-x-2 text-gray-400 cursor-pointer">
+            <input type="checkbox" id="remember-me" checked class="rounded border-gray-700 bg-navy-950 text-gold-500 focus:ring-gold-400">
+            <span>記住我</span>
+          </label>
+          <a href="javascript:void(0)" onclick="showToast('密碼重置驗證碼已寄發至您的信箱。', 'info')" class="text-gold-400 hover:underline">忘記密碼？</a>
+        </div>
+
+        <button type="submit" id="auth-submit-btn" class="w-full py-3 rounded-xl bg-gradient-to-r from-gold-500 to-gold-600 hover:from-gold-400 hover:to-gold-500 text-navy-950 font-bold text-xs uppercase tracking-widest shadow-lg shadow-gold-500/20 transition-all">
+          立即登入
+        </button>
+      </form>
+
+      <!-- Social Logins -->
+      <div class="relative my-6 text-center">
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/10"></div></div>
+        <span class="relative bg-navy-900 px-3 text-[11px] text-gray-400 uppercase tracking-widest">或透過社群快速登入</span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="handleSocialAuth('Google')" class="flex items-center justify-center gap-2 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-gray-200 transition-colors">
+          <i class="fa-brands fa-google text-red-400"></i> Google
+        </button>
+        <button onclick="handleSocialAuth('LINE')" class="flex items-center justify-center gap-2 py-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-gray-200 transition-colors">
+          <i class="fa-brands fa-line text-green-400 text-base"></i> LINE
+        </button>
+      </div>
+
+      <div class="mt-6 text-center text-xs text-gray-400">
+        <span id="auth-switch-text">尚未成為尊榮會員？</span>
+        <button onclick="switchAuthMode()" id="auth-switch-btn" class="text-gold-400 font-semibold hover:underline ml-1">
+          立即註冊會員
+        </button>
+      </div>
+    </div>
   </div>
- </div>
- </div>
 
- <div class="section"><h2>快速入口</h2>
- <div class="grid">
-  <div class="card" onclick="startGame()"><div class="emoji">⚔️</div><h3>30 VS 30</h3><p>60 名 AI 角色參與競技</p></div>
-  <div class="card" onclick="page('missions')"><div class="emoji">🎯</div><h3>每日任務</h3><p>完成任務取得遊戲幣</p></div>
-  <div class="card" onclick="page('shop')"><div class="emoji">🛒</div><h3>商城</h3><p>收集各種遊戲外觀</p></div>
-  <div class="card" onclick="page('ranking')"><div class="emoji">🏆</div><h3>排行榜</h3><p>查看個人戰績</p></div>
- </div>
- </div>
-</section>
+  <!-- ================= 13. MEMBER DASHBOARD MODAL ================= -->
+  <div id="member-dashboard-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full max-w-3xl glass-dark border border-gold-400/40 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <!-- Top Bar Profile Info -->
+      <div class="p-6 bg-navy-900/90 border-b border-white/10 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full border-2 border-gold-400 overflow-hidden bg-navy-950 flex items-center justify-center text-gold-400 font-serif text-xl font-bold">
+            <span id="dashboard-avatar-text">V</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-serif text-lg font-bold text-white" id="dashboard-user-name">尊榮會員貴賓</h3>
+              <span class="px-2 py-0.5 rounded-full bg-gold-500/20 text-gold-300 text-[10px] font-semibold border border-gold-400/30">GOLD VIP</span>
+            </div>
+            <p class="text-xs text-gray-400" id="dashboard-user-email">vip@aurelia.com</p>
+          </div>
+        </div>
 
-<section id="missions" class="hidden">
- <h2>🎯 每日任務</h2><div id="missionList" class="grid"></div>
-</section>
+        <div class="flex items-center gap-6 text-right">
+          <div>
+            <span class="text-[10px] uppercase text-gray-400 block">累積會員點數</span>
+            <span class="text-lg font-bold text-gold-400" id="dashboard-points">2,450 pts</span>
+          </div>
+          <button onclick="handleLogout()" class="px-4 py-2 rounded-xl border border-red-500/30 text-red-400 hover:bg-red-500 hover:text-white text-xs transition-colors">
+            登出
+          </button>
+        </div>
+      </div>
 
-<section id="shop" class="hidden">
- <h2>🛒 遊戲商城</h2>
- <p class="muted">虛擬遊戲幣購買，不涉及真實付款。</p>
- <div id="shopList" class="grid"></div>
-</section>
+      <!-- Tab Buttons -->
+      <div class="flex border-b border-white/10 bg-navy-950/60 text-xs">
+        <button onclick="switchDashboardTab('bookings')" id="tab-btn-bookings" class="flex-1 py-3 font-semibold text-gold-400 border-b-2 border-gold-400 transition-colors">
+          <i class="fa-solid fa-receipt mr-1.5"></i> 我的訂單預訂
+        </button>
+        <button onclick="switchDashboardTab('coupons')" id="tab-btn-coupons" class="flex-1 py-3 font-semibold text-gray-400 border-b-2 border-transparent transition-colors">
+          <i class="fa-solid fa-ticket mr-1.5"></i> 會員優惠券與點數
+        </button>
+        <button onclick="switchDashboardTab('wishlist')" id="tab-btn-wishlist" class="flex-1 py-3 font-semibold text-gray-400 border-b-2 border-transparent transition-colors">
+          <i class="fa-solid fa-heart mr-1.5"></i> 心願收藏清單 (<span id="dashboard-wishlist-count">0</span>)
+        </button>
+      </div>
 
-<section id="equipment" class="hidden">
- <h2>🎒 我的裝備</h2>
- <div class="panel"><div id="ownedList"></div><p id="equipped"></p></div>
-</section>
+      <!-- Tab Contents -->
+      <div class="p-6 overflow-y-auto flex-1 space-y-4 text-xs">
+        <!-- 1. Bookings Tab -->
+        <div id="tab-content-bookings" class="space-y-4">
+          <div id="user-bookings-list" class="space-y-3">
+            <!-- Dynamic injected bookings -->
+          </div>
+        </div>
 
-<section id="maps" class="hidden">
- <h2>🗺 戰場選擇</h2>
- <div class="grid">
-  <div class="card" onclick="chooseMap('城市競技場')"><div class="emoji">🏙️</div><h3>城市競技場</h3></div>
-  <div class="card" onclick="chooseMap('沙漠基地')"><div class="emoji">🏜️</div><h3>沙漠基地</h3></div>
-  <div class="card" onclick="chooseMap('森林營地')"><div class="emoji">🌲</div><h3>森林營地</h3></div>
-  <div class="card" onclick="chooseMap('星際要塞')"><div class="emoji">🌌</div><h3>星際要塞</h3></div>
- </div>
- <p>目前選擇：<b id="selectedMap"></b></p>
- <button class="primary" onclick="startGame()">進入戰場</button>
-</section>
+        <!-- 2. Coupons Tab -->
+        <div id="tab-content-coupons" class="hidden space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl border border-gold-400/40 bg-gold-500/5 flex justify-between items-center">
+              <div>
+                <span class="text-[10px] text-gold-400 uppercase font-bold tracking-wider">限時特惠代碼</span>
+                <h4 class="font-bold text-white text-sm mt-1">AURA1000</h4>
+                <p class="text-gray-400 text-[11px]">立折 NT$ 1,000 元（滿萬適用）</p>
+              </div>
+              <button onclick="copyCouponCode('AURA1000')" class="px-3 py-1.5 rounded-lg bg-gold-500 text-navy-950 font-bold text-[11px] hover:bg-gold-400">複製</button>
+            </div>
 
-<section id="ranking" class="hidden">
- <h2>🏆 排行榜</h2>
- <div class="panel">
-  <div id="rankList"></div>
-  <p class="muted">目前為本機排行榜，全球排行榜需要連接線上伺服器。</p>
- </div>
-</section>
-</main>
-<footer>FLAG WAR 3D INFINITY · ARCADE EDITION</footer>
-</div>
+            <div class="p-4 rounded-xl border border-gold-400/40 bg-gold-500/5 flex justify-between items-center">
+              <div>
+                <span class="text-[10px] text-gold-400 uppercase font-bold tracking-wider">房客尊榮禮遇</span>
+                <h4 class="font-bold text-white text-sm mt-1">BREAKFASTFREE</h4>
+                <p class="text-gray-400 text-[11px]">雙人星級百匯早餐免費升級</p>
+              </div>
+              <button onclick="copyCouponCode('BREAKFASTFREE')" class="px-3 py-1.5 rounded-lg bg-gold-500 text-navy-950 font-bold text-[11px] hover:bg-gold-400">複製</button>
+            </div>
+          </div>
+        </div>
 
-<div id="nameModal" class="modal hidden">
- <div class="modalbox">
-  <h2>玩家資料設定</h2>
-  <p>輸入你的遊戲暱稱</p>
-  <input id="nameInput" maxlength="18" placeholder="玩家暱稱">
-  <button onclick="saveName()">確認</button>
-  <button class="secondary" onclick="closeName()">取消</button>
- </div>
-</div>
+        <!-- 3. Wishlist Tab -->
+        <div id="tab-content-wishlist" class="hidden space-y-4">
+          <div id="user-wishlist-items" class="space-y-3">
+            <!-- Dynamic Wishlist Cards -->
+          </div>
+        </div>
+      </div>
 
-<div id="gameScreen">
- <canvas id="gameCanvas"></canvas>
- <div id="hud">
-  <div class="hudbox">🔵 BLUE <b id="bs">0</b></div>
-  <div class="hudbox">🔴 RED <b id="rs">0</b></div>
-  <div class="hudbox">👥 <span id="bc">30</span> VS <span id="rc">30</span></div>
-  <div class="hudbox">⏱ <span id="timer">300</span></div>
-  <div class="hudbox">⭐ <span id="gamePoints">0</span></div>
- </div>
- <div id="cross">＋</div>
- <div id="gameButtons">
-  <button onclick="pauseGame()">Ⅱ 暫停</button>
-  <button class="secondary" onclick="exitGame()">退出</button>
- </div>
- <div id="mobileControls">
-  <div id="stick"><div id="knob"></div></div>
-  <button id="fire">發射</button>
- </div>
- <div id="result" class="hidden">
-  <div class="modalbox">
-   <h1 id="winner">比賽結束</h1>
-   <h2 id="finalScore"></h2>
-   <p id="finalText"></p>
-   <button onclick="startGame()">再次比賽</button>
-   <button class="secondary" onclick="exitGame()">返回首頁</button>
+      <!-- Close Drawer -->
+      <div class="p-4 border-t border-white/10 bg-navy-900/60 text-right">
+        <button onclick="closeMemberModal()" class="px-5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs transition-colors">關閉視窗</button>
+      </div>
+    </div>
   </div>
- </div>
-</div>
-<div id="toast"></div>
 
-<script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+  <!-- ================= 14. ROOM DETAILS & PHOTO GALLERY MODAL ================= -->
+  <div id="room-gallery-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full max-w-4xl glass-dark border border-gold-400/40 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+      
+      <button onclick="closeGalleryModal()" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-navy-950/80 text-gray-300 hover:text-white flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
 
-const $=id=>document.getElementById(id);
-const defaults={
- name:"INFINITY PLAYER",coins:1000,level:1,exp:0,
- wins:0,games:0,points:0,lastDaily:"",
- owned:["標準藍色外觀"],equipped:"標準藍色外觀",
- missions:{}
-};
-let data;
-try{data={...defaults,...JSON.parse(localStorage.getItem("fw_save")||"{}")}}
-catch(e){data={...defaults}}
-let selectedMap=localStorage.getItem("fw_map")||"城市競技場";
+      <div class="overflow-y-auto p-6 sm:p-8 space-y-6">
+        <!-- Main Image Display -->
+        <div class="relative h-72 sm:h-96 rounded-2xl overflow-hidden border border-white/10">
+          <img id="gallery-main-img" src="" alt="Room Full View" class="w-full h-full object-cover transition-all duration-500">
+          <div class="absolute bottom-4 left-4 bg-navy-950/80 backdrop-blur-md px-3 py-1.5 rounded-xl text-gold-300 text-xs">
+            <span id="gallery-tag">景觀視角</span>
+          </div>
+        </div>
 
-function save(){
- localStorage.setItem("fw_save",JSON.stringify(data));
- render();
-}
-function toast(msg){
- $("toast").textContent=msg;
- $("toast").style.display="block";
- setTimeout(()=>$("toast").style.display="none",2200);
-}
-function page(p){
- document.querySelectorAll("main section").forEach(x=>x.classList.add("hidden"));
- $(p).classList.remove("hidden");
- if(p==="missions")renderMissions();
- if(p==="shop")renderShop();
- if(p==="equipment")renderEquipment();
- if(p==="ranking")renderRanking();
-}
-function render(){
- $("coins").textContent=data.coins;
- $("level").textContent=data.level;
- $("playerName").textContent=data.name;
- $("profileLevel").textContent=data.level;
- $("wins").textContent=data.wins;
- $("games").textContent=data.games;
- $("points").textContent=data.points;
- $("expText").textContent=data.exp+" / 100 EXP";
- $("expBar").style.width=Math.min(100,data.exp)+"%";
- $("selectedMap").textContent=selectedMap;
- let claimed=data.lastDaily===new Date().toDateString();
- $("dailyBtn").disabled=claimed;
- $("dailyBtn").textContent=claimed?"今日已領取":"領取獎勵";
- $("dailyText").textContent=claimed?"明天再來領取":"今日獎勵尚未領取";
-}
-function editName(){
- $("nameInput").value=data.name;
- $("nameModal").classList.remove("hidden");
-}
-function closeName(){$("nameModal").classList.add("hidden")}
-function saveName(){
- let n=$("nameInput").value.trim();
- if(!n)return toast("請輸入暱稱");
- data.name=n;save();closeName();toast("暱稱已更新");
-}
-function daily(){
- if(data.lastDaily===new Date().toDateString())return toast("今天已領取");
- data.lastDaily=new Date().toDateString();
- data.coins+=200;save();toast("領取 200 遊戲幣");
-}
-const missions=[
- {name:"完成一場戰鬥",desc:"進行一次 30 VS 30",reward:100},
- {name:"累積 50 積分",desc:"獲得至少 50 個人積分",reward:150},
- {name:"每日登入",desc:"領取每日登入獎勵",reward:80}
-];
-function renderMissions(){
- $("missionList").innerHTML="";
- missions.forEach((m,i)=>{
-  let done=!!data.missions[i];
-  let c=document.createElement("div");c.className="card";
-  c.innerHTML=`<h3>${m.name}</h3><p>${m.desc}</p><p>🪙 ${m.reward}</p>`;
-  let b=document.createElement("button");b.textContent=done?"已領取":"領取";
-  b.disabled=done;b.onclick=()=>claimMission(i);
-  c.append(b);$("missionList").append(c);
- });
-}
-function claimMission(i){
- if(data.missions[i])return;
- if(i===0&&data.games<1)return toast("請先完成一場戰鬥");
- if(i===1&&data.points<50)return toast("還需要更多積分");
- if(i===2&&data.lastDaily!==new Date().toDateString())return toast("請先領取每日獎勵");
- data.missions[i]=true;data.coins+=missions[i].reward;
- save();renderMissions();toast("任務獎勵已領取");
-}
-const products=[
- ["霓虹藍色外觀",300,"🔷"],["熾熱紅色外觀",300,"🔴"],
- ["黃金冠軍外觀",700,"👑"],["星際傳說外觀",1000,"🌌"],
- ["勝利者徽章",500,"🏅"],["閃耀旗幟",450,"🚩"],
- ["鑽石稱號",1200,"💎"],["傳奇稱號",1800,"⭐"]
-];
-function renderShop(){
- $("shopList").innerHTML="";
- products.forEach(([name,price,emoji])=>{
-  let c=document.createElement("div");c.className="card";
-  c.innerHTML=`<div class="emoji">${emoji}</div><h3>${name}</h3><p>🪙 ${price}</p>`;
-  let b=document.createElement("button");
-  let owned=data.owned.includes(name);
-  b.textContent=owned?"已擁有":"購買";b.disabled=owned;
-  b.onclick=()=>{
-   if(data.coins<price)return toast("遊戲幣不足");
-   data.coins-=price;data.owned.push(name);
-   save();renderShop();toast("購買成功");
-  };
-  c.append(b);$("shopList").append(c);
- });
-}
-function renderEquipment(){
- $("ownedList").innerHTML="";
- data.owned.forEach(name=>{
-  let row=document.createElement("div");row.className="item";
-  let label=document.createElement("b");label.textContent=name;
-  let b=document.createElement("button");
-  b.textContent=data.equipped===name?"使用中":"裝備";
-  b.onclick=()=>{data.equipped=name;save();renderEquipment()};
-  row.append(label,b);$("ownedList").append(row);
- });
- $("equipped").textContent="目前裝備："+data.equipped;
-}
-function renderRanking(){
- $("rankList").innerHTML="";
- let row=document.createElement("div");row.className="item";
- let a=document.createElement("b");a.textContent="🥇 "+data.name;
- let b=document.createElement("b");b.textContent=data.points+" 分";
- row.append(a,b);$("rankList").append(row);
-}
-function chooseMap(m){
- selectedMap=m;localStorage.setItem("fw_map",m);
- render();toast("已選擇 "+m);
-}
+        <!-- Thumbnail Selector -->
+        <div id="gallery-thumbnails" class="grid grid-cols-4 gap-3">
+          <!-- Dynamic thumbnails injected -->
+        </div>
 
-/* 3D GAME */
-let scene,camera,renderer,clock,player;
-let blue=[],red=[],orbs=[];
-let blueScore=0,redScore=0,myScore=0,time=300;
-let running=false,paused=false,yaw=0;
-let keys={},joy={x:0,y:0},lastShot=0;
-const mobile=matchMedia("(pointer:coarse)").matches;
-let animFrame=0;
+        <!-- Room Meta Details -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-white/10">
+          <div class="md:col-span-2 space-y-4">
+            <h3 class="font-serif text-2xl font-bold text-white" id="gallery-room-name">房型名稱</h3>
+            <p class="text-xs text-gray-300 leading-relaxed" id="gallery-room-desc">詳細介紹內容</p>
+            
+            <h5 class="text-xs font-bold text-gold-400 uppercase tracking-wider mt-4">專屬頂級設施與尊寵備品</h5>
+            <div id="gallery-amenities" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs text-gray-300">
+              <!-- Amenities injected -->
+            </div>
+          </div>
 
-function mat(c){return new THREE.MeshStandardMaterial({color:c,roughness:.75})}
-function makeBox(x,y,z,w,h,d,c){
- let m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat(c));
- m.position.set(x,y,z);m.castShadow=true;scene.add(m);return m;
-}
-function character(color){
- let g=new THREE.Group();
- let body=new THREE.Mesh(new THREE.CapsuleGeometry(.35,.7,4,8),mat(color));
- body.position.y=1;g.add(body);
- let head=new THREE.Mesh(new THREE.SphereGeometry(.24,12,12),mat(0xd8aa86));
- head.position.y=1.8;g.add(head);
- let helmet=new THREE.Mesh(new THREE.SphereGeometry(.27,12,8),mat(color));
- helmet.position.y=1.96;g.add(helmet);
- return g;
-}
-function createWorld(){
- scene=new THREE.Scene();
- const backgrounds={
-  "城市競技場":0x7899a9,"沙漠基地":0xc49a62,
-  "森林營地":0x466b50,"星際要塞":0x202d58
- };
- scene.background=new THREE.Color(backgrounds[selectedMap]||0x7899a9);
- scene.fog=new THREE.Fog(scene.background,55,110);
- camera=new THREE.PerspectiveCamera(70,innerWidth/innerHeight,.1,150);
- renderer=new THREE.WebGLRenderer({canvas:$("gameCanvas"),antialias:true});
- renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
- renderer.setSize(innerWidth,innerHeight);
- scene.add(new THREE.HemisphereLight(0xffffff,0x445566,2));
- let sun=new THREE.DirectionalLight(0xffffff,2);
- sun.position.set(15,25,10);scene.add(sun);
- let groundColor=selectedMap==="沙漠基地"?0xb99b68:
- selectedMap==="森林營地"?0x466c49:
- selectedMap==="星際要塞"?0x303e68:0x536b55;
- let ground=new THREE.Mesh(new THREE.PlaneGeometry(100,100),mat(groundColor));
- ground.rotation.x=-Math.PI/2;scene.add(ground);
- scene.add(new THREE.GridHelper(100,50,0x8aa9a0,0x738a80));
- for(let i=0;i<24;i++){
-  let x=(Math.random()-.5)*48,z=(Math.random()-.5)*48;
-  if(Math.abs(x)<7&&Math.abs(z)<7)continue;
-  makeBox(x,1.5,z,3+Math.random()*2,3,3+Math.random()*2,0x526d83);
- }
- makeBox(0,2,0,.15,4,.15,0xffffff);
- let flag=new THREE.Mesh(new THREE.PlaneGeometry(2,1),
- new THREE.MeshStandardMaterial({color:0x22aaff,side:THREE.DoubleSide}));
- flag.position.set(1,3,0);scene.add(flag);
- let ring=new THREE.Mesh(new THREE.TorusGeometry(4,.1,8,48),
- new THREE.MeshBasicMaterial({color:0x00cfff}));
- ring.rotation.x=Math.PI/2;ring.position.y=.1;scene.add(ring);
- player=character(0x087de0);player.position.set(0,0,22);scene.add(player);
-}
-function createTeam(name,color){
- let arr=[];
- for(let i=0;i<30;i++){
-  let g=character(color),side=name==="BLUE"?-1:1;
-  g.position.set(side*(8+Math.random()*12),0,(Math.random()-.5)*42);
-  scene.add(g);
-  arr.push({mesh:g,team:name,alive:true,cooldown:Math.random()*3,speed:1.5+Math.random()*1.5});
- }
- return arr;
-}
-function startGame(){
- cancelAnimationFrame(animFrame);
- $("result").classList.add("hidden");
- $("app").classList.add("hidden");
- $("gameScreen").style.display="block";
- $("mobileControls").style.display=mobile?"block":"none";
- $("cross").style.display="block";
- blue=[];red=[];orbs=[];
- blueScore=0;redScore=0;myScore=0;time=300;yaw=0;
- paused=false;running=true;
- createWorld();blue=createTeam("BLUE",0x137eff);red=createTeam("RED",0xe83f4d);
- clock=new THREE.Clock();updateHUD();animate();
-}
-function updateHUD(){
- $("bs").textContent=Math.round(blueScore);
- $("rs").textContent=Math.round(redScore);
- $("bc").textContent=blue.filter(x=>x.alive).length;
- $("rc").textContent=red.filter(x=>x.alive).length;
- $("timer").textContent=Math.max(0,Math.ceil(time));
- $("gamePoints").textContent=myScore;
-}
-function fire(){
- if(!running||paused||performance.now()-lastShot<250)return;
- lastShot=performance.now();
- let dir=new THREE.Vector3(Math.sin(yaw),0,Math.cos(yaw));
- let mesh=new THREE.Mesh(new THREE.SphereGeometry(.16,10,10),
- new THREE.MeshBasicMaterial({color:0x43eaff}));
- mesh.position.copy(player.position);mesh.position.y=1.3;
- mesh.position.add(dir);scene.add(mesh);
- orbs.push({mesh,dir,life:2});
-}
-function updatePlayer(dt){
- let f=0,s=0;
- if(keys.KeyW)f++;if(keys.KeyS)f--;
- if(keys.KeyA)s--;if(keys.KeyD)s++;
- f-=joy.y;s+=joy.x;
- let len=Math.hypot(f,s);if(len>1){f/=len;s/=len;}
- player.position.x+=(Math.sin(yaw)*f+Math.cos(yaw)*s)*8*dt;
- player.position.z+=(Math.cos(yaw)*f-Math.sin(yaw)*s)*8*dt;
- player.position.x=THREE.MathUtils.clamp(player.position.x,-27,27);
- player.position.z=THREE.MathUtils.clamp(player.position.z,-27,27);
- let target=player.position.clone().add(
- new THREE.Vector3(-Math.sin(yaw)*7,4,-Math.cos(yaw)*7));
- camera.position.lerp(target,.15);
- camera.lookAt(player.position.x,1.3,player.position.z);
-}
-function updateTeam(team,dt){
- team.forEach(s=>{
-  if(!s.alive)return;
-  let enemies=s.team==="BLUE"?red:blue;
-  let target=null,best=Infinity;
-  for(let e of enemies){
-   if(!e.alive)continue;
-   let d=s.mesh.position.distanceTo(e.mesh.position);
-   if(d<best){best=d;target=e;}
-  }
-  if(!target)return;
-  let dx=target.mesh.position.x-s.mesh.position.x;
-  let dz=target.mesh.position.z-s.mesh.position.z;
-  let d=Math.hypot(dx,dz)||1;
-  s.mesh.rotation.y=Math.atan2(dx,dz);
-  if(d>5){
-   s.mesh.position.x+=dx/d*s.speed*dt;
-   s.mesh.position.z+=dz/d*s.speed*dt;
-  }
-  s.cooldown-=dt;
-  if(s.cooldown<=0&&d<18){
-   s.cooldown=2+Math.random()*2;
-   if(Math.random()<.25){
-    if(s.team==="BLUE")blueScore++;
-    else redScore++;
-   }
-  }
- });
-}
-function updateOrbs(dt){
- for(let i=orbs.length-1;i>=0;i--){
-  let o=orbs[i];o.mesh.position.addScaledVector(o.dir,25*dt);o.life-=dt;
-  let hit=false;
-  for(let enemy of red){
-   if(!enemy.alive)continue;
-   let p=enemy.mesh.position.clone();p.y+=1;
-   if(o.mesh.position.distanceTo(p)<1){
-    enemy.alive=false;enemy.mesh.visible=false;
-    myScore+=10;blueScore+=10;hit=true;break;
-   }
-  }
-  if(hit||o.life<=0){
-   scene.remove(o.mesh);orbs.splice(i,1);
-  }
- }
-}
-function animate(){
- if(!running||paused)return;
- animFrame=requestAnimationFrame(animate);
- let dt=Math.min(clock.getDelta(),.04);
- updatePlayer(dt);updateTeam(blue,dt);updateTeam(red,dt);
- updateOrbs(dt);
- if(Math.hypot(player.position.x,player.position.z)<4)blueScore+=dt*2;
- time-=dt;updateHUD();
- if(time<=0){finishGame();return;}
- renderer.render(scene,camera);
-}
-function finishGame(){
- running=false;cancelAnimationFrame(animFrame);
- let won=blueScore>redScore;
- data.games++;
- data.points+=myScore;
- data.exp+=Math.floor(myScore/2)+20;
- data.coins+=Math.max(50,Math.floor(myScore/2));
- if(won)data.wins++;
- while(data.exp>=100){data.exp-=100;data.level++;}
- save();
- $("winner").textContent=won?"🔵 藍隊勝利":"🔴 紅隊勝利";
- if(blueScore===redScore)$("winner").textContent="🤝 平手";
- $("finalScore").textContent=Math.round(blueScore)+" : "+Math.round(redScore);
- $("finalText").textContent="個人積分："+myScore+"　獲得遊戲幣："+Math.max(50,Math.floor(myScore/2));
- $("result").classList.remove("hidden");
-}
-function pauseGame(){
- if(!running)return;
- paused=!paused;
- if(paused){
-  $("winner").textContent="遊戲暫停";
-  $("finalScore").textContent="按下繼續返回戰鬥";
-  $("finalText").textContent="";
-  $("result").classList.remove("hidden");
-  $("result").querySelector("button").textContent="繼續遊戲";
-  $("result").querySelector("button").onclick=resumeGame;
-  $("result").querySelectorAll("button")[1].classList.add("hidden");
- }else resumeGame();
-}
-function resumeGame(){
- $("result").classList.add("hidden");
- $("result").querySelector("button").textContent="再次比賽";
- $("result").querySelector("button").onclick=()=>startGame();
- $("result").querySelectorAll("button")[1].classList.remove("hidden");
- paused=false;clock.getDelta();animate();
-}
-function exitGame(){
- running=false;paused=false;cancelAnimationFrame(animFrame);
- $("gameScreen").style.display="none";$("app").classList.remove("hidden");
- $("result").classList.add("hidden");page("home");
-}
-window.startGame=startGame;
-window.pauseGame=pauseGame;
-window.exitGame=exitGame;
-window.page=page;
-window.editName=editName;
-window.saveName=saveName;
-window.closeName=closeName;
-window.daily=daily;
-window.chooseMap=chooseMap;
+          <div class="p-5 rounded-2xl bg-navy-900 border border-white/10 flex flex-col justify-between">
+            <div>
+              <span class="text-xs text-gray-400 block">每晚尊榮房價</span>
+              <div class="text-2xl font-serif font-bold text-white mt-1" id="gallery-room-price">NT$ 0</div>
+              <p class="text-[11px] text-gold-400 mt-1">✓ 含雙人早餐及迎賓禮</p>
+            </div>
+            <button id="gallery-book-now-btn" class="w-full py-3 mt-4 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider transition-all shadow-md">
+              即刻預訂此房型
+            </button>
+          </div>
+        </div>
+      </div>
 
-window.addEventListener("keydown",e=>keys[e.code]=true);
-window.addEventListener("keyup",e=>keys[e.code]=false);
-window.addEventListener("mousemove",e=>{
- if(document.pointerLockElement&&running&&!mobile)yaw-=e.movementX*.003;
-});
-$("gameCanvas").addEventListener("click",()=>{
- if(running&&!mobile){
-  $("gameCanvas").requestPointerLock?.();fire();
- }
-});
-window.addEventListener("resize",()=>{
- if(camera&&renderer){
-  camera.aspect=innerWidth/innerHeight;
-  camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);
- }
-});
-$("fire").addEventListener("pointerdown",e=>{e.preventDefault();fire()});
-const stick=$("stick"),knob=$("knob");
-let stickId=null;
-stick.addEventListener("pointerdown",e=>{
- stickId=e.pointerId;stick.setPointerCapture(e.pointerId);moveStick(e);
-});
-stick.addEventListener("pointermove",e=>{if(e.pointerId===stickId)moveStick(e)});
-function moveStick(e){
- let r=stick.getBoundingClientRect();
- let x=e.clientX-r.left-60,y=e.clientY-r.top-60;
- let l=Math.hypot(x,y);
- if(l>40){x*=40/l;y*=40/l;}
- joy.x=x/40;joy.y=y/40;
- knob.style.transform=`translate(${x}px,${y}px)`;
-}
-function resetStick(){
- stickId=null;joy={x:0,y:0};knob.style.transform="translate(0,0)";
-}
-stick.addEventListener("pointerup",resetStick);
-stick.addEventListener("pointercancel",resetStick);
+    </div>
+  </div>
 
-render();
-</script>
+  <!-- ================= 15. DYNAMIC PRICE CALCULATOR & CALENDAR MODAL ================= -->
+  <div id="calculator-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full max-w-3xl glass-dark border border-gold-400/40 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      
+      <div class="p-6 bg-navy-900 border-b border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-2 text-gold-400">
+          <i class="fa-solid fa-calculator text-base"></i>
+          <h3 class="font-serif text-lg font-bold text-white">智慧房價即時試算與空房日曆</h3>
+        </div>
+        <button onclick="closeBookingCalculatorModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-6 text-xs">
+        <!-- Room Selector & Dates -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-gray-400 mb-1">試算房型</label>
+            <select id="calc-room-select" onchange="runPriceCalculation()" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
+              <!-- populated dynamically -->
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1">入住日期</label>
+            <input type="date" id="calc-checkin" onchange="runPriceCalculation()" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1">退房日期</label>
+            <input type="date" id="calc-checkout" onchange="runPriceCalculation()" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
+          </div>
+        </div>
+
+        <!-- Visual Price Calendar Preview -->
+        <div class="bg-navy-900/60 p-4 rounded-xl border border-white/5">
+          <div class="flex justify-between items-center mb-3">
+            <span class="font-bold text-white">房價週期指標（平日享 85 折優惠）</span>
+            <span class="text-[11px] text-gray-400">綠色: 平日優惠 | 金色: 假日熱門</span>
+          </div>
+          <div class="grid grid-cols-7 gap-1.5 text-center text-[10px]">
+            <div class="py-1 text-gray-400">日</div><div class="py-1 text-gray-400">一</div><div class="py-1 text-gray-400">二</div>
+            <div class="py-1 text-gray-400">三</div><div class="py-1 text-gray-400">四</div><div class="py-1 text-gray-400">五</div><div class="py-1 text-gray-400">六</div>
+            
+            <div class="p-2 rounded bg-gold-500/20 text-gold-300">週日<br><span class="opacity-80">標準</span></div>
+            <div class="p-2 rounded bg-emerald-500/20 text-emerald-300">週一<br><span class="opacity-80">-15%</span></div>
+            <div class="p-2 rounded bg-emerald-500/20 text-emerald-300">週二<br><span class="opacity-80">-15%</span></div>
+            <div class="p-2 rounded bg-emerald-500/20 text-emerald-300">週三<br><span class="opacity-80">-15%</span></div>
+            <div class="p-2 rounded bg-emerald-500/20 text-emerald-300">週四<br><span class="opacity-80">-15%</span></div>
+            <div class="p-2 rounded bg-gold-500/20 text-gold-300">週五<br><span class="opacity-80">熱門</span></div>
+            <div class="p-2 rounded bg-amber-500/20 text-amber-300">週六<br><span class="opacity-80">旺季</span></div>
+          </div>
+        </div>
+
+        <!-- Detailed Breakdown -->
+        <div class="p-5 rounded-2xl bg-navy-950 border border-white/10 space-y-2.5">
+          <div class="flex justify-between text-gray-300">
+            <span>住宿夜數：</span>
+            <span id="calc-nights" class="font-bold text-white">2 晚</span>
+          </div>
+          <div class="flex justify-between text-gray-300">
+            <span>房價基準總計：</span>
+            <span id="calc-base-subtotal">NT$ 0</span>
+          </div>
+          <div class="flex justify-between text-gray-300">
+            <span>10% 專屬服務費：</span>
+            <span id="calc-service-fee">NT$ 0</span>
+          </div>
+          <div class="flex justify-between text-gray-300">
+            <span>5% 營業加值稅：</span>
+            <span id="calc-vat">NT$ 0</span>
+          </div>
+          <div class="flex justify-between text-emerald-400 font-medium">
+            <span>會員預訂專屬 9 折優惠：</span>
+            <span id="calc-member-discount">- NT$ 0</span>
+          </div>
+          <div class="pt-3 border-t border-white/10 flex justify-between items-center text-sm font-bold text-white">
+            <span>預估實付總額：</span>
+            <span id="calc-grand-total" class="font-serif text-xl text-gold-400">NT$ 0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-4 bg-navy-900 border-t border-white/10 flex justify-end gap-3">
+        <button onclick="closeBookingCalculatorModal()" class="px-5 py-2.5 rounded-xl border border-white/20 text-gray-300 text-xs">返回</button>
+        <button onclick="proceedToCheckoutFromCalc()" class="px-6 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider transition-all">
+          以此試算前往結帳
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= 16. CHECKOUT FLOW MODAL (3 STEPS) ================= -->
+  <div id="checkout-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/85 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full max-w-2xl glass-dark border border-gold-400/40 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+      
+      <!-- Top Steps Indicator -->
+      <div class="p-6 bg-navy-900 border-b border-white/10 flex items-center justify-between">
+        <div>
+          <h3 class="font-serif text-lg font-bold text-white">尊榮預約確認與結帳</h3>
+          <p class="text-xs text-gold-400" id="checkout-room-banner">豪華海景客房 · 2 晚</p>
+        </div>
+        <button onclick="closeCheckoutModal()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <!-- Step Progress Bar -->
+      <div class="flex border-b border-white/10 bg-navy-950/80 text-[11px] text-center">
+        <div id="step-tab-1" class="flex-1 py-2.5 font-bold text-gold-400 border-b-2 border-gold-400">1. 住客資訊</div>
+        <div id="step-tab-2" class="flex-1 py-2.5 font-semibold text-gray-400 border-b-2 border-transparent">2. 支付方式</div>
+        <div id="step-tab-3" class="flex-1 py-2.5 font-semibold text-gray-400 border-b-2 border-transparent">3. 預訂完成</div>
+      </div>
+
+      <!-- Steps Forms -->
+      <div class="p-6 overflow-y-auto space-y-4 text-xs">
+        
+        <!-- STEP 1: Guest Info -->
+        <div id="checkout-step-1" class="space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-gray-300 mb-1">貴賓姓名 *</label>
+              <input type="text" id="chk-guest-name" required placeholder="例如：林書緯" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400">
+            </div>
+            <div>
+              <label class="block text-gray-300 mb-1">聯絡電話 *</label>
+              <input type="tel" id="chk-guest-phone" required placeholder="0912-345-678" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-gray-300 mb-1">電子信箱 * (發送入住憑證)</label>
+              <input type="email" id="chk-guest-email" required placeholder="guest@example.com" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-gold-400">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-gray-300 mb-1">特別需求備註（可多選）</label>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
+                <label class="flex items-center gap-1.5 text-gray-300 cursor-pointer">
+                  <input type="checkbox" id="req-highfloor" class="rounded bg-navy-950 text-gold-500"> 高樓層安靜房
+                </label>
+                <label class="flex items-center gap-1.5 text-gray-300 cursor-pointer">
+                  <input type="checkbox" id="req-babycot" class="rounded bg-navy-950 text-gold-500"> 嬰兒床／澡盆
+                </label>
+                <label class="flex items-center gap-1.5 text-gray-300 cursor-pointer">
+                  <input type="checkbox" id="req-honeymoon" class="rounded bg-navy-950 text-gold-500"> 蜜月迎賓佈置
+                </label>
+                <label class="flex items-center gap-1.5 text-gray-300 cursor-pointer">
+                  <input type="checkbox" id="req-shuttle" class="rounded bg-navy-950 text-gold-500"> 需高鐵接駁車
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="pt-4 flex justify-end">
+            <button onclick="goToCheckoutStep(2)" class="px-6 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider">
+              下一步：選擇支付方式 <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Payment -->
+        <div id="checkout-step-2" class="hidden space-y-4">
+          <label class="block font-bold text-white mb-2">請選取支付方式：</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <label class="border border-gold-400/50 bg-gold-500/10 rounded-xl p-3 flex flex-col justify-between cursor-pointer">
+              <input type="radio" name="paymethod" value="credit" checked class="text-gold-500 self-end">
+              <i class="fa-solid fa-credit-card text-lg text-gold-400 mb-1"></i>
+              <span class="font-bold text-white">線上信用卡</span>
+              <span class="text-[10px] text-gray-400">Visa / Master / JCB</span>
+            </label>
+
+            <label class="border border-white/10 bg-navy-950 rounded-xl p-3 flex flex-col justify-between cursor-pointer">
+              <input type="radio" name="paymethod" value="linepay" class="text-gold-500 self-end">
+              <i class="fa-brands fa-line text-lg text-green-400 mb-1"></i>
+              <span class="font-bold text-white">LINE Pay</span>
+              <span class="text-[10px] text-gray-400">快捷行動支付</span>
+            </label>
+
+            <label class="border border-white/10 bg-navy-950 rounded-xl p-3 flex flex-col justify-between cursor-pointer">
+              <input type="radio" name="paymethod" value="hotel" class="text-gold-500 self-end">
+              <i class="fa-solid fa-hotel text-lg text-blue-400 mb-1"></i>
+              <span class="font-bold text-white">抵達現場付款</span>
+              <span class="text-[10px] text-gray-400">入住時於前台結清</span>
+            </label>
+          </div>
+
+          <!-- Simulated Credit Card Input -->
+          <div id="credit-card-inputs" class="p-4 rounded-xl bg-navy-950 border border-white/10 space-y-3 mt-4">
+            <div>
+              <label class="block text-gray-400 mb-1 text-[11px]">信用卡卡號</label>
+              <input type="text" placeholder="4242 •••• •••• 4242" value="4242 8888 9999 1234" class="w-full bg-navy-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-white">
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-gray-400 mb-1 text-[11px]">有效期限</label>
+                <input type="text" placeholder="MM/YY" value="08/29" class="w-full bg-navy-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-white">
+              </div>
+              <div>
+                <label class="block text-gray-400 mb-1 text-[11px]">安全碼 CVV</label>
+                <input type="text" placeholder="CVC" value="888" class="w-full bg-navy-900 border border-white/10 rounded-lg px-3 py-2 text-xs text-white">
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-4 flex justify-between">
+            <button onclick="goToCheckoutStep(1)" class="px-5 py-2.5 rounded-xl border border-white/20 text-gray-300 text-xs">
+              <i class="fa-solid fa-arrow-left mr-1"></i> 上一步
+            </button>
+            <button onclick="confirmFinalBooking()" class="px-6 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider">
+              立即確認並支付 <span id="checkout-final-pay-amount"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 3: Success Confirmation -->
+        <div id="checkout-step-3" class="hidden text-center py-8 space-y-4">
+          <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-3xl mx-auto">
+            <i class="fa-solid fa-check"></i>
+          </div>
+          <h4 class="font-serif text-2xl font-bold text-white">預訂已成功確認！</h4>
+          <p class="text-xs text-gray-300 max-w-md mx-auto leading-relaxed">
+            感謝您選擇 AURELIA 度假酒店。訂房憑證與入住指引已寄送至您的電子信箱，此訂單同時已同步至您的「會員訂單中心」。
+          </p>
+          <div class="p-4 rounded-xl bg-navy-950 border border-white/10 inline-block text-left text-xs space-y-1">
+            <p><strong class="text-gold-400">訂單編號：</strong><span id="confirmed-booking-id">#AUR-882910</span></p>
+            <p><strong class="text-gold-400">入住貴賓：</strong><span id="confirmed-guest-name">林先生</span></p>
+            <p><strong class="text-gold-400">房型項目：</strong><span id="confirmed-room-title">豪華海景客房</span></p>
+          </div>
+          <div class="pt-4">
+            <button onclick="closeCheckoutModal(); openMemberModal('bookings');" class="px-6 py-2.5 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs">
+              前往查看我的訂單紀錄
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= 17. RESTAURANT TABLE RESERVATION MODAL ================= -->
+  <div id="table-booking-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+    <div class="relative w-full max-w-md glass-dark border border-gold-400/40 rounded-2xl p-6 shadow-2xl">
+      <button onclick="closeTableBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="text-center mb-6">
+        <i class="fa-solid fa-utensils text-2xl text-gold-400 mb-2"></i>
+        <h4 class="font-serif text-xl font-bold text-white" id="table-modal-restaurant-name">餐廳線上訂位</h4>
+        <p class="text-xs text-gray-400 mt-1">享用米其林星級主廚私房美饌</p>
+      </div>
+
+      <form onsubmit="handleTableReservationSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block text-gray-300 mb-1">用餐貴賓姓名</label>
+          <input type="text" required placeholder="王大明" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3.5 py-2 text-white">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-gray-300 mb-1">預訂日期</label>
+            <input type="date" required id="table-date" class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
+          </div>
+          <div>
+            <label class="block text-gray-300 mb-1">用餐時段</label>
+            <select class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
+              <option>12:00 午餐</option>
+              <option>18:00 晚宴 (第一輪)</option>
+              <option>20:00 晚宴 (第二輪)</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block text-gray-300 mb-1">貴賓人數</label>
+          <select class="w-full bg-navy-950 border border-white/10 rounded-xl px-3 py-2 text-white">
+            <option>2 位貴賓</option>
+            <option>4 位貴賓</option>
+            <option>6 位以上 (獨立包廂)</option>
+          </select>
+        </div>
+        <button type="submit" class="w-full py-3 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider mt-2 transition-colors">
+          送出訂位需求
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 18. NOTIFICATION TOAST ================= -->
+  <div id="toast" class="fixed top-20 right-4 z-50 transform translate-x-full opacity-0 transition-all duration-300 max-w-sm w-full glass-dark border border-gold-400/50 rounded-2xl p-4 shadow-2xl flex items-start space-x-3 text-xs">
+    <div id="toast-icon" class="text-gold-400 text-base mt-0.5"><i class="fa-solid fa-circle-check"></i></div>
+    <div class="flex-1">
+      <p id="toast-title" class="font-bold text-white">AURELIA 禮賓通知</p>
+      <p id="toast-message" class="text-gray-300 text-[11px] mt-0.5 leading-relaxed">訊息內容</p>
+    </div>
+    <button onclick="hideToast()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+
+  <!-- ================= 19. CORE APPLICATION JAVASCRIPT ================= -->
+  <script>
+    /* -------------------------------------------------------------
+       A. DATA STORE: ROOMS, CURRENCIES, REVIEWS, STATE
+    -------------------------------------------------------------- */
+    const ROOM_DATA = [
+      {
+        id: 'deluxe-ocean',
+        title: '豪華海景套房 (Deluxe Ocean Suite)',
+        badge: '超人氣海景首選',
+        size: '62 ㎡ / 18.8 坪',
+        bed: '席夢思加大特大床',
+        basePriceTWD: 9800,
+        rating: 4.9,
+        reviewsCount: 320,
+        desc: '全景落地窗將太平洋海天一線盡收眼底，備有戶外景觀觀星露台、雙人深浸式景觀浴缸與頂級義大利進口羽絨被寢飾。',
+        images: [
+          'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1000&q=80'
+        ],
+        tags: ['太平洋景觀', '獨立大浴缸', '高速 Wi-Fi 6', '膠囊咖啡'],
+        amenities: [
+          'Dyson Supersonic 吹風機', '獨立落地景觀浴缸', 'Nespresso 頂級膠囊咖啡機',
+          '席夢思 Beautyrest 名床', '智慧語音客房中控', 'Bvlgari 奢華洗浴沐浴組'
+        ]
+      },
+      {
+        id: 'executive-skyline',
+        title: '尊爵行政海景套房 (Executive Skyline King)',
+        badge: '行政酒廊禮遇',
+        size: '92 ㎡ / 27.8 坪',
+        bed: '頂級加州特大雙人床',
+        basePriceTWD: 16800,
+        rating: 5.0,
+        reviewsCount: 198,
+        desc: '設有獨立尊榮會客起居室與私密乾濕分離蒸氣衛浴。入住即享 AURA 頂級行政酒廊全日免費精緻小點與暮光 Happy Hour 暢飲。',
+        images: [
+          'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1000&q=80'
+        ],
+        tags: ['獨立起居室', '行政酒廊禮遇', '香檳迎賓禮', '白手套管家'],
+        amenities: [
+          'Dyson 旗艦全系列吹風機', '專屬乾濕分離蒸氣室', '香檳迎賓與特選魚子醬',
+          '行政酒廊全日通行證', 'iPad 智慧燈光窗簾中控', 'Diptyque 頂級香氛備品'
+        ]
+      },
+      {
+        id: 'skyline-pool-villa',
+        title: 'AURELIA 私人無邊際泳池別墅 (Presidential Pool Villa)',
+        badge: '極致莊園隱私',
+        size: '185 ㎡ / 56 坪',
+        bed: '雙臥室 (特大床 x 2)',
+        basePriceTWD: 32000,
+        rating: 5.0,
+        reviewsCount: 88,
+        desc: '完全獨立隱蔽的莊園別墅，坐擁 12 米專屬私人恆溫無邊際泳池、日光甲板與 24 小時白手套私人管家私廚量身服務。',
+        images: [
+          'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1000&q=80',
+          'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1000&q=80'
+        ],
+        tags: ['私人恆溫泳池', '24H 私人管家', '戶外星空烤肉', '寵物友善'],
+        amenities: [
+          '12 米私人恆溫泳池', '24 小時專屬管家私廚', '客製化香檳池畔早餐',
+          'Bang & Olufsen 頂級音響', '戶外壁爐與星空沙發', 'Hermès 頂級愛馬仕沐浴套裝'
+        ]
+      }
+    ];
+
+    const CURRENCIES = {
+      TWD: { symbol: 'NT$', rate: 1 },
+      USD: { symbol: '$', rate: 0.031 },
+      JPY: { symbol: '¥', rate: 4.82 }
+    };
+
+    // Global Interactive State
+    let currentCurrency = 'TWD';
+    let currentLang = 'zh';
+    let wishlist = [];
+    let currentUser = null;
+    let userBookings = [
+      {
+        id: 'AUR-918234',
+        roomTitle: '豪華海景套房 (Deluxe Ocean Suite)',
+        checkin: '2026-11-20',
+        checkout: '2026-11-22',
+        nights: 2,
+        totalTWD: 21560,
+        status: '已確認 (即將成行)'
+      }
+    ];
+    let selectedRoomForCheckout = ROOM_DATA[0];
+    let selectedCheckoutNights = 2;
+
+    /* -------------------------------------------------------------
+       B. INITIALIZATION ON LOAD
+    -------------------------------------------------------------- */
+    window.addEventListener('DOMContentLoaded', () => {
+      // Set default dates to Tomorrow & Day After Tomorrow
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      const dayAfter = new Date(today);
+      dayAfter.setDate(dayAfter.getDate() + 3);
+
+      const toISO = (d) => d.toISOString().split('T')[0];
+      
+      const elCheckin = document.getElementById('hero-checkin');
+      const elCheckout = document.getElementById('hero-checkout');
+      const calcIn = document.getElementById('calc-checkin');
+      const calcOut = document.getElementById('calc-checkout');
+      const tableDate = document.getElementById('table-date');
+
+      if (elCheckin && elCheckout) {
+        elCheckin.min = toISO(today);
+        elCheckin.value = toISO(tomorrow);
+        elCheckout.min = toISO(tomorrow);
+        elCheckout.value = toISO(dayAfter);
+      }
+      if (calcIn && calcOut) {
+        calcIn.value = toISO(tomorrow);
+        calcOut.value = toISO(dayAfter);
+      }
+      if (tableDate) {
+        tableDate.min = toISO(today);
+        tableDate.value = toISO(tomorrow);
+      }
+
+      // Load saved state
+      loadSavedState();
+
+      // Render Dynamic Views
+      renderRooms();
+      populateCalculatorSelect();
+      runPriceCalculation();
+      updateWishlistUI();
+      renderUserBookings();
+    });
+
+    function loadSavedState() {
+      const savedUser = localStorage.getItem('aurelia_user');
+      if (savedUser) {
+        currentUser = JSON.parse(savedUser);
+        updateNavUserDisplay();
+      }
+      const savedWishlist = localStorage.getItem('aurelia_wishlist');
+      if (savedWishlist) {
+        wishlist = JSON.parse(savedWishlist);
+      }
+      const savedBookings = localStorage.getItem('aurelia_bookings');
+      if (savedBookings) {
+        userBookings = JSON.parse(savedBookings);
+      }
+    }
+
+    /* -------------------------------------------------------------
+       C. CURRENCY & FORMATTING UTILITIES
+    -------------------------------------------------------------- */
+    function formatMoney(amountTWD) {
+      const c = CURRENCIES[currentCurrency];
+      const converted = amountTWD * c.rate;
+      if (currentCurrency === 'JPY') {
+        return `${c.symbol} ${Math.round(converted).toLocaleString()}`;
+      } else if (currentCurrency === 'USD') {
+        return `${c.symbol} ${Math.round(converted).toLocaleString()}`;
+      }
+      return `${c.symbol} ${Math.round(converted).toLocaleString()}`;
+    }
+
+    function changeCurrency(val) {
+      currentCurrency = val;
+      renderRooms();
+      runPriceCalculation();
+      renderWishlistTab();
+      renderUserBookings();
+      showToast(`幣別已切換為 ${val}，所有房價與試算已即時換算。`, 'info');
+    }
+
+    function changeLanguage(lang) {
+      currentLang = lang;
+      showToast(`語言切換至 ${lang === 'zh' ? '繁體中文' : lang === 'en' ? 'English' : '日本語'} (展示多語系切換功能)`, 'info');
+    }
+
+    /* -------------------------------------------------------------
+       D. RENDER ROOMS
+    -------------------------------------------------------------- */
+    function renderRooms() {
+      const container = document.getElementById('rooms-grid');
+      if (!container) return;
+
+      container.innerHTML = ROOM_DATA.map(room => {
+        const isFav = wishlist.includes(room.id);
+        const heartColor = isFav ? 'text-red-500 fa-solid' : 'text-gray-300 fa-regular';
+
+        return `
+          <div class="glass-card border border-white/10 rounded-2xl overflow-hidden hover:border-gold-500/50 transition-all duration-300 flex flex-col justify-between group">
+            <div>
+              <div class="relative h-64 overflow-hidden">
+                <img src="${room.images[0]}" alt="${room.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                <span class="absolute top-3 left-3 bg-gold-500 text-navy-950 px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
+                  ${room.badge}
+                </span>
+                <button onclick="toggleWishlist('${room.id}')" class="absolute top-3 right-3 w-9 h-9 rounded-full bg-navy-950/80 backdrop-blur-md flex items-center justify-center text-sm transition-transform hover:scale-110" title="收藏">
+                  <i class="${heartColor} fa-heart"></i>
+                </button>
+                <div class="absolute bottom-3 left-3 bg-navy-950/80 backdrop-blur-md px-3 py-1 rounded-full text-gold-300 text-[11px]">
+                  ${room.size} · ${room.bed}
+                </div>
+              </div>
+
+              <div class="p-6">
+                <div class="flex items-center justify-between mb-2">
+                  <h3 class="font-serif text-lg font-bold text-white group-hover:text-gold-300 transition-colors">${room.title}</h3>
+                  <div class="text-xs text-gold-400 flex items-center gap-1">
+                    <i class="fa-solid fa-star"></i> ${room.rating}
+                  </div>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed mb-4 line-clamp-2">${room.desc}</p>
+                <div class="flex flex-wrap gap-1.5 mb-2">
+                  ${room.tags.map(t => `<span class="text-[10px] bg-navy-900 border border-white/5 text-gray-300 px-2 py-0.5 rounded">${t}</span>`).join('')}
+                </div>
+              </div>
+            </div>
+
+            <div class="p-6 pt-0 border-t border-white/10 mt-2 flex items-center justify-between">
+              <div>
+                <span class="text-[11px] text-gray-400">官方早鳥價</span>
+                <div class="text-lg font-bold text-white font-serif">${formatMoney(room.basePriceTWD)} <span class="text-xs font-normal text-gray-400">/ 晚</span></div>
+              </div>
+              <div class="flex gap-2">
+                <button onclick="openRoomGallery('${room.id}')" class="px-3 py-2 rounded-xl border border-white/20 hover:border-gold-400 text-gray-300 hover:text-gold-400 text-xs transition-colors" title="探索細節相簿">
+                  <i class="fa-solid fa-images"></i>
+                </button>
+                <button onclick="initiateCheckoutForRoom('${room.id}')" class="px-4 py-2 rounded-xl bg-gold-500 hover:bg-gold-400 text-navy-950 font-bold text-xs uppercase tracking-wider transition-all">
+                  立即預訂
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* -------------------------------------------------------------
+       E. WISHLIST MANAGEMENT
+    -------------------------------------------------------------- */
+    function toggleWishlist(roomId) {
+      if (wishlist.includes(roomId)) {
+        wishlist = wishlist.filter(id => id !== roomId);
+        showToast('已自心願清單移除該房型。');
+      } else {
+        wishlist.push(roomId);
+        showToast('已加入您的尊榮心願清單！');
+      }
+      localStorage.setItem('aurelia_wishlist', JSON.stringify(wishlist));
+      updateWishlistUI();
+      renderRooms();
+      renderWishlistTab();
+    }
+
+    function updateWishlistUI() {
+      const badge = document.getElementById('wishlist-badge');
+      const countSpan = document.getElementById('dashboard-wishlist-count');
+      if (badge) {
+        badge.textContent = wishlist.length;
+        if (wishlist.length > 0) {
+          badge.classList.remove('scale-0');
+        } else {
+          badge.classList.add('scale-0');
+        }
+      }
+      if (countSpan) countSpan.textContent = wishlist.length;
+    }
+
+    function renderWishlistTab() {
+      const container = document.getElementById('user-wishlist-items');
+      if (!container) return;
+
+      if (wishlist.length === 0) {
+        container.innerHTML = `<p class="text-gray-400 text-center py-6">目前心願單尚無收藏房型。點擊房型卡片右上角愛心即可快速收藏！</p>`;
+        return;
+      }
+
+      const favRooms = ROOM_DATA.filter(r => wishlist.includes(r.id));
+      container.innerHTML = favRooms.map(r => `
+        <div class="p-3 bg-navy-950 border border-white/10 rounded-xl flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <img src="${r.images[0]}" class="w-16 h-12 object-cover rounded-lg border border-white/10">
+            <div>
+              <h5 class="font-bold text-white">${r.title}</h5>
+              <p class="text-[11px] text-gold-400">${formatMoney(r.basePriceTWD)} / 晚 · ${r.size}</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="closeMemberModal(); initiateCheckoutForRoom('${r.id}');" class="px-3 py-1.5 rounded-lg bg-gold-500 text-navy-950 font-bold text-xs hover:bg-gold-400">
+              預訂
+            </button>
+            <button onclick="toggleWishlist('${r.id}')" class="p-2 text-gray-400 hover:text-red-400">
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* -------------------------------------------------------------
+       F. ROOM GALLERY & DETAIL LIGHTBOX
+    -------------------------------------------------------------- */
+    function openRoomGallery(roomId) {
+      const room = ROOM_DATA.find(r => r.id === roomId);
+      if (!room) return;
+
+      document.getElementById('gallery-room-name').textContent = room.title;
+      document.getElementById('gallery-room-desc').textContent = room.desc;
+      document.getElementById('gallery-room-price').textContent = `${formatMoney(room.basePriceTWD)} / 晚`;
+      
+      const mainImg = document.getElementById('gallery-main-img');
+      mainImg.src = room.images[0];
+
+      // Thumbs
+      const thumbs = document.getElementById('gallery-thumbnails');
+      thumbs.innerHTML = room.images.map((img, idx) => `
+        <button onclick="switchGalleryImg('${img}', ${idx})" class="h-16 rounded-xl overflow-hidden border-2 border-white/10 hover:border-gold-400 transition-all">
+          <img src="${img}" class="w-full h-full object-cover">
+        </button>
+      `).join('');
+
+      // Amenities
+      const amenitiesBox = document.getElementById('gallery-amenities');
+      amenitiesBox.innerHTML = room.amenities.map(a => `
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-gem text-gold-400 text-[10px]"></i>
+          <span>${a}</span>
+        </div>
+      `).join('');
+
+      document.getElementById('gallery-book-now-btn').onclick = () => {
+        closeGalleryModal();
+        initiateCheckoutForRoom(room.id);
+      };
+
+      const modal = document.getElementById('room-gallery-modal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function switchGalleryImg(src, idx) {
+      document.getElementById('gallery-main-img').src = src;
+      const tags = ['客房全景', '衛浴水療設施', '獨立景觀露台', '戶外夕陽全貌'];
+      document.getElementById('gallery-tag').textContent = tags[idx] || '奢華視角';
+    }
+
+    function closeGalleryModal() {
+      document.getElementById('room-gallery-modal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    /* -------------------------------------------------------------
+       G. PRICE CALCULATOR & VISUAL CALENDAR
+    -------------------------------------------------------------- */
+    function populateCalculatorSelect() {
+      const sel = document.getElementById('calc-room-select');
+      if (!sel) return;
+      sel.innerHTML = ROOM_DATA.map(r => `<option value="${r.id}">${r.title} (${formatMoney(r.basePriceTWD)}/晚)</option>`).join('');
+    }
+
+    function openBookingCalculatorModal() {
+      const modal = document.getElementById('calculator-modal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      runPriceCalculation();
+    }
+
+    function closeBookingCalculatorModal() {
+      document.getElementById('calculator-modal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function runPriceCalculation() {
+      const selId = document.getElementById('calc-room-select').value;
+      const room = ROOM_DATA.find(r => r.id === selId) || ROOM_DATA[0];
+      const inDate = new Date(document.getElementById('calc-checkin').value);
+      const outDate = new Date(document.getElementById('calc-checkout').value);
+
+      let diffDays = Math.ceil((outDate - inDate) / (1000 * 60 * 60 * 24));
+      if (isNaN(diffDays) || diffDays < 1) diffDays = 1;
+
+      selectedCheckoutNights = diffDays;
+      selectedRoomForCheckout = room;
+
+      const baseSubtotal = room.basePriceTWD * diffDays;
+      const serviceFee = baseSubtotal * 0.10;
+      const vat = baseSubtotal * 0.05;
+      const memberDiscount = baseSubtotal * 0.10; // 10% Member Privilege
+      const grandTotal = baseSubtotal + serviceFee + vat - memberDiscount;
+
+      document.getElementById('calc-nights').textContent = `${diffDays} 晚`;
+      document.getElementById('calc-base-subtotal').textContent = formatMoney(baseSubtotal);
+      document.getElementById('calc-service-fee').textContent = formatMoney(serviceFee);
+      document.getElementById('calc-vat').textContent = formatMoney(vat);
+      document.getElementById('calc-member-discount').textContent = `- ${formatMoney(memberDiscount)}`;
+      document.getElementById('calc-grand-total').textContent = formatMoney(grandTotal);
+    }
+
+    function proceedToCheckoutFromCalc() {
+      closeBookingCalculatorModal();
+      openCheckoutModal(selectedRoomForCheckout, selectedCheckoutNights);
+    }
+
+    function handleQuickSearch(e) {
+      e.preventDefault();
+      const inVal = document.getElementById('hero-checkin').value;
+      const outVal = document.getElementById('hero-checkout').value;
+      
+      document.getElementById('calc-checkin').value = inVal;
+      document.getElementById('calc-checkout').value = outVal;
+      
+      showToast(`已為您篩選 ${inVal} 至 ${outVal} 的奢華空房，即刻開啟試算確認！`, 'info');
+      setTimeout(() => {
+        openBookingCalculatorModal();
+      }, 500);
+    }
+
+    /* -------------------------------------------------------------
+       H. CHECKOUT FLOW (3 STEPS)
+    -------------------------------------------------------------- */
+    function initiateCheckoutForRoom(roomId) {
+      const room = ROOM_DATA.find(r => r.id === roomId) || ROOM_DATA[0];
+      openCheckoutModal(room, 2);
+    }
+
+    function openCheckoutModal(room, nights = 2) {
+      selectedRoomForCheckout = room;
+      selectedCheckoutNights = nights;
+
+      document.getElementById('checkout-room-banner').textContent = `${room.title} · ${nights} 晚`;
+      
+      // Auto-fill user if logged in
+      if (currentUser) {
+        document.getElementById('chk-guest-name').value = currentUser.name || '';
+        document.getElementById('chk-guest-email').value = currentUser.email || '';
+      }
+
+      const totalTWD = Math.round(room.basePriceTWD * nights * 1.05);
+      document.getElementById('checkout-final-pay-amount').textContent = `(${formatMoney(totalTWD)})`;
+
+      goToCheckoutStep(1);
+      const modal = document.getElementById('checkout-modal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById('checkout-modal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function goToCheckoutStep(step) {
+      [1, 2, 3].forEach(s => {
+        document.getElementById(`checkout-step-${s}`).classList.add('hidden');
+        const tab = document.getElementById(`step-tab-${s}`);
+        tab.classList.remove('text-gold-400', 'border-gold-400');
+        tab.classList.add('text-gray-400', 'border-transparent');
+      });
+
+      document.getElementById(`checkout-step-${step}`).classList.remove('hidden');
+      const activeTab = document.getElementById(`step-tab-${step}`);
+      activeTab.classList.add('text-gold-400', 'border-gold-400');
+      activeTab.classList.remove('text-gray-400', 'border-transparent');
+    }
+
+    function confirmFinalBooking() {
+      const name = document.getElementById('chk-guest-name').value || '貴賓';
+      const email = document.getElementById('chk-guest-email').value || 'guest@aurelia.com';
+      const orderId = '#AUR-' + Math.floor(100000 + Math.random() * 900000);
+      const totalTWD = Math.round(selectedRoomForCheckout.basePriceTWD * selectedCheckoutNights * 1.05);
+
+      const newBooking = {
+        id: orderId,
+        roomTitle: selectedRoomForCheckout.title,
+        checkin: document.getElementById('hero-checkin').value,
+        checkout: document.getElementById('hero-checkout').value,
+        nights: selectedCheckoutNights,
+        totalTWD: totalTWD,
+        guestName: name,
+        status: '預訂成功 · 已付款'
+      };
+
+      userBookings.unshift(newBooking);
+      localStorage.setItem('aurelia_bookings', JSON.stringify(userBookings));
+
+      // Display Confirmation
+      document.getElementById('confirmed-booking-id').textContent = orderId;
+      document.getElementById('confirmed-guest-name').textContent = name;
+      document.getElementById('confirmed-room-title').textContent = selectedRoomForCheckout.title;
+
+      renderUserBookings();
+      goToCheckoutStep(3);
+      showToast('恭喜！預訂已成功確認，尊榮迎賓禮遇已為您保留。');
+    }
+
+    /* -------------------------------------------------------------
+       I. AUTHENTICATION & MEMBER CENTER
+    -------------------------------------------------------------- */
+    let isSignUp = false;
+
+    function openLoginModal() {
+      const modal = document.getElementById('auth-modal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeAuthModal() {
+      document.getElementById('auth-modal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function switchAuthMode() {
+      isSignUp = !isSignUp;
+      const title = document.getElementById('auth-title');
+      const sub = document.getElementById('auth-subtitle');
+      const nameGroup = document.getElementById('auth-name-group');
+      const options = document.getElementById('auth-options');
+      const submit = document.getElementById('auth-submit-btn');
+      const switchBtn = document.getElementById('auth-switch-btn');
+      const switchText = document.getElementById('auth-switch-text');
+
+      if (isSignUp) {
+        title.textContent = '註冊尊榮會籍';
+        sub.textContent = '加入享會員現折 NT$ 1,000 與入會迎賓 1,000 點數禮遇';
+        nameGroup.classList.remove('hidden');
+        options.classList.add('hidden');
+        submit.textContent = '確認加入會籍';
+        switchText.textContent = '已經是會員？';
+        switchBtn.textContent = '切換至登入';
+      } else {
+        title.textContent = '尊榮會員登入';
+        sub.textContent = '登入以享會員保證 9折 優惠、升等特權與迎賓點數';
+        nameGroup.classList.add('hidden');
+        options.classList.remove('hidden');
+        submit.textContent = '立即登入';
+        switchText.textContent = '尚未成為尊榮會員？';
+        switchBtn.textContent = '立即註冊會員';
+      }
+    }
+
+    function togglePasswordView() {
+      const p = document.getElementById('auth-password');
+      const icon = document.getElementById('pwd-eye-icon');
+      if (p.type === 'password') {
+        p.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        p.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('auth-email').value;
+      const name = document.getElementById('auth-name').value || email.split('@')[0];
+
+      currentUser = {
+        name: name,
+        email: email,
+        points: 2450
+      };
+
+      localStorage.setItem('aurelia_user', JSON.stringify(currentUser));
+      updateNavUserDisplay();
+      closeAuthModal();
+      showToast(`歡迎光臨，尊貴的會員 ${name} 貴賓！`);
+    }
+
+    function handleSocialAuth(platform) {
+      currentUser = {
+        name: `${platform} 貴賓`,
+        email: `guest@${platform.toLowerCase()}.com`,
+        points: 1500
+      };
+      localStorage.setItem('aurelia_user', JSON.stringify(currentUser));
+      updateNavUserDisplay();
+      closeAuthModal();
+      showToast(`已成功透過 ${platform} 安全登入！`);
+    }
+
+    function handleLogout() {
+      currentUser = null;
+      localStorage.removeItem('aurelia_user');
+      updateNavUserDisplay();
+      closeMemberModal();
+      showToast('您已成功安全登出。期待再次為您服務！', 'info');
+    }
+
+    function updateNavUserDisplay() {
+      const container = document.getElementById('nav-auth-container');
+      if (!container) return;
+
+      if (currentUser) {
+        container.innerHTML = `
+          <button onclick="openMemberModal('bookings')" class="flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-gold-400/50 bg-gold-500/10 hover:bg-gold-500 hover:text-navy-950 text-gold-300 transition-all text-xs font-semibold">
+            <span class="w-6 h-6 rounded-full bg-gold-500 text-navy-950 flex items-center justify-center font-serif text-[11px] font-bold">
+              ${currentUser.name[0] || 'V'}
+            </span>
+            <span class="max-w-[90px] truncate">${currentUser.name}</span>
+          </button>
+        `;
+      } else {
+        container.innerHTML = `
+          <button onclick="openLoginModal()" class="px-5 py-2.5 rounded-full border border-gold-500/70 bg-gold-500/10 hover:bg-gold-500 hover:text-navy-950 text-gold-300 text-xs uppercase tracking-widest transition-all duration-300 flex items-center gap-2 shadow-sm">
+            <i class="fa-regular fa-user"></i>
+            <span>會員登入</span>
+          </button>
+        `;
+      }
+    }
+
+    function openMemberModal(initialTab = 'bookings') {
+      if (!currentUser) {
+        openLoginModal();
+        return;
+      }
+
+      document.getElementById('dashboard-user-name').textContent = currentUser.name;
+      document.getElementById('dashboard-user-email').textContent = currentUser.email;
+      document.getElementById('dashboard-avatar-text').textContent = currentUser.name[0] || 'V';
+      
+      switchDashboardTab(initialTab);
+      const modal = document.getElementById('member-dashboard-modal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeMemberModal() {
+      document.getElementById('member-dashboard-modal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function switchDashboardTab(tabName) {
+      ['bookings', 'coupons', 'wishlist'].forEach(t => {
+        document.getElementById(`tab-content-${t}`).classList.add('hidden');
+        const b = document.getElementById(`tab-btn-${t}`);
+        b.classList.remove('text-gold-400', 'border-gold-400');
+        b.classList.add('text-gray-400', 'border-transparent');
+      });
+
+      document.getElementById(`tab-content-${tabName}`).classList.remove('hidden');
+      const activeBtn = document.getElementById(`tab-btn-${tabName}`);
+      activeBtn.classList.add('text-gold-400', 'border-gold-400');
+      activeBtn.classList.remove('text-gray-400', 'border-transparent');
+
+      if (tabName === 'wishlist') renderWishlistTab();
+    }
+
+    function renderUserBookings() {
+      const container = document.getElementById('user-bookings-list');
+      if (!container) return;
+
+      if (userBookings.length === 0) {
+        container.innerHTML = `<p class="text-gray-400 text-center py-6">目前尚無預訂紀錄。探索房型即刻預約頂級假期！</p>`;
+        return;
+      }
+
+      container.innerHTML = userBookings.map((b, idx) => `
+        <div class="p-4 bg-navy-950 border border-white/10 rounded-xl flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-gold-400 font-bold">${b.id}</span>
+              <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded border border-emerald-500/30">${b.status}</span>
+            </div>
+            <h4 class="font-bold text-white text-sm mt-1">${b.roomTitle}</h4>
+            <p class="text-gray-400 text-[11px] mt-0.5">入住：${b.checkin} → 退房：${b.checkout} (${b.nights} 晚)</p>
+          </div>
+          <div class="text-right">
+            <span class="text-base font-bold text-white">${formatMoney(b.totalTWD)}</span>
+            <div class="mt-2 flex gap-2">
+              <button onclick="cancelUserBooking(${idx})" class="text-red-400 hover:text-red-300 text-[11px] underline">取消訂單</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function cancelUserBooking(idx) {
+      if (confirm('確定要取消此筆預訂嗎？（入住前 7 天免費取消）')) {
+        userBookings.splice(idx, 1);
+        localStorage.setItem('aurelia_bookings', JSON.stringify(userBookings));
+        renderUserBookings();
+        showToast('預訂已成功取消，退款將循原支付管道退回。');
+      }
+    }
+
+    function copyCouponCode(code) {
+      document.execCommand('copy');
+      showToast(`已複製優惠代碼 [${code}]，結帳時可輸入折抵！`);
+    }
+
+    /* -------------------------------------------------------------
+       J. RESTAURANT & NEWSLETTER
+    -------------------------------------------------------------- */
+    let currentTableResName = '';
+
+    function openTableBookingModal(resName) {
+      currentTableResName = resName;
+      document.getElementById('table-modal-restaurant-name').textContent = resName;
+      const modal = document.getElementById('table-booking-modal');
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+    }
+
+    function closeTableBookingModal() {
+      document.getElementById('table-booking-modal').classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function handleTableReservationSubmit(e) {
+      e.preventDefault();
+      closeTableBookingModal();
+      showToast(`已收到您於「${currentTableResName}」的訂位需求，禮賓專員將發送簡訊確認席次！`);
+    }
+
+    function downloadMenuPDF(title) {
+      showToast(`正在為您下載「${title}」高清季節菜單 PDF...`, 'info');
+    }
+
+    function handleNewsletterSubmit() {
+      const email = document.getElementById('newsletter-email').value;
+      if (!email) {
+        showToast('請輸入有效的電子信箱以領取代碼！', 'warning');
+        return;
+      }
+      showToast('恭喜！NT$ 1,000 折扣碼 [AURA1000] 已寄送至您的信箱。');
+      document.getElementById('newsletter-email').value = '';
+    }
+
+    /* -------------------------------------------------------------
+       K. FAQ ACCORDION & MOBILE MENU
+    -------------------------------------------------------------- */
+    function toggleFaq(btn) {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('i');
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.classList.add('rotate-180');
+      } else {
+        content.classList.add('hidden');
+        icon.classList.remove('rotate-180');
+      }
+    }
+
+    function toggleMobileMenu() {
+      const m = document.getElementById('mobile-menu');
+      const icon = document.getElementById('menu-icon');
+      if (m.classList.contains('hidden')) {
+        m.classList.remove('hidden');
+        icon.classList.replace('fa-bars', 'fa-xmark');
+      } else {
+        m.classList.add('hidden');
+        icon.classList.replace('fa-xmark', 'fa-bars');
+      }
+    }
+
+    /* -------------------------------------------------------------
+       L. AI CONCIERGE CHAT WIDGET
+    -------------------------------------------------------------- */
+    function toggleAiChat() {
+      const w = document.getElementById('ai-chat-window');
+      w.classList.toggle('hidden');
+    }
+
+    function handleChatSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('chat-input');
+      const query = input.value.trim();
+      if (!query) return;
+
+      appendChatMessage(query, 'user');
+      input.value = '';
+
+      setTimeout(() => {
+        const reply = generateAiReply(query);
+        appendChatMessage(reply, 'bot');
+      }, 600);
+    }
+
+    function sendQuickPrompt(promptText) {
+      appendChatMessage(promptText, 'user');
+      setTimeout(() => {
+        const reply = generateAiReply(promptText);
+        appendChatMessage(reply, 'bot');
+      }, 500);
+    }
+
+    function appendChatMessage(text, role) {
+      const c = document.getElementById('chat-messages');
+      const isUser = role === 'user';
+      const row = document.createElement('div');
+      row.className = isUser ? 'flex justify-end' : 'flex gap-2.5';
+
+      if (isUser) {
+        row.innerHTML = `<div class="bg-gold-500 text-navy-950 p-2.5 rounded-xl rounded-tr-none font-medium leading-relaxed max-w-[85%]">${text}</div>`;
+      } else {
+        row.innerHTML = `
+          <div class="w-6 h-6 rounded-full bg-gold-500/20 text-gold-400 flex items-center justify-center shrink-0 text-[10px]">
+            <i class="fa-solid fa-crown"></i>
+          </div>
+          <div class="bg-navy-900 border border-white/10 p-3 rounded-xl rounded-tl-none text-gray-300 leading-relaxed max-w-[85%]">
+            ${text}
+          </div>
+        `;
+      }
+      c.appendChild(row);
+      c.scrollTop = c.scrollHeight;
+    }
+
+    function generateAiReply(msg) {
+      if (msg.includes('入住') || msg.includes('退房') || msg.includes('時間')) {
+        return '本度假村入住時間為 15:00 後，退房時間為 11:00 前。登入金卡會員可享延遲至 13:00 退房之尊榮禮遇！';
+      }
+      if (msg.includes('接駁') || msg.includes('車') || msg.includes('高鐵')) {
+        return '我們每日備有 4 班高鐵與台東火車站免費商務禮賓接駁車（10:30, 14:00, 16:30, 19:00），歡迎提前向禮賓部預留席位！';
+      }
+      if (msg.includes('餐廳') || msg.includes('吃') || msg.includes('百匯')) {
+        return '強烈推薦體驗我們的「HARVEST 全日星級自助百匯」（海鮮生蠔與熟成和牛）或預約「AURA 頂樓星空酒吧」品嚐冠軍客製調酒！';
+      }
+      if (msg.includes('真人') || msg.includes('客服') || msg.includes('電話')) {
+        return '您可隨時撥打 24 小時白手套禮賓專線：+886 (02) 2345-8888，或直接由大廳服務人員為您即刻服務。';
+      }
+      return '收到您的需求！AURELIA 禮賓團隊將竭誠為您服務，您可點擊房型直接預訂或使用試算日曆查看空房。';
+    }
+
+    /* -------------------------------------------------------------
+       M. TOAST NOTIFICATION UTILITY
+    -------------------------------------------------------------- */
+    let toastTimer;
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toast-message');
+      const icon = document.getElementById('toast-icon');
+
+      msg.textContent = message;
+      if (type === 'warning') {
+        icon.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-amber-400"></i>';
+      } else if (type === 'info') {
+        icon.innerHTML = '<i class="fa-solid fa-circle-info text-sky-400"></i>';
+      } else {
+        icon.innerHTML = '<i class="fa-solid fa-circle-check text-gold-400"></i>';
+      }
+
+      toast.classList.remove('translate-x-full', 'opacity-0');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(hideToast, 4000);
+    }
+
+    function hideToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('translate-x-full', 'opacity-0');
+    }
+  </script>
 </body>
 </html>
