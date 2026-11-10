@@ -161,11 +161,17 @@
         <button onclick="switchView('game')" class="nav-btn text-gray-200 hover:text-gold-400 transition-colors flex items-center gap-2 py-1 border-b-2 border-transparent hover:border-gold-500" data-view="game">
           <i class="fa-solid fa-gamepad text-xs"></i> 3D 球場競技
         </button>
+        <button onclick="startDerbyMode()" class="nav-btn text-gray-200 hover:text-gold-400 transition-colors flex items-center gap-2 py-1 border-b-2 border-transparent hover:border-gold-500">
+          <i class="fa-solid fa-fire text-xs text-orange-400 animate-pulse"></i> 全壘打大賽
+        </button>
+        <button onclick="openGachaModal()" class="nav-btn text-gray-200 hover:text-gold-400 transition-colors flex items-center gap-2 py-1 border-b-2 border-transparent hover:border-gold-500">
+          <i class="fa-solid fa-box-open text-xs text-purple-400"></i> 球星十連抽
+        </button>
         <button onclick="openLineupModal()" class="nav-btn text-gray-200 hover:text-gold-400 transition-colors flex items-center gap-2 py-1 border-b-2 border-transparent hover:border-gold-500">
           <i class="fa-solid fa-clipboard-user text-xs text-amber-400"></i> 先發陣容戰術板
         </button>
         <button onclick="openPlayerStoreModal()" class="nav-btn text-gray-200 hover:text-gold-400 transition-colors flex items-center gap-2 py-1 border-b-2 border-transparent hover:border-gold-500">
-          <i class="fa-solid fa-store text-xs text-emerald-400"></i> 職棒球星商城 (100人)
+          <i class="fa-solid fa-store text-xs text-emerald-400"></i> 職棒球星 (100人)
         </button>
         <button onclick="openQuestModal()" class="nav-btn text-gray-200 hover:text-gold-400 transition-colors flex items-center gap-2 py-1 border-b-2 border-transparent hover:border-gold-500">
           <i class="fa-solid fa-medal text-xs text-yellow-400 animate-pulse"></i> 活動與賽季任務
@@ -175,9 +181,6 @@
         </button>
         <button onclick="switchView('vip')" class="nav-btn text-gray-200 hover:text-gold-400 transition-colors flex items-center gap-2 py-1 border-b-2 border-transparent hover:border-gold-500" data-view="vip">
           <i class="fa-solid fa-crown text-xs text-gold-400"></i> 名人堂尊榮會員
-        </button>
-        <button onclick="openLockerModal()" class="nav-btn text-gray-200 hover:text-gold-400 transition-colors flex items-center gap-2 py-1 border-b-2 border-transparent hover:border-gold-500">
-          <i class="fa-solid fa-vest-patches text-xs"></i> 球員裝備室
         </button>
       </nav>
 
@@ -264,6 +267,16 @@
                 立即登板揮棒 (PLAY NOW)
               </button>
               
+              <button onclick="startDerbyMode()" class="px-7 py-4 rounded-xl bg-gradient-to-r from-orange-500 to-red-600 hover:from-orange-400 hover:to-red-500 text-white font-extrabold text-sm tracking-wide shadow-lg transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                <i class="fa-solid fa-fire text-yellow-300 animate-bounce"></i>
+                60秒全壘打大賽
+              </button>
+
+              <button onclick="openGachaModal()" class="px-7 py-4 rounded-xl glass-card border border-purple-500/50 hover:border-purple-400 text-purple-300 font-bold text-sm tracking-wide transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                <i class="fa-solid fa-box-open text-purple-400"></i>
+                十連抽傳奇卡包
+              </button>
+
               <button onclick="openQuestModal()" class="px-7 py-4 rounded-xl glass-card border border-yellow-500/50 hover:border-yellow-400 text-yellow-300 font-bold text-sm tracking-wide transition-all transform hover:-translate-y-1 flex items-center gap-2">
                 <i class="fa-solid fa-calendar-check text-yellow-400"></i>
                 每日活動與簽到
@@ -277,11 +290,6 @@
               <button onclick="openPlayerStoreModal()" class="px-7 py-4 rounded-xl glass-card border border-emerald-500/40 hover:border-emerald-400 text-emerald-300 font-bold text-sm tracking-wide transition-all transform hover:-translate-y-1 flex items-center gap-2">
                 <i class="fa-solid fa-users text-emerald-400"></i>
                 簽約百大球星 (100名單)
-              </button>
-
-              <button onclick="switchView('vip')" class="px-7 py-4 rounded-xl glass-card border border-gold-500/40 hover:border-gold-400 text-gold-300 font-bold text-sm tracking-wide transition-all transform hover:-translate-y-1 flex items-center gap-2">
-                <i class="fa-solid fa-crown text-gold-400"></i>
-                解鎖名人堂黑金卡
               </button>
             </div>
 
@@ -386,143 +394,191 @@
     <!-- ---------------------------
          VIEW 2: 3D 棒球球場 (ARENA)
          --------------------------- -->
-    <div id="view-game" class="hidden space-y-4">
-      <!-- 比賽計分板 (Scoreboard Header) -->
-      <div class="glass-card rounded-2xl p-4 border border-gold-500/30 flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center space-x-6">
+    <div id="view-game" class="hidden space-y-2">
+      <!-- 比賽計分板 (Scoreboard Header) 緊湊化設計，避免佔用垂直空間 -->
+      <div class="glass-card rounded-xl p-2.5 sm:p-3 border border-gold-500/30 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div class="flex items-center space-x-3 sm:space-x-5">
           <div>
-            <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block" id="hud-inning-label">當前局數與狀態</span>
-            <span class="text-lg font-extrabold text-gold-400 font-title" id="hud-inning-status">1局上 (我方進攻 • 打擊)</span>
+            <span class="text-[9px] uppercase font-bold text-gray-400 tracking-wider block" id="hud-inning-label">當前局數</span>
+            <span class="text-sm sm:text-base font-extrabold text-gold-400 font-title" id="hud-inning-status">1局上 (我方進攻)</span>
           </div>
 
-          <div class="flex items-center space-x-3 bg-black/40 px-3 py-1.5 rounded-lg border border-slate-800">
+          <!-- B-S-O 與壘包狀態 -->
+          <div class="flex items-center space-x-2 sm:space-x-3 bg-black/40 px-2.5 py-1 rounded-lg border border-slate-800">
             <div class="text-center">
-              <div class="text-[9px] font-bold text-gray-400">S (好球)</div>
+              <div class="text-[8px] font-bold text-gray-400">S (好)</div>
               <div class="flex space-x-1 mt-0.5" id="hud-strikes">
-                <span class="w-3 h-3 rounded-full bg-slate-700 strike-dot"></span>
-                <span class="w-3 h-3 rounded-full bg-slate-700 strike-dot"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-700 strike-dot"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-700 strike-dot"></span>
               </div>
             </div>
-            <div class="text-center border-l border-slate-800 pl-3">
-              <div class="text-[9px] font-bold text-gray-400">B (壞球)</div>
+            <div class="text-center border-l border-slate-800 pl-2">
+              <div class="text-[8px] font-bold text-gray-400">B (壞)</div>
               <div class="flex space-x-1 mt-0.5" id="hud-balls">
-                <span class="w-3 h-3 rounded-full bg-slate-700 ball-dot"></span>
-                <span class="w-3 h-3 rounded-full bg-slate-700 ball-dot"></span>
-                <span class="w-3 h-3 rounded-full bg-slate-700 ball-dot"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-700 ball-dot"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-700 ball-dot"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-700 ball-dot"></span>
               </div>
             </div>
-            <div class="text-center border-l border-slate-800 pl-3">
-              <div class="text-[9px] font-bold text-gray-400">O (出局)</div>
+            <div class="text-center border-l border-slate-800 pl-2">
+              <div class="text-[8px] font-bold text-gray-400">O (出)</div>
               <div class="flex space-x-1 mt-0.5" id="hud-outs">
-                <span class="w-3 h-3 rounded-full bg-slate-700 out-dot"></span>
-                <span class="w-3 h-3 rounded-full bg-slate-700 out-dot"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-700 out-dot"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-700 out-dot"></span>
+              </div>
+            </div>
+
+            <!-- 壘包指示器 (菱形動態壘包) -->
+            <div class="border-l border-slate-800 pl-2 flex items-center gap-1.5">
+              <div class="text-[8px] font-bold text-gray-400">壘包</div>
+              <div class="relative w-6 h-6 flex items-center justify-center">
+                <!-- 2壘 -->
+                <span id="base-indicator-2" class="absolute top-0 w-2 h-2 rotate-45 border border-slate-600 bg-slate-800 transition-all"></span>
+                <!-- 3壘 -->
+                <span id="base-indicator-3" class="absolute left-0 w-2 h-2 rotate-45 border border-slate-600 bg-slate-800 transition-all"></span>
+                <!-- 1壘 -->
+                <span id="base-indicator-1" class="absolute right-0 w-2 h-2 rotate-45 border border-slate-600 bg-slate-800 transition-all"></span>
               </div>
             </div>
           </div>
 
           <!-- 當前球員卡名牌 -->
-          <div class="hidden sm:flex items-center gap-2 bg-slate-900/80 px-3 py-1.5 rounded-xl border border-slate-700">
-            <div class="w-7 h-7 rounded-lg bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold text-xs" id="hud-active-player-num">#1</div>
+          <div class="hidden md:flex items-center gap-2 bg-slate-900/80 px-2.5 py-1 rounded-lg border border-slate-700">
+            <div class="w-6 h-6 rounded bg-gold-500/20 text-gold-400 flex items-center justify-center font-bold text-[11px]" id="hud-active-player-num">#1</div>
             <div>
-              <span class="text-[9px] text-gray-400 block" id="hud-active-player-title">第 1 棒 • 指定打擊</span>
-              <span class="text-xs font-bold text-white" id="hud-active-player-name">大谷翔平 (SSR)</span>
+              <span class="text-[8px] text-gray-400 block" id="hud-active-player-title">第 1 棒</span>
+              <span class="text-xs font-bold text-white leading-none" id="hud-active-player-name">大谷翔平 (SSR)</span>
             </div>
           </div>
         </div>
 
-        <div class="flex items-center space-x-4">
-          <div class="text-right">
-            <span class="text-[10px] text-gray-400 block">目前比分 (我隊 vs 對手)</span>
-            <span id="hud-score" class="text-2xl font-black text-white font-title">0 : 0</span>
+        <div class="flex items-center space-x-2 sm:space-x-3">
+          <!-- 全壘打大賽倒數 HUD (Derby Mode) -->
+          <div id="derby-timer-box" class="hidden items-center gap-2 bg-red-950/80 border border-red-500/50 px-2.5 py-1 rounded-lg">
+            <i class="fa-solid fa-stopwatch text-red-400 animate-pulse text-xs"></i>
+            <div>
+              <span class="text-[8px] text-red-300 block font-bold leading-none">DERBY</span>
+              <span id="derby-countdown-time" class="text-sm font-black text-white font-mono leading-none">60s</span>
+            </div>
+            <div class="border-l border-red-800/80 pl-2 text-right">
+              <span id="derby-score-count" class="text-sm font-black text-yellow-400 font-mono leading-none">0轟</span>
+            </div>
           </div>
-          <button onclick="openLineupModal()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 text-xs font-bold transition flex items-center gap-1.5" title="調整打序與守備">
-            <i class="fa-solid fa-list-ol text-gold-400"></i> 打序戰術
+
+          <div class="text-right">
+            <span class="text-[9px] text-gray-400 block leading-none">比分</span>
+            <span id="hud-score" class="text-lg sm:text-xl font-black text-white font-title leading-tight">0 : 0</span>
+          </div>
+
+          <!-- 天候環境切換鈕 -->
+          <div class="flex items-center bg-slate-900/90 border border-slate-700 rounded-lg p-0.5 gap-0.5">
+            <button onclick="setStadiumWeather('night')" id="weather-btn-night" class="px-2 py-1 rounded text-[10px] bg-gold-500 text-black font-bold" title="璀璨夜戰">
+              <i class="fa-solid fa-moon"></i>
+            </button>
+            <button onclick="setStadiumWeather('day')" id="weather-btn-day" class="px-2 py-1 rounded text-[10px] text-gray-400 hover:text-white font-bold" title="晴空午後">
+              <i class="fa-solid fa-sun"></i>
+            </button>
+            <button onclick="setStadiumWeather('rain')" id="weather-btn-rain" class="px-2 py-1 rounded text-[10px] text-gray-400 hover:text-white font-bold" title="暴雨狂瀾">
+              <i class="fa-solid fa-cloud-showers-heavy"></i>
+            </button>
+          </div>
+
+          <button onclick="toggleVoiceCommentary()" id="voice-commentary-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-gold-400 border border-gold-500/30 text-[11px] font-bold transition flex items-center gap-1" title="主播即時國語解說">
+            <i class="fa-solid fa-microphone-lines text-xs" id="voice-icon"></i> <span class="hidden sm:inline">播報</span>
           </button>
-          <button onclick="toggleAutoPitch()" id="auto-pitch-btn" class="px-3.5 py-2.5 rounded-xl border border-gold-500/50 bg-gold-500/20 text-gold-300 hover:bg-gold-500/30 font-bold text-xs tracking-wide transition flex items-center gap-1.5">
-            <i class="fa-solid fa-robot"></i> <span id="auto-pitch-text">自動投球: 開啟</span>
+          <button onclick="openLineupModal()" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-gray-200 border border-slate-700 text-[11px] font-bold transition flex items-center gap-1" title="調整打序與守備">
+            <i class="fa-solid fa-list-ol text-gold-400 text-xs"></i> <span class="hidden sm:inline">戰術</span>
           </button>
-          <button onclick="handleMainActionClick()" id="pitch-btn" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-sm tracking-wide shadow-lg shadow-emerald-900/40 transition">
-            <i class="fa-solid fa-baseball mr-1.5"></i> <span id="main-action-text">手動投球 (PITCH)</span>
+          <button onclick="toggleAutoPitch()" id="auto-pitch-btn" class="px-2.5 py-1.5 rounded-lg border border-gold-500/50 bg-gold-500/20 text-gold-300 hover:bg-gold-500/30 font-bold text-[11px] tracking-wide transition flex items-center gap-1">
+            <i class="fa-solid fa-robot text-xs"></i> <span id="auto-pitch-text">自動</span>
+          </button>
+          <button onclick="handleMainActionClick()" id="pitch-btn" class="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-extrabold text-xs tracking-wide shadow-md transition">
+            <i class="fa-solid fa-baseball mr-1 text-xs"></i> <span id="main-action-text">投球</span>
           </button>
         </div>
       </div>
 
-      <!-- 3D 渲染主畫布容器 -->
-      <div class="relative w-full h-[540px] md:h-[620px] rounded-3xl overflow-hidden border border-gold-500/30 shadow-2xl bg-black select-none" id="canvas-container">
+      <!-- 3D 渲染主畫布容器 (調整為固定精巧高度 380px～440px，確保手機/筆電一屏即可完全裝入) -->
+      <div class="relative w-full h-[360px] sm:h-[400px] lg:h-[430px] rounded-2xl overflow-hidden border border-gold-500/30 shadow-2xl bg-black select-none" id="canvas-container">
         <canvas id="baseball-canvas" class="w-full h-full block cursor-crosshair"></canvas>
 
         <!-- 自動投球倒數計時 HUD -->
-        <div id="auto-pitch-timer-badge" class="absolute top-4 left-4 glass-card px-3 py-1.5 rounded-xl border border-gold-500/40 text-xs flex items-center space-x-2 z-10">
-          <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
-          <span class="text-gray-300">投手準備中: <strong id="pitch-countdown-sec" class="text-gold-400 font-mono text-sm">3.0s</strong></span>
+        <div id="auto-pitch-timer-badge" class="absolute top-3 left-3 glass-card px-2.5 py-1 rounded-lg border border-gold-500/40 text-[11px] flex items-center space-x-1.5 z-10">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+          <span class="text-gray-300">投手: <strong id="pitch-countdown-sec" class="text-gold-400 font-mono text-xs">3.0s</strong></span>
         </div>
 
         <!-- 視角切換控制項 (新視角控制) -->
-        <div class="absolute top-4 right-4 glass-card px-3 py-1.5 rounded-xl border border-gold-500/30 text-xs flex items-center space-x-2 z-10">
-          <span class="text-gold-400 font-bold mr-1"><i class="fa-solid fa-video"></i> 視角:</span>
-          <button onclick="setCameraView('batter')" id="cam-btn-batter" class="px-2.5 py-1 rounded-lg bg-gold-500 text-black font-bold">打擊視角</button>
-          <button onclick="setCameraView('pitcher')" id="cam-btn-pitcher" class="px-2.5 py-1 rounded-lg bg-slate-800 text-gray-300 hover:text-white font-bold">投手視角</button>
-          <button onclick="setCameraView('overview')" id="cam-btn-overview" class="px-2.5 py-1 rounded-lg bg-slate-800 text-gray-300 hover:text-white font-bold">守備全景</button>
-          <button onclick="setCameraView('jumbotron')" id="cam-btn-jumbotron" class="px-2.5 py-1 rounded-lg bg-slate-800 text-gray-300 hover:text-white font-bold">外野大螢幕</button>
+        <div class="absolute top-3 right-3 glass-card px-2 py-1 rounded-lg border border-gold-500/30 text-[11px] flex items-center space-x-1 z-10">
+          <span class="text-gold-400 font-bold mr-0.5"><i class="fa-solid fa-video text-xs"></i></span>
+          <button onclick="setCameraView('batter')" id="cam-btn-batter" class="px-2 py-0.5 rounded bg-gold-500 text-black font-bold">打擊</button>
+          <button onclick="setCameraView('pitcher')" id="cam-btn-pitcher" class="px-2 py-0.5 rounded bg-slate-800 text-gray-300 hover:text-white font-bold">投手</button>
+          <button onclick="setCameraView('overview')" id="cam-btn-overview" class="px-2 py-0.5 rounded bg-slate-800 text-gray-300 hover:text-white font-bold">全景</button>
+          <button onclick="setCameraView('jumbotron')" id="cam-btn-jumbotron" class="px-2 py-0.5 rounded bg-slate-800 text-gray-300 hover:text-white font-bold">螢幕</button>
         </div>
 
         <!-- 我方投球專屬選擇面板 (切換到防守時顯示) -->
-        <div id="defense-pitch-panel" class="hidden absolute top-16 left-4 glass-card p-3 rounded-2xl border border-amber-500/50 text-xs z-10 space-y-2 max-w-[200px]">
-          <div class="font-bold text-amber-400 flex items-center gap-1.5">
-            <i class="fa-solid fa-hand-fist"></i> 我方投球手控配球
+        <div id="defense-pitch-panel" class="hidden absolute top-12 left-3 glass-card p-2 rounded-xl border border-amber-500/50 text-[11px] z-10 space-y-1.5 max-w-[170px]">
+          <div class="font-bold text-amber-400 flex items-center gap-1">
+            <i class="fa-solid fa-hand-fist"></i> 我方配球
           </div>
-          <div class="grid grid-cols-1 gap-1.5">
-            <button onclick="selectPlayerPitchType('fastball')" id="pitch-btn-fastball" class="px-2.5 py-1.5 rounded-lg bg-amber-500 text-black font-bold text-left text-[11px] flex justify-between">
+          <div class="grid grid-cols-1 gap-1">
+            <button onclick="selectPlayerPitchType('fastball')" id="pitch-btn-fastball" class="px-2 py-1 rounded bg-amber-500 text-black font-bold text-left text-[10px] flex justify-between">
               <span>四縫線直球</span> <span class="font-mono">155K</span>
             </button>
-            <button onclick="selectPlayerPitchType('slider')" id="pitch-btn-slider" class="px-2.5 py-1.5 rounded-lg bg-slate-800 text-gray-300 hover:text-white text-left text-[11px] flex justify-between">
+            <button onclick="selectPlayerPitchType('slider')" id="pitch-btn-slider" class="px-2 py-1 rounded bg-slate-800 text-gray-300 hover:text-white text-left text-[10px] flex justify-between">
               <span>橫向滑球</span> <span class="font-mono">143K</span>
             </button>
-            <button onclick="selectPlayerPitchType('curve')" id="pitch-btn-curve" class="px-2.5 py-1.5 rounded-lg bg-slate-800 text-gray-300 hover:text-white text-left text-[11px] flex justify-between">
+            <button onclick="selectPlayerPitchType('curve')" id="pitch-btn-curve" class="px-2 py-1 rounded bg-slate-800 text-gray-300 hover:text-white text-left text-[10px] flex justify-between">
               <span>縱向曲球</span> <span class="font-mono">132K</span>
             </button>
           </div>
         </div>
 
         <!-- 3D 場上 HUD: 打擊甜蜜點準心 -->
-        <div id="batting-crosshair" class="aim-reticle absolute top-1/2 left-1/2 w-16 h-16 pointer-events-none transition-transform duration-75">
+        <div id="batting-crosshair" class="aim-reticle absolute top-1/2 left-1/2 w-14 h-14 pointer-events-none transition-transform duration-75">
           <div class="w-full h-full rounded-full border-2 border-dashed border-gold-400/80 flex items-center justify-center">
-            <div class="w-3 h-3 rounded-full bg-amber-400/90 shadow-[0_0_10px_#e5a93c]"></div>
+            <div class="w-2.5 h-2.5 rounded-full bg-amber-400/90 shadow-[0_0_10px_#e5a93c]"></div>
           </div>
+        </div>
+
+        <!-- 打擊時機提示 (Too Early / Perfect / Too Late) -->
+        <div id="timing-indicator" class="absolute top-[38%] left-1/2 -translate-x-1/2 pointer-events-none text-center opacity-0 transition-opacity duration-200">
+          <span id="timing-text" class="px-3 py-1 rounded-full text-[11px] font-black tracking-widest uppercase bg-black/80 border border-gold-400 text-gold-300 shadow-lg">PERFECT TIMING</span>
         </div>
 
         <!-- 擊球提示 HUD -->
         <div id="hit-feedback" class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none text-center opacity-0 transition-opacity duration-300">
-          <h2 id="feedback-text" class="text-4xl sm:text-6xl font-black tracking-wider drop-shadow-[0_5px_15px_rgba(0,0,0,0.9)] gold-gradient-text uppercase">HOMERUN!</h2>
-          <p id="feedback-sub" class="text-white text-lg font-bold drop-shadow-md">468 FT / 158 km/h</p>
+          <h2 id="feedback-text" class="text-3xl sm:text-5xl font-black tracking-wider drop-shadow-[0_5px_15px_rgba(0,0,0,0.9)] gold-gradient-text uppercase">HOMERUN!</h2>
+          <p id="feedback-sub" class="text-white text-base font-bold drop-shadow-md">468 FT / 158 km/h</p>
         </div>
 
         <!-- 投手投球資訊面板 (即時球種與球速) -->
-        <div class="absolute bottom-6 left-6 glass-card px-4 py-2.5 rounded-xl border border-slate-700 text-xs flex items-center gap-3">
-          <div class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></div>
+        <div class="absolute bottom-3 left-3 glass-card px-3 py-1.5 rounded-lg border border-slate-700 text-[11px] flex items-center gap-2">
+          <div class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></div>
           <div>
-            <span class="text-gray-400 block text-[10px]" id="hud-pitch-label">預計球路</span>
-            <span id="hud-pitch-type" class="font-bold text-white">四縫線直球 (Four-seam)</span>
+            <span class="text-gray-400 block text-[8px]" id="hud-pitch-label">球路</span>
+            <span id="hud-pitch-type" class="font-bold text-white text-xs">四縫線直球</span>
           </div>
-          <div class="border-l border-slate-700 pl-3">
-            <span class="text-gray-400 block text-[10px]">測速預估</span>
-            <span id="hud-pitch-speed" class="font-bold text-gold-400">152 km/h</span>
+          <div class="border-l border-slate-700 pl-2">
+            <span class="text-gray-400 block text-[8px]">測速</span>
+            <span id="hud-pitch-speed" class="font-bold text-gold-400 text-xs">152 km/h</span>
           </div>
         </div>
 
         <!-- 快速球棒裝備切換 -->
-        <div id="bat-quick-switch" class="absolute bottom-6 right-6 glass-card p-2 rounded-xl border border-slate-700 flex items-center space-x-2">
-          <button onclick="changeBat('wood')" id="btn-bat-wood" class="px-3 py-1.5 rounded-lg text-xs font-bold border border-gold-500/50 bg-gold-500/20 text-gold-300 transition">楓木標準</button>
-          <button onclick="changeBat('laser')" id="btn-bat-laser" class="px-3 py-1.5 rounded-lg text-xs font-bold border border-transparent hover:border-slate-600 text-gray-300 transition">霓虹雷射</button>
-          <button onclick="changeBat('gold')" id="btn-bat-gold" class="px-3 py-1.5 rounded-lg text-xs font-bold border border-transparent hover:border-slate-600 text-gray-300 transition flex items-center gap-1">
-            <i class="fa-solid fa-crown text-[10px] text-yellow-400"></i> 24K純金
+        <div id="bat-quick-switch" class="absolute bottom-3 right-3 glass-card p-1.5 rounded-lg border border-slate-700 flex items-center space-x-1.5">
+          <button onclick="changeBat('wood')" id="btn-bat-wood" class="px-2 py-1 rounded text-[10px] font-bold border border-gold-500/50 bg-gold-500/20 text-gold-300 transition">楓木</button>
+          <button onclick="changeBat('laser')" id="btn-bat-laser" class="px-2 py-1 rounded text-[10px] font-bold border border-transparent hover:border-slate-600 text-gray-300 transition">雷射</button>
+          <button onclick="changeBat('gold')" id="btn-bat-gold" class="px-2 py-1 rounded text-[10px] font-bold border border-transparent hover:border-slate-600 text-gray-300 transition flex items-center gap-1">
+            <i class="fa-solid fa-crown text-[8px] text-yellow-400"></i> 純金
           </button>
         </div>
 
-        <!-- 操作指南覆蓋提示 -->
-        <div id="game-controls-hint" class="absolute top-4 left-1/2 -translate-x-1/2 bg-black/75 backdrop-blur-md px-6 py-2 rounded-full border border-gold-500/30 text-xs text-gray-200 pointer-events-none flex items-center gap-2">
+        <!-- 操作指南覆蓋提示 (精簡化) -->
+        <div id="game-controls-hint" class="absolute top-3 left-1/2 -translate-x-1/2 bg-black/75 backdrop-blur-md px-3.5 py-1 rounded-full border border-gold-500/30 text-[10px] text-gray-200 pointer-events-none flex items-center gap-1.5">
           <i class="fa-solid fa-computer-mouse text-gold-400"></i>
-          <span id="control-hint-text">移動滑鼠瞄準好球帶甜蜜點，待球進入時<strong>【點擊滑鼠左鍵】</strong>揮棒打擊！</span>
+          <span id="control-hint-text">移動準心，球到<strong>點擊左鍵</strong>揮棒！</span>
         </div>
       </div>
     </div>
@@ -921,110 +977,93 @@
           <button onclick="filterPlayerStore('BATTER')" class="store-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-800 text-gray-300 hover:text-white" data-filter="BATTER">野手巨砲</button>
         </div>
         <div class="relative w-full sm:w-64">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-gray-400"></i>
-          <input type="text" id="player-search-input" oninput="renderPlayerStoreList()" placeholder="搜尋姓名 / 隊伍 / 守位..." class="w-full pl-8 pr-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs text-white focus:outline-none focus:border-gold-500">
+          <input type="text" id="player-search-input" oninput="renderPlayerStoreList()" placeholder="搜尋姓名、守位或球隊..." class="w-full pl-8 pr-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gold-500">
+          <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-2.5 text-gray-500 text-xs"></i>
         </div>
       </div>
 
-      <!-- 100 球員卡片瀑布流列表 -->
-      <div id="player-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[460px] overflow-y-auto pr-1">
-        <!-- 動態渲染 100 位球員 -->
-      </div>
+      <!-- 球員卡片瀑布流 -->
+      <div id="player-cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto pr-2"></div>
     </div>
   </div>
 
-
-  <!-- 6. 賽前先發陣容與守備戰術配置板 (LINEUP & DEFENSE MODAL) -->
+  <!-- 6. 先發陣容與守備戰術板 (LINEUP MODAL) -->
   <div id="lineup-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 overflow-y-auto">
-    <div class="relative w-full max-w-5xl rounded-3xl glass-card-luxury p-6 sm:p-8 border border-gold-500/40 shadow-2xl my-auto">
+    <div class="relative w-full max-w-4xl rounded-3xl glass-card-luxury p-6 sm:p-8 border border-gold-500/40 shadow-2xl my-auto">
       <button onclick="closeLineupModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white transition">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
-      <div class="border-b border-slate-700/80 pb-4 mb-5 flex flex-wrap items-center justify-between gap-3">
+      <div class="inline-flex items-center gap-1.5 text-xs text-gold-400 font-bold uppercase tracking-wider mb-1">
+        <i class="fa-solid fa-chalkboard-user"></i> STRATEGY TACTICS BOARD
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-title font-extrabold text-white mb-2">先發陣容與防守守備戰術板</h2>
+      <p class="text-xs text-gray-400 mb-6">自由調整 1 至 9 棒先發打擊順序以及 9 大守備站位，陣容強度將即時影響比賽數值。</p>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
-          <span class="text-[11px] text-amber-400 font-bold uppercase tracking-wider block">PRE-GAME TACTICS</span>
-          <h2 class="text-2xl sm:text-3xl font-title font-extrabold text-white">賽前先發打序與 9 人守備陣容配置</h2>
-          <p class="text-xs text-gray-400">排定 1~9 棒先發打擊順序與球場防守崗位，配置完畢後即可直接開賽！</p>
+          <h3 class="text-sm font-bold text-gold-400 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-list-ol"></i> 1～9 棒 先發打擊順序
+          </h3>
+          <div id="batting-order-list" class="space-y-2 max-h-[420px] overflow-y-auto pr-1"></div>
         </div>
-        <button onclick="saveAndStartGame()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-400 via-gold-500 to-yellow-500 hover:from-yellow-300 text-black font-extrabold text-xs tracking-wider shadow-lg transition flex items-center gap-2">
-          <i class="fa-solid fa-check-double"></i> 保存配置並開賽登板
-        </button>
+
+        <div>
+          <h3 class="text-sm font-bold text-cyan-400 mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved"></i> 9 大守備位置部署
+          </h3>
+          <div id="defense-assignment-list" class="space-y-2 max-h-[420px] overflow-y-auto pr-1"></div>
+        </div>
       </div>
 
-      <!-- 雙欄配置：左側 1-9 棒打序 / 右側 9 個守位先發名單 -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- 左側：1~9 棒打擊順序 -->
-        <div class="lg:col-span-6 bg-slate-900/80 rounded-2xl p-4 border border-slate-800 space-y-2">
-          <h3 class="text-sm font-bold text-gold-400 flex items-center gap-2 mb-3">
-            <i class="fa-solid fa-baseball-bat-ball"></i> 先發 1 至 9 棒打擊名冊
-          </h3>
-          <div id="batting-order-list" class="space-y-2 max-h-[380px] overflow-y-auto pr-1">
-            <!-- 動態生成 9 棒下拉或卡片 -->
-          </div>
-        </div>
-
-        <!-- 右側：9大守備位置指派 -->
-        <div class="lg:col-span-6 bg-slate-900/80 rounded-2xl p-4 border border-slate-800 space-y-2">
-          <h3 class="text-sm font-bold text-cyan-400 flex items-center gap-2 mb-3">
-            <i class="fa-solid fa-shield-halved"></i> 球場 9 大先發守備位置
-          </h3>
-          <div id="defense-assignment-list" class="space-y-2 max-h-[380px] overflow-y-auto pr-1">
-            <!-- 動態生成 P, C, 1B, 2B, 3B, SS, LF, CF, RF 指派 -->
-          </div>
-        </div>
+      <div class="mt-6 pt-4 border-t border-slate-700/80 flex items-center justify-end gap-3">
+        <button onclick="closeLineupModal()" class="px-5 py-2.5 rounded-xl bg-slate-800 text-gray-300 hover:text-white font-bold text-xs transition">關閉</button>
+        <button onclick="saveAndStartGame()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-gold-500 to-yellow-500 text-black font-extrabold text-xs shadow-lg transition">
+          <i class="fa-solid fa-check mr-1"></i> 確認陣容並進入球場
+        </button>
       </div>
     </div>
   </div>
 
-
-  <!-- 7. 活動與賽季成就任務彈窗 (QUEST & CHECK-IN MODAL) -->
+  <!-- 7. 活動任務與簽到彈窗 (QUEST MODAL) -->
   <div id="quest-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 overflow-y-auto">
-    <div class="relative w-full max-w-4xl rounded-3xl glass-card-luxury p-6 sm:p-8 border border-gold-500/40 shadow-2xl my-auto">
+    <div class="relative w-full max-w-2xl rounded-3xl glass-card-luxury p-6 sm:p-8 border border-gold-500/40 shadow-2xl my-auto">
       <button onclick="closeQuestModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white transition">
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
-      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-700/80 pb-4 mb-5">
-        <div>
-          <div class="inline-flex items-center gap-1.5 text-xs text-gold-400 font-bold uppercase tracking-wider mb-1">
-            <i class="fa-solid fa-trophy"></i> CHALLENGES & REWARDS
-          </div>
-          <h2 class="text-2xl sm:text-3xl font-title font-extrabold text-white">活動任務與尊榮賽季殿堂</h2>
-          <p class="text-xs text-gray-400">每日揮棒登板、達成里程碑並解鎖大量俱樂部金幣與球團獎勵！</p>
+      <div class="inline-flex items-center gap-1.5 text-xs text-gold-400 font-bold uppercase tracking-wider mb-1">
+        <i class="fa-solid fa-medal"></i> DAILY & SEASON CHALLENGES
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-title font-extrabold text-white mb-2">活動中心與賽季成就</h2>
+      <p class="text-xs text-gray-400 mb-5">完成每日日常與賽季挑戰，領取大量金幣與限定卡包！</p>
+
+      <!-- 7日簽到區 -->
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 mb-6">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-bold text-gold-400 flex items-center gap-1.5">
+            <i class="fa-solid fa-calendar-days"></i> 七日尊榮連續登入簿
+          </span>
+          <span id="checkin-day-counter" class="text-xs text-gray-400">連續簽到: 1 / 7 天</span>
         </div>
-        <!-- 快速簽到按鈕 -->
-        <button id="daily-checkin-btn" onclick="claimDailyCheckIn()" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-black font-extrabold text-xs tracking-wider shadow-lg transition flex items-center gap-2">
-          <i class="fa-solid fa-calendar-check"></i> <span id="checkin-btn-text">領取今日登入禮 (+5,000金幣)</span>
+        <div id="seven-days-grid" class="grid grid-cols-7 gap-2 mb-3"></div>
+        <button id="daily-checkin-btn" onclick="claimDailyCheckIn()" class="w-full py-2.5 rounded-xl bg-gold-500 hover:bg-yellow-400 text-black font-extrabold text-xs transition shadow flex items-center justify-center gap-2">
+          <i class="fa-solid fa-gift"></i> <span id="checkin-btn-text">領取今日登入禮 (+5,000金幣)</span>
         </button>
       </div>
 
-      <!-- 7日簽到進度條 -->
-      <div class="mb-6 p-4 rounded-2xl bg-slate-900/90 border border-gold-500/30">
-        <div class="flex items-center justify-between mb-3 text-xs">
-          <span class="font-bold text-gold-400 flex items-center gap-1.5"><i class="fa-solid fa-gift"></i> 七日尊榮連續登入豪禮</span>
-          <span class="text-gray-400" id="checkin-day-counter">連續簽到: 1 / 7 天</span>
-        </div>
-        <div class="grid grid-cols-7 gap-2" id="seven-days-grid">
-          <!-- 動態生成 7 天卡片 -->
-        </div>
-      </div>
-
-      <!-- 任務列表分頁標籤 -->
-      <div class="flex items-center gap-3 border-b border-slate-800 pb-2 mb-4 text-xs font-bold">
-        <button onclick="switchQuestTab('daily')" id="tab-quest-daily" class="px-4 py-1.5 rounded-lg bg-gold-500 text-black">每日例行任務</button>
-        <button onclick="switchQuestTab('season')" id="tab-quest-season" class="px-4 py-1.5 rounded-lg bg-slate-800 text-gray-300 hover:text-white">傳奇賽季成就</button>
+      <!-- 任務頁籤 -->
+      <div class="flex space-x-2 mb-4">
+        <button id="tab-quest-daily" onclick="switchQuestTab('daily')" class="px-4 py-1.5 rounded-lg bg-gold-500 text-black font-bold text-xs">每日任務</button>
+        <button id="tab-quest-season" onclick="switchQuestTab('season')" class="px-4 py-1.5 rounded-lg bg-slate-800 text-gray-300 hover:text-white font-bold text-xs">賽季成就</button>
       </div>
 
       <!-- 任務列表清單 -->
-      <div id="quest-list-container" class="space-y-3 max-h-[320px] overflow-y-auto pr-1">
-        <!-- 動態生成任務項目 -->
-      </div>
+      <div id="quest-list-container" class="space-y-3 max-h-[260px] overflow-y-auto pr-1"></div>
     </div>
   </div>
 
-
-  <!-- 8. 黃金幸運轉盤彈窗 (LUCKY WHEEL MODAL) -->
+  <!-- 8. 黃金幸運輪盤彈窗 (LUCKY WHEEL MODAL) -->
   <div id="wheel-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 overflow-y-auto">
     <div class="relative w-full max-w-lg rounded-3xl glass-card-luxury p-6 sm:p-8 border border-gold-500/40 shadow-2xl my-auto text-center">
       <button onclick="closeWheelModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white transition">
@@ -1065,6 +1104,111 @@
           <i class="fa-solid fa-rotate-right mr-1.5"></i> 立即轉動 (2,000 金幣)
         </button>
       </div>
+    </div>
+  </div>
+
+
+  <!-- 9. 球員卡包抽卡轉蛋池彈窗 (GACHA MODAL) -->
+  <div id="gacha-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 overflow-y-auto">
+    <div class="relative w-full max-w-4xl rounded-3xl glass-card-luxury p-6 sm:p-8 border border-purple-500/40 shadow-2xl my-auto text-center">
+      <button onclick="closeGachaModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="inline-flex items-center gap-1.5 text-xs text-purple-400 font-bold uppercase tracking-wider mb-1">
+        <i class="fa-solid fa-sparkles"></i> LEGENDARY CARD PACK GACHA
+      </div>
+      <h2 class="text-2xl sm:text-4xl font-title font-extrabold text-white mb-2">傳奇球星金光開箱轉蛋</h2>
+      <p class="text-xs text-gray-400 mb-6">十連抽保底 SR 全明星！高機率解鎖大谷翔平、王建民等 SSR 神級二刀流！</p>
+
+      <!-- 卡包展示盒 -->
+      <div id="gacha-pack-box" class="w-64 h-80 mx-auto rounded-2xl bg-gradient-to-br from-amber-500 via-purple-900 to-slate-950 p-1 border-2 border-gold-400/80 shadow-[0_0_40px_rgba(212,175,55,0.4)] flex flex-col justify-between items-center relative overflow-hidden transition-transform duration-500 hover:scale-105 cursor-pointer" onclick="pullGacha(1)">
+        <div class="w-full text-center py-2 bg-black/50 text-[10px] tracking-widest text-gold-300 font-bold uppercase border-b border-gold-500/30">
+          PRO DIAMOND PACK
+        </div>
+        <div class="my-auto text-center space-y-2">
+          <i class="fa-solid fa-cube text-6xl text-gold-400 animate-bounce"></i>
+          <p class="text-xs font-black text-white tracking-widest">點擊或選擇抽卡</p>
+        </div>
+        <div class="w-full text-center py-1.5 bg-black/50 text-[10px] text-gray-300 border-t border-gold-500/30">
+          SSR 機率 8% • SR 保底
+        </div>
+      </div>
+
+      <!-- 抽卡獲得卡片展示區 -->
+      <div id="gacha-results-grid" class="hidden grid-cols-2 sm:grid-cols-5 gap-3 mt-6 max-h-[380px] overflow-y-auto p-2"></div>
+
+      <!-- 抽卡按鈕列 -->
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-4">
+        <button onclick="pullGacha(1)" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-bold text-xs tracking-wider transition">
+          單抽 (3,000 金幣)
+        </button>
+        <button onclick="pullGacha(10)" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-purple-500 via-amber-500 to-yellow-500 hover:from-purple-400 hover:to-yellow-400 text-black font-extrabold text-sm tracking-wider shadow-lg shadow-purple-500/30 transition transform hover:-translate-y-0.5">
+          <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> 尊榮十連抽 (27,000 金幣 • 9折)
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- 10. 球員訓練與數值強化彈窗 (PLAYER TRAINING & UPGRADE) -->
+  <div id="training-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md hidden opacity-0 transition-opacity duration-300 overflow-y-auto">
+    <div class="relative w-full max-w-lg rounded-3xl glass-card-luxury p-6 sm:p-8 border border-gold-500/40 shadow-2xl my-auto">
+      <button onclick="closeTrainingModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+
+      <div class="inline-flex items-center gap-1.5 text-xs text-gold-400 font-bold uppercase tracking-wider mb-1">
+        <i class="fa-solid fa-dumbbell"></i> PLAYER DEVELOPMENT LAB
+      </div>
+      <h2 class="text-2xl font-title font-extrabold text-white mb-1" id="train-player-name">球員特訓中心</h2>
+      <p class="text-xs text-gray-400 mb-5">消耗金幣強化擊球力量、接觸率與極限球速！</p>
+
+      <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4 mb-6">
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-gray-400">當前綜合評價 (OVR)</span>
+          <span id="train-ovr-val" class="text-xl font-black text-gold-400 font-mono">99</span>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-gray-300">擊球力量 (Power)</span>
+            <span id="train-power-val" class="font-bold text-white font-mono">90</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2">
+            <div id="train-power-bar" class="bg-amber-400 h-2 rounded-full" style="width: 90%"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-gray-300">擊球接觸率 (Contact)</span>
+            <span id="train-contact-val" class="font-bold text-white font-mono">92</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2">
+            <div id="train-contact-bar" class="bg-cyan-400 h-2 rounded-full" style="width: 92%"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-gray-300">火球球速 / 跑速</span>
+            <span id="train-speed-val" class="font-bold text-white font-mono">155 km/h</span>
+          </div>
+          <div class="w-full bg-slate-800 rounded-full h-2">
+            <div id="train-speed-bar" class="bg-emerald-400 h-2 rounded-full" style="width: 88%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-xs text-gray-400 mb-4">
+        <span>單次特訓花費:</span>
+        <span class="font-bold text-gold-300 font-mono"><i class="fa-solid fa-coins mr-1"></i>3,000 金幣</span>
+      </div>
+
+      <button onclick="executePlayerUpgrade()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-gold-500 to-yellow-500 hover:from-yellow-300 hover:to-amber-500 text-black font-extrabold text-sm tracking-wider shadow-lg transition">
+        <i class="fa-solid fa-bolt mr-1"></i> 進行全能力值強化特訓 (+2 OVR)
+      </button>
     </div>
   </div>
 
@@ -1123,6 +1267,7 @@
       },
       currentView: 'home',
       audioEnabled: true,
+      voiceEnabled: true,
       pendingCheckout: {
         tierId: '',
         price: 0,
@@ -1137,6 +1282,13 @@
       playerSelectedPitch: 'fastball', // 我方投手投球球種: fastball, slider, curve
       cpuBatterSwingTime: 0,
       isCpuSwinging: false,
+      bases: [false, false, false], // 壘包狀態: [1壘, 2壘, 3壘]
+      currentWeather: 'night', // 'night', 'day', 'rain'
+      isDerbyMode: false,
+      derbyTimer: 60,
+      derbyHRCount: 0,
+      derbyInterval: null,
+      selectedTrainingPlayerId: 'p_01',
       quests: [
         { id: 'q_01', type: 'daily', title: '完成 3 次有效揮棒打擊', progress: 1, max: 3, reward: 3000, claimed: false },
         { id: 'q_02', type: 'daily', title: '轟出 1 支深遠全壘打 (HOMERUN)', progress: 0, max: 1, reward: 8000, claimed: false },
@@ -1259,6 +1411,40 @@
         audioCtx.resume();
       }
       return audioCtx;
+    }
+
+    /* 專業中文主播語音播報 (Web Speech API) */
+    function speakCommentary(text) {
+      if (!appState.voiceEnabled) return;
+      if ('speechSynthesis' in window) {
+        try {
+          window.speechSynthesis.cancel(); // 停止上一句播報
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'zh-TW';
+          utterance.rate = 1.15; // 稍微快節奏，符合棒球實況熱情
+          utterance.pitch = 1.05;
+          window.speechSynthesis.speak(utterance);
+        } catch (e) {
+          console.warn('語音播報失敗:', e);
+        }
+      }
+    }
+
+    function toggleVoiceCommentary() {
+      appState.voiceEnabled = !appState.voiceEnabled;
+      const btn = document.getElementById('voice-commentary-btn');
+      const icon = document.getElementById('voice-icon');
+      if (appState.voiceEnabled) {
+        btn.className = 'px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-gold-400 border border-gold-500/30 text-xs font-bold transition flex items-center gap-1.5';
+        btn.innerHTML = '<i class="fa-solid fa-microphone-lines" id="voice-icon"></i> 播報員: 開';
+        speakCommentary('歡迎收看世界大賽，現場實況開講！');
+        showQuickAlert('國語即時實況解說已開啟');
+      } else {
+        btn.className = 'px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-gray-400 border border-slate-700 text-xs font-bold transition flex items-center gap-1.5';
+        btn.innerHTML = '<i class="fa-solid fa-microphone-slash" id="voice-icon"></i> 播報員: 關';
+        showQuickAlert('語音解說已靜音');
+      }
+      playSound('click');
     }
 
     function toggleAudio() {
@@ -1790,12 +1976,14 @@
               <div>跑速: <strong class="text-white">${player.speed}</strong></div>
             </div>
           </div>
-          <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
+          <div class="pt-2 border-t border-slate-800 flex items-center justify-between gap-1">
             <span class="text-xs font-mono font-bold text-gold-400"><i class="fa-solid fa-coins mr-1"></i>${player.price.toLocaleString()}</span>
-            ${isOwned ?
-              `<button class="px-3 py-1.5 rounded-lg bg-slate-800 text-gray-400 text-xs font-bold cursor-default">已在球隊</button>` :
-              `<button onclick="buyPlayerCard('${player.id}')" class="px-3 py-1.5 rounded-lg bg-gold-500 hover:bg-yellow-400 text-black text-xs font-bold transition shadow">簽約入隊</button>`
-            }
+            <div class="flex items-center gap-1">
+              ${isOwned ?
+                `<button onclick="openTrainingModal('${player.id}')" class="px-2.5 py-1.5 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-bold hover:bg-amber-500 hover:text-black transition">特訓強化</button>` :
+                `<button onclick="buyPlayerCard('${player.id}')" class="px-3 py-1.5 rounded-lg bg-gold-500 hover:bg-yellow-400 text-black text-xs font-bold transition shadow">簽約入隊</button>`
+              }
+            </div>
           </div>
         `;
         container.appendChild(card);
@@ -1825,8 +2013,188 @@
     }
 
     /* ==========================================
-       6.6 先發打序與 9 人防守配置戰術板
+       6.9 球星抽卡與轉蛋池 (Gacha System)
        ========================================== */
+    function openGachaModal() {
+      playSound('click');
+      document.getElementById('gacha-results-grid').classList.add('hidden');
+      document.getElementById('gacha-pack-box').classList.remove('hidden');
+      const modal = document.getElementById('gacha-modal');
+      modal.classList.remove('hidden');
+      setTimeout(() => modal.classList.remove('opacity-0'), 20);
+    }
+
+    function closeGachaModal() {
+      playSound('click');
+      const modal = document.getElementById('gacha-modal');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    function pullGacha(count = 1) {
+      const cost = count === 10 ? 27000 : 3000;
+      if (appState.user.coins < cost) {
+        showQuickAlert('俱樂部金幣資金不足，無法開啟卡包！');
+        return;
+      }
+
+      appState.user.coins -= cost;
+      updateUserUI();
+      playSound('success');
+
+      const packBox = document.getElementById('gacha-pack-box');
+      const resultsGrid = document.getElementById('gacha-results-grid');
+
+      packBox.classList.add('animate-spin');
+      setTimeout(() => {
+        packBox.classList.remove('animate-spin');
+        packBox.classList.add('hidden');
+        resultsGrid.classList.remove('hidden');
+        resultsGrid.innerHTML = '';
+
+        const pulledList = [];
+        for (let i = 0; i < count; i++) {
+          const rand = Math.random();
+          let targetTier = 'R';
+          if (count === 10 && i === 9) {
+            // 十連抽保底 SR 以上
+            targetTier = rand < 0.25 ? 'SSR' : 'SR';
+          } else {
+            if (rand < 0.08) targetTier = 'SSR';
+            else if (rand < 0.35) targetTier = 'SR';
+          }
+
+          const pool = proPlayerDatabase.filter(p => p.tier === targetTier);
+          const chosen = pool[Math.floor(Math.random() * pool.length)];
+          pulledList.push(chosen);
+
+          if (!appState.user.ownedPlayers.includes(chosen.id)) {
+            appState.user.ownedPlayers.push(chosen.id);
+          }
+        }
+
+        pulledList.forEach((p, idx) => {
+          const item = document.createElement('div');
+          const isSSR = p.tier === 'SSR';
+          item.className = `p-3 rounded-xl border ${isSSR ? 'border-gold-500 bg-amber-950/60 shadow-[0_0_15px_#f59e0b]' : 'border-slate-700 bg-slate-900'} text-center transition transform scale-95 animate-pulse`;
+          item.innerHTML = `
+            <span class="px-1.5 py-0.5 rounded text-[9px] font-bold ${isSSR ? 'bg-gold-500 text-black' : 'bg-cyan-600 text-white'}">${p.tier}</span>
+            <div class="my-2 text-2xl ${isSSR ? 'text-gold-400' : 'text-gray-300'}"><i class="fa-solid fa-id-card"></i></div>
+            <h5 class="text-xs font-bold text-white truncate">${p.name}</h5>
+            <p class="text-[9px] text-gray-400">${p.pos} • OVR ${p.ovr}</p>
+          `;
+          resultsGrid.appendChild(item);
+        });
+
+        // 播報開箱語音
+        const hasSSR = pulledList.some(p => p.tier === 'SSR');
+        if (hasSSR) {
+          speakCommentary('金光閃耀！恭喜獲得 SSR 頂級傳奇球星！');
+          confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+        } else {
+          speakCommentary('獲得優秀職棒陣容新秀！');
+        }
+
+        renderPlayerStoreList();
+        renderLineupUI();
+      }, 700);
+    }
+
+    /* ==========================================
+       6.10 球員特訓養成 (Player Training System)
+       ========================================== */
+    function openTrainingModal(playerId) {
+      playSound('click');
+      appState.selectedTrainingPlayerId = playerId;
+      const p = getPlayerById(playerId);
+      if (!p) return;
+
+      document.getElementById('train-player-name').textContent = `${p.name} (${p.tier}) • 養成特訓`;
+      document.getElementById('train-ovr-val').textContent = p.ovr;
+      document.getElementById('train-power-val').textContent = p.power;
+      document.getElementById('train-contact-val').textContent = p.contact;
+      document.getElementById('train-speed-val').textContent = `${p.velo || p.speed} km/h`;
+
+      document.getElementById('train-power-bar').style.width = `${Math.min(100, p.power)}%`;
+      document.getElementById('train-contact-bar').style.width = `${Math.min(100, p.contact)}%`;
+      document.getElementById('train-speed-bar').style.width = `${Math.min(100, (p.velo || p.speed) * 0.6)}%`;
+
+      const modal = document.getElementById('training-modal');
+      modal.classList.remove('hidden');
+      setTimeout(() => modal.classList.remove('opacity-0'), 20);
+    }
+
+    function closeTrainingModal() {
+      playSound('click');
+      const modal = document.getElementById('training-modal');
+      modal.classList.add('opacity-0');
+      setTimeout(() => modal.classList.add('hidden'), 300);
+    }
+
+    function executePlayerUpgrade() {
+      if (appState.user.coins < 3000) {
+        showQuickAlert('俱樂部資金不足 3,000 金幣，無法特訓！');
+        return;
+      }
+
+      const p = getPlayerById(appState.selectedTrainingPlayerId);
+      if (!p) return;
+
+      appState.user.coins -= 3000;
+      p.ovr = Math.min(99, p.ovr + 2);
+      p.power = Math.min(99, p.power + 3);
+      p.contact = Math.min(99, p.contact + 2);
+      if (p.velo) p.velo = Math.min(165, p.velo + 2);
+      p.speed = Math.min(99, p.speed + 2);
+
+      updateUserUI();
+      openTrainingModal(p.id); // 刷新特訓彈窗數據
+      renderPlayerStoreList();
+      playSound('success');
+      speakCommentary(`${p.name} 特訓突破！整體能力值巨幅躍升！`);
+      showQuickAlert(`⚡ 特訓完成！【${p.name}】OVR 提升至 ${p.ovr}！`);
+    }
+
+    /* ==========================================
+       6.11 全壘打大賽模式 (Home Run Derby)
+       ========================================== */
+    function startDerbyMode() {
+      playSound('cheer');
+      switchView('game');
+      appState.isDerbyMode = true;
+      appState.derbyTimer = 60;
+      appState.derbyHRCount = 0;
+      appState.gameState.autoPitchEnabled = true;
+      appState.gameState.countdown = 2.0;
+
+      const timerBox = document.getElementById('derby-timer-box');
+      if (timerBox) timerBox.classList.remove('hidden');
+      document.getElementById('derby-countdown-time').textContent = '60s';
+      document.getElementById('derby-score-count').textContent = '0';
+
+      speakCommentary('限時 60 秒極限全壘打大賽正式開始！全力轟擊！');
+      showQuickAlert('🔥 60秒全壘打大賽開始！連續開轟締造歷史！');
+
+      if (appState.derbyInterval) clearInterval(appState.derbyInterval);
+      appState.derbyInterval = setInterval(() => {
+        appState.derbyTimer--;
+        const timerEl = document.getElementById('derby-countdown-time');
+        if (timerEl) timerEl.textContent = `${appState.derbyTimer}s`;
+
+        if (appState.derbyTimer <= 0) {
+          clearInterval(appState.derbyInterval);
+          appState.derbyInterval = null;
+          appState.isDerbyMode = false;
+          if (timerBox) timerBox.classList.add('hidden');
+          speakCommentary(`時間到！全壘打大賽結束，您總共轟出 ${appState.derbyHRCount} 支全壘打！恭喜獲得大賽獎金！`);
+          showHitFeedback('DERBY 結束!', `總計轟出 ${appState.derbyHRCount} 支全壘打`, 'gold-gradient-text');
+          appState.user.coins += appState.derbyHRCount * 2000;
+          updateUserUI();
+          playSound('success');
+        }
+      }, 1000);
+    }
+
     function openLineupModal() {
       playSound('click');
       renderLineupUI();
@@ -2241,6 +2609,13 @@
     let cameraShake = 0;
     let isSwinging = false;
     let swingProgress = 0;
+    let timeScale = 1.0; // 時間縮放 (子彈時間慢動作)
+    let slowMoTriggered = false;
+
+    // 實體跑壘者模型組
+    let baseRunnerMeshes = [null, null, null]; // 1壘、2壘、3壘跑者
+    let batterRunnerMesh = null; // 打者跑壘模型
+    let strikeZoneBox = null; // 3D 好球帶輔助框
 
     // 守備員模型列表與位置配置 (9人配置)
     let fielders = [];
@@ -2352,6 +2727,8 @@
       // 6. 建造球棒、球與9人守備員陣型
       buildBallAndBat();
       buildFielders();
+      buildBaseRunners();
+      buildStrikeZoneVisualizer();
 
       // 7. 事件監聽
       container.addEventListener('mousemove', onCanvasMouseMove);
@@ -2623,78 +3000,26 @@
       safetyNet.position.set(0, 4.5, 0);
       stadiumGroup.add(safetyNet);
 
-      // 一壘側與三壘側內野側邊防護圍牆 (Side Foul Walls)
+      // 一壘側與三壘側內野側邊防護圍牆 (沿著 45 度界外線向外平行後退 8 公尺，絕不切入場內)
       const sideWallMat = new THREE.MeshStandardMaterial({ color: 0x081324, roughness: 0.5 });
-      const sideWallGeo = new THREE.BoxGeometry(0.5, 1.4, 45);
+      const sideWallGeo = new THREE.BoxGeometry(0.5, 1.4, 60);
       
       const leftSideWall = new THREE.Mesh(sideWallGeo, sideWallMat);
-      leftSideWall.position.set(-22, 0.7, -18);
-      leftSideWall.rotation.y = 0.22;
+      // 三壘界外外側平行放置
+      leftSideWall.position.set(-30, 0.7, -25);
+      leftSideWall.rotation.y = -Math.PI / 4;
       stadiumGroup.add(leftSideWall);
 
       const rightSideWall = new THREE.Mesh(sideWallGeo, sideWallMat);
-      rightSideWall.position.set(22, 0.7, -18);
-      rightSideWall.rotation.y = -0.22;
+      // 一壘界外外側平行放置
+      rightSideWall.position.set(30, 0.7, -25);
+      rightSideWall.rotation.y = Math.PI / 4;
       stadiumGroup.add(rightSideWall);
 
-      // 7. 球員休息室 (Dugouts - 一壘與三壘側沉降式休息區)
-      const buildDugout = (xPos, isLeft = false) => {
-        const dugoutGroup = new THREE.Group();
-        // 頂棚遮雨棚
-        const roofGeo = new THREE.BoxGeometry(6, 0.25, 14);
-        const roofMat = new THREE.MeshStandardMaterial({ color: 0x0b172a, metalness: 0.8, roughness: 0.2 });
-        const roof = new THREE.Mesh(roofGeo, roofMat);
-        roof.position.set(0, 2.4, 0);
-        dugoutGroup.add(roof);
-
-        // 頂棚金色銘板
-        const brandGeo = new THREE.BoxGeometry(0.1, 0.6, 13.8);
-        const brandMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.9, roughness: 0.2 });
-        const brand = new THREE.Mesh(brandGeo, brandMat);
-        brand.position.set(isLeft ? 3.01 : -3.01, 2.4, 0);
-        dugoutGroup.add(brand);
-
-        // 沉降式地板與後牆
-        const wallMat = new THREE.MeshStandardMaterial({ color: 0x050b14, roughness: 0.7 });
-        const backWallGeo = new THREE.BoxGeometry(0.4, 2.4, 14);
-        const backWall = new THREE.Mesh(backWallGeo, wallMat);
-        backWall.position.set(isLeft ? -2.8 : 2.8, 1.2, 0);
-        dugoutGroup.add(backWall);
-
-        // 球員休息長凳 (Bench)
-        const benchGeo = new THREE.BoxGeometry(1.2, 0.5, 12);
-        const benchMat = new THREE.MeshStandardMaterial({ color: 0x8a5323, roughness: 0.6 });
-        const bench = new THREE.Mesh(benchGeo, benchMat);
-        bench.position.set(isLeft ? -1.8 : 1.8, 0.25, 0);
-        dugoutGroup.add(bench);
-
-        // 護欄欄杆 (Front Railing)
-        const railGeo = new THREE.CylinderGeometry(0.06, 0.06, 13.5, 16);
-        const railMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.9 });
-        const rail = new THREE.Mesh(railGeo, railMat);
-        rail.rotation.x = Math.PI / 2;
-        rail.position.set(isLeft ? 2.8 : -2.8, 1.1, 0);
-        dugoutGroup.add(rail);
-
-        // 休息室立柱
-        [-6.5, 0, 6.5].forEach(zOffset => {
-          const postGeo = new THREE.CylinderGeometry(0.08, 0.08, 2.4, 12);
-          const post = new THREE.Mesh(postGeo, railMat);
-          post.position.set(isLeft ? 2.8 : -2.8, 1.2, zOffset);
-          dugoutGroup.add(post);
-        });
-
-        dugoutGroup.position.set(xPos, 0, -12);
-        dugoutGroup.rotation.y = isLeft ? 0.22 : -0.22;
-        stadiumGroup.add(dugoutGroup);
-      };
-
-      buildDugout(-25, true);  // 三壘側主隊休息室
-      buildDugout(25, false); // 一壘側客隊休息室
-
-      // 3. 外野全壘打弧形大牆 (深墨藍與黃金鑲邊)
-      const wallRadius = 112;
-      const wallGeo = new THREE.CylinderGeometry(wallRadius, wallRadius, 8.5, 64, 1, true, -Math.PI * 0.42, Math.PI * 0.84);
+      // 3. 外野全壘打弧形大牆 (圓心向後調整並精準覆蓋外野 105 米處，呈標準開闊向外環抱狀)
+      const wallCenterZ = -20; // 圓心後移，使圓弧向外推開
+      const wallRadius = 92;
+      const wallGeo = new THREE.CylinderGeometry(wallRadius, wallRadius, 8.5, 64, 1, true, Math.PI * 0.25, Math.PI * 0.5);
       const wallMat = new THREE.MeshStandardMaterial({
         color: 0x0a1426,
         roughness: 0.35,
@@ -2702,23 +3027,23 @@
         side: THREE.DoubleSide
       });
       const wall = new THREE.Mesh(wallGeo, wallMat);
-      wall.position.set(0, 4.25, 0);
+      wall.position.set(0, 4.25, wallCenterZ);
       stadiumGroup.add(wall);
 
       // 全壘打黃色頂部防撞飾條
-      const wallLipGeo = new THREE.CylinderGeometry(wallRadius + 0.1, wallRadius + 0.1, 0.3, 64, 1, true, -Math.PI * 0.42, Math.PI * 0.84);
+      const wallLipGeo = new THREE.CylinderGeometry(wallRadius + 0.1, wallRadius + 0.1, 0.3, 64, 1, true, Math.PI * 0.25, Math.PI * 0.5);
       const wallLipMat = new THREE.MeshBasicMaterial({ color: 0xffcc00, side: THREE.DoubleSide });
       const wallLip = new THREE.Mesh(wallLipGeo, wallLipMat);
-      wallLip.position.set(0, 8.5, 0);
+      wallLip.position.set(0, 8.5, wallCenterZ);
       stadiumGroup.add(wallLip);
 
-      // 全壘打標竿 (黃色立柱)
+      // 全壘打標竿 (黃色立柱，精確定位於弧線左右兩端界外線交點)
       const poleGeo = new THREE.CylinderGeometry(0.22, 0.22, 32, 16);
       const poleMat = new THREE.MeshStandardMaterial({ color: 0xffd700, metalness: 0.7, roughness: 0.3 });
       const leftPole = new THREE.Mesh(poleGeo, poleMat);
-      leftPole.position.set(-78, 16, -78);
+      leftPole.position.set(-65, 16, -85);
       const rightPole = new THREE.Mesh(poleGeo, poleMat);
-      rightPole.position.set(78, 16, -78);
+      rightPole.position.set(65, 16, -85);
       stadiumGroup.add(leftPole);
       stadiumGroup.add(rightPole);
 
@@ -2729,59 +3054,59 @@
       const screenGeo = new THREE.PlaneGeometry(screenWidth, screenHeight);
       const screenMat = new THREE.MeshBasicMaterial({ map: jumboTex });
       const jumbotronMesh = new THREE.Mesh(screenGeo, screenMat);
-      jumbotronMesh.position.set(0, 24, -110);
+      jumbotronMesh.position.set(0, 24, -114);
       stadiumGroup.add(jumbotronMesh);
 
       // 螢幕外框鋼構與 VIP 皇冠裝飾
       const frameGeo = new THREE.BoxGeometry(screenWidth + 2.5, screenHeight + 3, 2.5);
       const frameMat = new THREE.MeshStandardMaterial({ color: 0x060c18, metalness: 0.8, roughness: 0.3 });
       const screenFrame = new THREE.Mesh(frameGeo, frameMat);
-      screenFrame.position.set(0, 24, -111.4);
+      screenFrame.position.set(0, 24, -115.4);
       stadiumGroup.add(screenFrame);
 
       // 螢幕頂端黃金皇冠立牌
       const crownGeo = new THREE.BoxGeometry(16, 2.5, 0.8);
       const crownMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.9, roughness: 0.2 });
       const crown = new THREE.Mesh(crownGeo, crownMat);
-      crown.position.set(0, 36, -111.4);
+      crown.position.set(0, 36, -115.4);
       stadiumGroup.add(crown);
 
-      // 5. 多階梯立體奢華觀眾看台席與觀眾席球迷粒子點綴
-      const standRadiusInner = wallRadius + 6;
-      const standRadiusOuter = wallRadius + 24;
+      // 5. 多階梯立體奢華觀眾看台席與觀眾席球迷粒子點綴 (緊貼全壘打外牆後側，向外延伸)
+      const standRadiusInner = wallRadius + 3;
+      const standRadiusOuter = wallRadius + 22;
       
-      // 階梯式看台座席層 (3階立體環狀梯台)
+      // 階梯式看台座席層 (4階立體環狀梯台，全數置於外牆後方)
       for (let tier = 0; tier < 4; tier++) {
-        const tierR1 = standRadiusInner + tier * 5.2;
-        const tierR2 = tierR1 + 4.8;
+        const tierR1 = standRadiusInner + tier * 5.0;
+        const tierR2 = tierR1 + 4.6;
         const tierH = 2.2 + tier * 3.8;
-        const tierGeo = new THREE.CylinderGeometry(tierR2, tierR1, 3.8, 48, 1, true, -Math.PI * 0.45, Math.PI * 0.9);
+        const tierGeo = new THREE.CylinderGeometry(tierR2, tierR1, 3.8, 48, 1, true, Math.PI * 0.24, Math.PI * 0.52);
         const tierMat = new THREE.MeshStandardMaterial({ 
           color: tier % 2 === 0 ? 0x0e172a : 0x16233d, 
           roughness: 0.85, 
           side: THREE.DoubleSide 
         });
         const tierMesh = new THREE.Mesh(tierGeo, tierMat);
-        tierMesh.position.y = tierH;
+        tierMesh.position.set(0, tierH, wallCenterZ);
         stadiumGroup.add(tierMesh);
 
         // 各階看台金色防護欄
-        const tierRailGeo = new THREE.CylinderGeometry(tierR1 + 0.1, tierR1 + 0.1, 0.6, 48, 1, true, -Math.PI * 0.45, Math.PI * 0.9);
+        const tierRailGeo = new THREE.CylinderGeometry(tierR1 + 0.1, tierR1 + 0.1, 0.6, 48, 1, true, Math.PI * 0.24, Math.PI * 0.52);
         const tierRailMat = new THREE.MeshStandardMaterial({ color: 0xd4af37, metalness: 0.8, roughness: 0.3, side: THREE.DoubleSide });
         const tierRail = new THREE.Mesh(tierRailGeo, tierRailMat);
-        tierRail.position.y = tierH + 2.0;
+        tierRail.position.set(0, tierH + 2.0, wallCenterZ);
         stadiumGroup.add(tierRail);
       }
 
-      // 看台上多色應援觀眾陣列 (Crowd Spectators)
+      // 看台上多色應援觀眾陣列 (位置同步與看台向外後移)
       const spectatorColors = [0xd4af37, 0xef4444, 0x3b82f6, 0xffffff, 0x10b981, 0xa855f7];
       const crowdGroup = new THREE.Group();
       for (let i = 0; i < 280; i++) {
-        const angle = (-0.42 + Math.random() * 0.84) * Math.PI;
+        const angle = (0.26 + Math.random() * 0.48) * Math.PI;
         const tierIdx = Math.floor(Math.random() * 4);
-        const radius = standRadiusInner + tierIdx * 5.2 + 1.5 + Math.random() * 2.5;
-        const x = Math.sin(angle) * radius;
-        const z = -Math.cos(angle) * radius;
+        const radius = standRadiusInner + tierIdx * 5.0 + 1.2 + Math.random() * 2.2;
+        const x = Math.cos(angle) * radius;
+        const z = wallCenterZ - Math.sin(angle) * radius;
         const y = 3.2 + tierIdx * 3.8 + Math.random() * 0.4;
 
         const specGeo = new THREE.CylinderGeometry(0.24, 0.2, 0.85, 6);
@@ -2795,10 +3120,10 @@
       stadiumGroup.add(crowdGroup);
 
       // VIP 空中包廂燈光條
-      const skyboxGeo = new THREE.CylinderGeometry(standRadiusOuter + 0.5, standRadiusOuter + 0.5, 3.2, 48, 1, true, -Math.PI * 0.43, Math.PI * 0.86);
+      const skyboxGeo = new THREE.CylinderGeometry(standRadiusOuter + 0.5, standRadiusOuter + 0.5, 3.2, 48, 1, true, Math.PI * 0.24, Math.PI * 0.52);
       const skyboxMat = new THREE.MeshBasicMaterial({ color: 0xffe699, side: THREE.DoubleSide, transparent: true, opacity: 0.55 });
       const skybox = new THREE.Mesh(skyboxGeo, skyboxMat);
-      skybox.position.set(0, 20.5, 0);
+      skybox.position.set(0, 20.5, wallCenterZ);
       stadiumGroup.add(skybox);
 
       // 6. 巨型球場泛光燈高塔 (Stadium Floodlight Towers)
@@ -2824,6 +3149,33 @@
       });
 
       scene.add(stadiumGroup);
+    }
+
+    /* 3D 霓虹好球帶輔助框 (Strike Zone Visualizer) */
+    function buildStrikeZoneVisualizer() {
+      const zoneGeo = new THREE.BoxGeometry(0.85, 0.95, 0.05);
+      const zoneMat = new THREE.MeshBasicMaterial({
+        color: 0xffcc00,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.45
+      });
+      strikeZoneBox = new THREE.Mesh(zoneGeo, zoneMat);
+      strikeZoneBox.position.set(0, 1.25, 0);
+      scene.add(strikeZoneBox);
+    }
+
+    /* 實體 3D 跑壘員模型建構 */
+    function buildBaseRunners() {
+      for (let i = 0; i < 3; i++) {
+        const runner = createFielderMesh(0xffb703);
+        runner.visible = false;
+        scene.add(runner);
+        baseRunnerMeshes[i] = runner;
+      }
+      batterRunnerMesh = createFielderMesh(0xffd166);
+      batterRunnerMesh.visible = false;
+      scene.add(batterRunnerMesh);
     }
 
     /* 建立 3D 守備員 (運動員模型，包含頭部、球衣軀幹、四肢與棒球手套) */
@@ -2882,26 +3234,88 @@
       return group;
     }
 
+    /* 建造 9 位守備員並配置位置 */
     function buildFielders() {
       fielders = [];
       Object.keys(fielderPositions).forEach(key => {
-        if (key === 'P') return; // 投手已存在單獨實例
-        const fData = fielderPositions[key];
-        const fMesh = createFielderMesh();
-        fMesh.position.set(...fData.pos);
-        // 朝向本壘板打擊者
-        fMesh.lookAt(0, 1, 0);
+        const info = fielderPositions[key];
+        if (info.role === 'pitcher') return; // 投手已有專屬 mesh
 
-        fMesh.userData = {
-          roleKey: key,
-          originalPos: new THREE.Vector3(...fData.pos),
-          currentVelocity: new THREE.Vector3(),
+        const fielderMesh = createFielderMesh(info.role === 'outfielder' ? 0x1e3a5f : 0x0f2240);
+        fielderMesh.position.set(info.pos[0], info.pos[1], info.pos[2]);
+        fielderMesh.userData = {
+          role: info.role,
+          name: info.name,
+          key: key,
+          originalPos: fielderMesh.position.clone(),
           isChasing: false
         };
-
-        scene.add(fMesh);
-        fielders.push(fMesh);
+        fielderMesh.lookAt(0, 1, 0);
+        stadiumGroup.add(fielderMesh);
+        fielders.push(fielderMesh);
       });
+    }
+
+    let rainSystem = null;
+
+    /* 球場日夜天候切換系統 */
+    function setStadiumWeather(weather) {
+      appState.currentWeather = weather;
+      ['night', 'day', 'rain'].forEach(w => {
+        const btn = document.getElementById(`weather-btn-${w}`);
+        if (btn) {
+          if (w === weather) {
+            btn.className = 'px-2 py-1 rounded-lg text-xs bg-gold-500 text-black font-bold';
+          } else {
+            btn.className = 'px-2 py-1 rounded-lg text-xs text-gray-400 hover:text-white font-bold';
+          }
+        }
+      });
+
+      if (!scene) return;
+
+      if (weather === 'day') {
+        scene.background = new THREE.Color(0x87ceeb);
+        scene.fog = new THREE.FogExp2(0x87ceeb, 0.003);
+        if (rainSystem) rainSystem.visible = false;
+        speakCommentary('球場天氣晴朗，午後暖陽逆光照射！');
+      } else if (weather === 'rain') {
+        scene.background = new THREE.Color(0x101726);
+        scene.fog = new THREE.FogExp2(0x101726, 0.012);
+        createOrShowRainParticles();
+        speakCommentary('球場降下陣雨，草皮濕滑考驗控球！');
+      } else {
+        // 夜間璀璨
+        scene.background = new THREE.Color(0x050811);
+        scene.fog = new THREE.FogExp2(0x050811, 0.005);
+        if (rainSystem) rainSystem.visible = false;
+        speakCommentary('夜戰璀璨燈火通明，大聯盟級聚光燈亮起！');
+      }
+      playSound('click');
+    }
+
+    function createOrShowRainParticles() {
+      if (rainSystem) {
+        rainSystem.visible = true;
+        return;
+      }
+      const count = 1800;
+      const rainGeo = new THREE.BufferGeometry();
+      const positions = new Float32Array(count * 3);
+      for (let i = 0; i < count * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 120;
+        positions[i + 1] = Math.random() * 45;
+        positions[i + 2] = (Math.random() - 0.5) * 120;
+      }
+      rainGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      const rainMat = new THREE.PointsMaterial({
+        color: 0x93c5fd,
+        size: 0.18,
+        transparent: true,
+        opacity: 0.6
+      });
+      rainSystem = new THREE.Points(rainGeo, rainMat);
+      scene.add(rainSystem);
     }
 
     function buildBallAndBat() {
@@ -2950,19 +3364,28 @@
     }
 
     function onCanvasTouchMove(e) {
-      if (!e.touches || e.touches.length === 0) return;
-      const container = document.getElementById('canvas-container');
-      const rect = container.getBoundingClientRect();
-      updateAimPosition(e.touches[0].clientX, e.touches[0].clientY, rect);
+      if (e.touches && e.touches.length > 0) {
+        const touch = e.touches[0];
+        const container = document.getElementById('canvas-container');
+        const rect = container.getBoundingClientRect();
+        updateAimPosition(touch.clientX, touch.clientY, rect);
+      }
     }
 
+    /* 強化準心映射與智慧磁吸輔助 */
     function updateAimPosition(clientX, clientY, rect) {
       const xPercent = (clientX - rect.left) / rect.width;
       const yPercent = (clientY - rect.top) / rect.height;
 
-      // 限制甜蜜點準心於好球帶範圍
-      aimZone.x = (xPercent - 0.5) * 1.5;
-      aimZone.y = 1.6 - yPercent * 1.0;
+      // 擴大打擊準心範圍，並適度磁吸靠近好球帶中心
+      aimZone.x = (xPercent - 0.5) * 1.6;
+      aimZone.y = 1.65 - yPercent * 1.1;
+
+      // 打擊輔助磁吸：如果球在靠近好球帶，準心往球心微幅吸附 25%
+      if (isBallInPlay && !ballContacted && ballMesh.position.z > -4.0) {
+        aimZone.x = aimZone.x * 0.75 + ballMesh.position.x * 0.25;
+        aimZone.y = aimZone.y * 0.75 + ballMesh.position.y * 0.25;
+      }
 
       const crosshair = document.getElementById('batting-crosshair');
       if (crosshair) {
@@ -2992,7 +3415,19 @@
 
       if (isBallInPlay && !ballContacted) {
         checkHitContact();
+      } else {
+        showTimingFeedback('揮棒落空 (MISS)', 'text-red-400');
       }
+    }
+
+    function showTimingFeedback(text, colorClass = 'text-gold-300') {
+      const indicator = document.getElementById('timing-indicator');
+      const textEl = document.getElementById('timing-text');
+      if (!indicator || !textEl) return;
+      textEl.textContent = text;
+      textEl.className = `px-3 py-1 rounded-full text-xs font-black tracking-widest uppercase bg-black/85 border border-gold-400 shadow-lg ${colorClass}`;
+      indicator.classList.remove('opacity-0');
+      setTimeout(() => indicator.classList.add('opacity-0'), 1000);
     }
 
     /* 擊球回饋文字與特效 */
@@ -3111,44 +3546,58 @@
       });
     }
 
-    /* 揮棒與命中物理碰撞更新 */
+    /* 揮棒與命中物理碰撞全面優化（大幅放寬判定，極易打中球） */
     function checkHitContact() {
       const ballZ = ballMesh.position.z;
-      if (ballZ >= -0.5 && ballZ <= 0.7) {
+      // 大幅擴大進壘擊球判斷區間：從 -1.5m 到 +1.6m 均能咬中
+      if (ballZ >= -1.5 && ballZ <= 1.6) {
         ballContacted = true;
+        timeScale = 1.0; // 恢復正常時間流速
 
         const currentBatterId = appState.lineup.battingOrder[appState.currentBatterIndex];
         const batter = getPlayerById(currentBatterId);
 
+        // 計算與準心的距離
         const dx = ballMesh.position.x - aimZone.x;
         const dy = ballMesh.position.y - aimZone.y;
         const distanceToCenter = Math.sqrt(dx * dx + dy * dy);
 
+        // 判定打擊時機 (Timing)
+        let timingDiff = Math.abs(ballZ - 0.1);
+        let timingMsg = 'PERFECT TIMING (完美時機)';
+        if (ballZ < -0.7) {
+          timingMsg = 'TOO EARLY (提早出棒)';
+        } else if (ballZ > 0.8) {
+          timingMsg = 'TOO LATE (出棒偏慢)';
+        }
+        showTimingFeedback(timingMsg, timingDiff < 0.5 ? 'text-gold-300' : 'text-cyan-300');
+
         let powerMultiplier = 1.0 + (batter.power - 75) * 0.008;
-        let sweetTolerance = 0.28 + (batter.contact - 75) * 0.003;
+        // 大幅增加甜蜜點寬容度：原本 0.28 增加至 0.85，幾乎百發百中
+        let sweetTolerance = 0.85 + (batter.contact - 75) * 0.006;
         if (appState.user.vipTier === 'allstar') {
-          powerMultiplier *= 1.15;
-          sweetTolerance += 0.08;
+          powerMultiplier *= 1.25;
+          sweetTolerance += 0.25;
         } else if (appState.user.vipTier === 'halloffame') {
-          powerMultiplier *= 1.35;
-          sweetTolerance += 0.15;
+          powerMultiplier *= 1.55;
+          sweetTolerance += 0.45;
         }
 
         let hitSpeed = 0;
         let hitDistance = 0;
 
-        if (distanceToCenter < sweetTolerance * 0.6) {
-          // 完美咬中球心 -> 驚天全壘打
-          hitSpeed = Math.floor((156 + Math.random() * 26) * powerMultiplier);
-          hitDistance = Math.floor(128 + Math.random() * 40 + (powerMultiplier - 1) * 35);
+        if (distanceToCenter < sweetTolerance * 0.65) {
+          // 完美咬中球心 -> 驚天全壘打 (HOMERUN)
+          hitSpeed = Math.floor((158 + Math.random() * 28) * powerMultiplier);
+          hitDistance = Math.floor(132 + Math.random() * 45 + (powerMultiplier - 1) * 40);
 
           ballVelocity.set(
-            (aimZone.x + (Math.random() - 0.5) * 0.25) * 0.9,
-            0.58 + Math.random() * 0.12,
-            -(1.85 + Math.random() * 0.35) * powerMultiplier
+            (aimZone.x * 0.7 + (Math.random() - 0.5) * 0.2),
+            0.62 + Math.random() * 0.15,
+            -(1.95 + Math.random() * 0.4) * powerMultiplier
           );
 
-          cameraShake = 16;
+          cameraShake = 20;
           playSound('cheer');
           triggerHomerunCelebration(hitDistance, hitSpeed);
 
@@ -3162,40 +3611,36 @@
           if (hitDistance > appState.user.bestDistance) {
             appState.user.bestDistance = hitDistance;
           }
-          appState.myTeamScore += (Math.floor(Math.random() * 3) + 1);
-          appState.gameState.score = appState.myTeamScore;
+
+          // 跑壘系統：滿壘大滿貫或全壘打清壘
+          const runs = advanceRunners(4);
+          speakCommentary(runs > 1 ? `出去啦！驚天特大號滿貫全壘打！一口氣灌進 ${runs} 分！` : '這一棒敲得非常深遠！直接飛過全壘打大牆！');
 
           // 任務進度連動更新
           updateQuestProgress('hit', 1);
           updateQuestProgress('homerun', 1);
           updateQuestProgress('distance', hitDistance);
           updateQuestProgress('score');
-        } else if (distanceToCenter < sweetTolerance) {
+        } else {
           // 擊出安打 / 強勁平飛球
-          hitSpeed = Math.floor(136 + Math.random() * 22);
-          hitDistance = Math.floor(72 + Math.random() * 38);
-          ballVelocity.set((Math.random() - 0.5) * 1.3, 0.24, -(1.2 + Math.random() * 0.35));
+          hitSpeed = Math.floor(138 + Math.random() * 24);
+          hitDistance = Math.floor(75 + Math.random() * 42);
+          const basesGained = hitDistance > 95 ? 2 : 1;
 
-          showHitFeedback('長打安打 (BASE HIT!)', `${hitDistance} M / ${hitSpeed} km/h`, 'text-emerald-400');
+          ballVelocity.set((Math.random() - 0.5) * 1.2, 0.28, -(1.3 + Math.random() * 0.4));
+
+          showHitFeedback(basesGained === 2 ? '二壘長打 (DOUBLE!)' : '平飛安打 (BASE HIT!)', `${hitDistance} M / ${hitSpeed} km/h`, 'text-emerald-400');
           jumbotronState.alertLevel = 'hit';
           jumbotronState.headline = 'SOLID HIT !!';
-          jumbotronState.subtext = `${batter.name} DOUBLE HIT`;
+          jumbotronState.subtext = `${batter.name} HIT`;
           updateJumbotronDisplay();
 
-          appState.myTeamScore += 1;
-          appState.gameState.score = appState.myTeamScore;
+          const runs = advanceRunners(basesGained);
+          speakCommentary(runs > 0 ? `強勁安打穿出防線！跑者繞過三壘回本壘得分！` : `漂亮安打！打者站上一壘！`);
 
           // 任務進度連動更新
           updateQuestProgress('hit', 1);
           updateQuestProgress('score');
-        } else {
-          // 滾地球或內野高飛
-          hitSpeed = Math.floor(95 + Math.random() * 20);
-          hitDistance = Math.floor(22 + Math.random() * 25);
-          ballVelocity.set((Math.random() - 0.5) * 0.9, 0.08, -(0.45 + Math.random() * 0.2));
-
-          showHitFeedback('內野防守攔截 (OUT)', '守備員刺殺出局', 'text-gray-400');
-          recordOut();
         }
 
         // 輪到下一棒
@@ -3205,6 +3650,13 @@
         dispatchFieldersToBall();
         updateHUD();
         updateHomeDashboard();
+      } else {
+        // 出棒太早或太晚
+        if (ballZ < -1.5) {
+          showTimingFeedback('TOO EARLY (揮棒過早)', 'text-amber-400');
+        } else {
+          showTimingFeedback('TOO LATE (揮棒過晚)', 'text-red-400');
+        }
       }
     }
 
@@ -3279,6 +3731,8 @@
       playSound('pitch');
       isBallInPlay = true;
       ballContacted = false;
+      slowMoTriggered = false;
+      timeScale = 1.0;
       appState.isCpuSwinging = false;
       resetFielders();
       appState.gameState.countdown = appState.gameState.autoPitchTimer;
@@ -3291,14 +3745,14 @@
       let name = '四縫線豪速球';
 
       if (appState.playerSelectedPitch === 'slider') {
-        speed -= 10;
-        curveX = 0.022;
-        curveY = -0.006;
+        speed -= 12;
+        curveX = 0.018;
+        curveY = -0.005;
         name = '外角銳利滑球';
       } else if (appState.playerSelectedPitch === 'curve') {
-        speed -= 18;
-        curveX = -0.01;
-        curveY = -0.022;
+        speed -= 20;
+        curveX = -0.008;
+        curveY = -0.016;
         name = '縱向大曲球';
       }
 
@@ -3308,21 +3762,21 @@
       document.getElementById('hud-pitch-type').textContent = `${myPitcher.name} • ${name}`;
       document.getElementById('hud-pitch-speed').textContent = `${speed} km/h`;
 
-      const forwardSpeed = (speed / 150) * 0.44;
-      const targetX = (Math.random() - 0.5) * 0.45;
-      const targetY = 0.9 + Math.random() * 0.45;
+      // 適度放慢飛行步長，讓視覺反應更充裕
+      const forwardSpeed = (speed / 150) * 0.32;
+      const targetX = (Math.random() - 0.5) * 0.38;
+      const targetY = 1.1 + Math.random() * 0.35;
 
       const deltaX = (targetX - ballMesh.position.x) / (18.44 / forwardSpeed);
       const deltaY = (targetY - ballMesh.position.y) / (18.44 / forwardSpeed);
 
       ballVelocity.set(deltaX + curveX, deltaY + curveY, forwardSpeed);
 
-      // 電腦打者 AI 隨機判斷是否揮棒
+      // 電腦打者 AI
       const cpuSwingDecision = Math.random();
       if (cpuSwingDecision > 0.45) {
         setTimeout(() => {
-          triggerBatSwing(); // 電腦打者揮棒
-          // 隨機落空或微弱安打
+          triggerBatSwing();
           if (Math.random() > 0.65) {
             checkHitContact();
           }
@@ -3336,45 +3790,204 @@
       playSound('pitch');
       isBallInPlay = true;
       ballContacted = false;
+      slowMoTriggered = false;
+      timeScale = 1.0;
       resetFielders();
       appState.gameState.countdown = appState.gameState.autoPitchTimer;
 
-      jumbotronState.alertLevel = 'normal';
-      jumbotronState.headline = 'BALL IN PLAY';
-      jumbotronState.subtext = 'FASTBALL 152 KM/H INCOMING';
-      updateJumbotronDisplay();
-
       ballMesh.position.set(0, 1.45, -18.44);
 
+      // 電腦投球：新增約 35% 機率投出「壞球 (Ball)」，考驗打者選球眼
+      const isIntentionalBall = !appState.isDerbyMode && Math.random() < 0.35;
+
       const pitchTypes = [
-        { name: '四縫線快速直球', speed: 154, curveX: 0, curveY: 0 },
-        { name: '外角銳利滑球', speed: 142, curveX: 0.016, curveY: -0.005 },
-        { name: '縱向曲球', speed: 132, curveX: -0.008, curveY: -0.018 }
+        { type: '四縫線直球', speed: 138, curveX: 0, curveY: 0 },
+        { type: '銳利外角滑球', speed: 128, curveX: 0.016, curveY: -0.005 },
+        { type: '大幅度縱向曲球', speed: 118, curveX: -0.008, curveY: -0.018 }
       ];
       const selected = pitchTypes[Math.floor(Math.random() * pitchTypes.length)];
-      appState.gameState.pitchType = selected.name;
+      
+      let targetX = 0;
+      let targetY = 1.2;
+
+      if (isIntentionalBall) {
+        // 壞球落點：偏外角、偏高或挖地瓜
+        const ballZoneType = Math.floor(Math.random() * 3);
+        if (ballZoneType === 0) {
+          // 偏外角大壞球
+          targetX = Math.random() < 0.5 ? 0.72 + Math.random() * 0.25 : -(0.72 + Math.random() * 0.25);
+          targetY = 1.1 + (Math.random() - 0.5) * 0.3;
+        } else if (ballZoneType === 1) {
+          // 偏高壞球
+          targetX = (Math.random() - 0.5) * 0.5;
+          targetY = 1.82 + Math.random() * 0.25;
+        } else {
+          // 偏低近挖地瓜壞球
+          targetX = (Math.random() - 0.5) * 0.5;
+          targetY = 0.52 - Math.random() * 0.15;
+        }
+      } else {
+        // 好球帶內落點 (X: ±0.32, Y: 0.85 ~ 1.55)
+        targetX = (Math.random() - 0.5) * 0.55;
+        targetY = 0.95 + Math.random() * 0.55;
+      }
+
+      appState.gameState.pitchType = selected.type;
       appState.gameState.pitchSpeedKmh = selected.speed;
 
-      document.getElementById('hud-pitch-type').textContent = selected.name;
-      document.getElementById('hud-pitch-speed').textContent = `${selected.speed} km/h`;
+      const typeEl = document.getElementById('hud-pitch-type');
+      const speedEl = document.getElementById('hud-pitch-speed');
+      if (typeEl) typeEl.textContent = selected.type;
+      if (speedEl) speedEl.textContent = `${selected.speed} km/h`;
 
-      const forwardSpeed = (selected.speed / 150) * 0.42;
-      const targetX = (Math.random() - 0.5) * 0.5;
-      const targetY = 0.85 + Math.random() * 0.5;
-
+      const forwardSpeed = (selected.speed / 150) * 0.32;
       const deltaX = (targetX - ballMesh.position.x) / (18.44 / forwardSpeed);
       const deltaY = (targetY - ballMesh.position.y) / (18.44 / forwardSpeed);
 
-      ballVelocity.set(deltaX, deltaY, forwardSpeed);
+      ballVelocity.set(deltaX + selected.curveX, deltaY + selected.curveY, forwardSpeed);
+      updateJumbotronDisplay();
+    }
 
-      pitcherMesh.rotation.y = 0.4;
-      setTimeout(() => {
-        pitcherMesh.rotation.y = 0;
-      }, 350);
+    /* 頂部 HUD (好壞球、出局數、比分、壘包狀態) 更新 */
+    function updateHUD() {
+      const hudScore = document.getElementById('hud-score');
+      if (hudScore) hudScore.textContent = `${appState.myTeamScore} : ${appState.cpuTeamScore}`;
+
+      const inningStatus = document.getElementById('hud-inning-status');
+      if (inningStatus) {
+        const halfText = appState.currentHalf === 'top' ? '上半' : '下半';
+        const modeText = appState.gameMode === 'offense' ? '我方進攻 • 打擊' : '我方防守 • 投手登板';
+        inningStatus.textContent = `${appState.currentInning}局${halfText} (${modeText})`;
+      }
+
+      // 壘包亮燈連動
+      for (let b = 1; b <= 3; b++) {
+        const baseEl = document.getElementById(`base-indicator-${b}`);
+        if (baseEl) {
+          if (appState.bases[b - 1]) {
+            baseEl.className = 'absolute w-2.5 h-2.5 rotate-45 border border-gold-400 bg-gold-400 shadow-[0_0_8px_#f59e0b]';
+          } else {
+            baseEl.className = 'absolute w-2.5 h-2.5 rotate-45 border border-slate-600 bg-slate-800';
+          }
+        }
+      }
+
+      // 當前打者/投手名字同步
+      const numEl = document.getElementById('hud-active-player-num');
+      const titleEl = document.getElementById('hud-active-player-title');
+      const nameEl = document.getElementById('hud-active-player-name');
+
+      if (appState.gameMode === 'offense') {
+        const activeBatterId = appState.lineup.battingOrder[appState.currentBatterIndex];
+        const p = getPlayerById(activeBatterId);
+        if (numEl) numEl.textContent = `#${appState.currentBatterIndex + 1}`;
+        if (titleEl) titleEl.textContent = `第 ${appState.currentBatterIndex + 1} 棒 • 先發`;
+        if (nameEl) nameEl.textContent = `${p.name} (${p.tier})`;
+      } else {
+        const pitcherId = appState.lineup.defensePositions.P;
+        const p = getPlayerById(pitcherId);
+        if (numEl) numEl.textContent = `P`;
+        if (titleEl) titleEl.textContent = `我隊先發王牌投手`;
+        if (nameEl) nameEl.textContent = `${p.name} (${p.tier})`;
+      }
+
+      const strikes = document.querySelectorAll('#hud-strikes .strike-dot');
+      strikes.forEach((dot, idx) => {
+        if (idx < appState.gameState.strikes) {
+          dot.className = 'w-3 h-3 rounded-full bg-amber-400 strike-dot shadow-[0_0_8px_#f59e0b]';
+        } else {
+          dot.className = 'w-3 h-3 rounded-full bg-slate-700 strike-dot';
+        }
+      });
+
+      const balls = document.querySelectorAll('#hud-balls .ball-dot');
+      balls.forEach((dot, idx) => {
+        if (idx < appState.gameState.balls) {
+          dot.className = 'w-3 h-3 rounded-full bg-emerald-400 ball-dot shadow-[0_0_8px_#10b981]';
+        } else {
+          dot.className = 'w-3 h-3 rounded-full bg-slate-700 ball-dot';
+        }
+      });
+
+      const outs = document.querySelectorAll('#hud-outs .out-dot');
+      outs.forEach((dot, idx) => {
+        if (idx < appState.gameState.outs) {
+          dot.className = 'w-3 h-3 rounded-full bg-red-500 out-dot shadow-[0_0_8px_#ef4444]';
+        } else {
+          dot.className = 'w-3 h-3 rounded-full bg-slate-700 out-dot';
+        }
+      });
+    }
+
+    /* 跑壘前進與得分邏輯 (Advance Runners) */
+    function advanceRunners(basesToAdvance) {
+      let runsScored = 0;
+      if (basesToAdvance >= 4) {
+        // 全壘打清壘
+        runsScored = 1 + (appState.bases[0] ? 1 : 0) + (appState.bases[1] ? 1 : 0) + (appState.bases[2] ? 1 : 0);
+        appState.bases = [false, false, false];
+      } else {
+        const newBases = [false, false, false];
+        for (let i = 2; i >= 0; i--) {
+          if (appState.bases[i]) {
+            if (i + basesToAdvance >= 3) {
+              runsScored++;
+            } else {
+              newBases[i + basesToAdvance] = true;
+            }
+          }
+        }
+        if (basesToAdvance - 1 < 3) {
+          newBases[basesToAdvance - 1] = true; // 打者自己上壘
+        }
+        appState.bases = newBases;
+      }
+
+      if (runsScored > 0) {
+        if (appState.gameMode === 'offense') {
+          appState.myTeamScore += runsScored;
+          appState.gameState.score = appState.myTeamScore;
+        } else {
+          appState.cpuTeamScore += runsScored;
+        }
+      }
+
+      // 同步 3D 場上的實體跑壘者模型
+      updateBaseRunners3D();
+      return runsScored;
+    }
+
+    function updateBaseRunners3D() {
+      // 1壘 (13.4, 0.05, -13.4)
+      if (baseRunnerMeshes[0]) {
+        baseRunnerMeshes[0].visible = appState.bases[0];
+        baseRunnerMeshes[0].position.set(13.4, 0.05, -13.4);
+        baseRunnerMeshes[0].lookAt(0, 0.05, -26.8);
+      }
+      // 2壘 (0, 0.05, -26.8)
+      if (baseRunnerMeshes[1]) {
+        baseRunnerMeshes[1].visible = appState.bases[1];
+        baseRunnerMeshes[1].position.set(0, 0.05, -26.8);
+        baseRunnerMeshes[1].lookAt(-13.4, 0.05, -13.4);
+      }
+      // 3壘 (-13.4, 0.05, -13.4)
+      if (baseRunnerMeshes[2]) {
+        baseRunnerMeshes[2].visible = appState.bases[2];
+        baseRunnerMeshes[2].position.set(-13.4, 0.05, -13.4);
+        baseRunnerMeshes[2].lookAt(0, 0.05, 0);
+      }
+    }
+
+    function resetBases() {
+      appState.bases = [false, false, false];
+      updateBaseRunners3D();
+      updateHUD();
     }
 
     function recordStrike() {
       appState.gameState.strikes++;
+      speakCommentary(appState.gameState.strikes === 3 ? '揮棒落空！打者遭到三振出局！' : '這球進壘位置刁鑽，主審判定好球！');
+
       if (appState.gameState.strikes >= 3) {
         showHitFeedback('三振出局! (STRIKEOUT)', '揮棒落空', 'text-red-500');
         jumbotronState.alertLevel = 'strikeout';
@@ -3394,6 +4007,61 @@
       updateJumbotronDisplay();
     }
 
+    /* 記錄壞球 (Ball) 與四壞保送 (Walk) 判定 */
+    function recordBall() {
+      appState.gameState.balls++;
+      showHitFeedback('壞球 (BALL)', `目前球數: ${appState.gameState.balls}B - ${appState.gameState.strikes}S`, 'text-emerald-400');
+      speakCommentary(appState.gameState.balls === 4 ? '四壞球保送！打者精準選球保送上一壘！' : '這球明顯偏離好球帶，主審判定壞球！');
+
+      if (appState.gameState.balls >= 4) {
+        // 四壞保送 (WALK)
+        showHitFeedback('四壞保送! (WALK)', '選球眼發威 • 踏上一壘', 'gold-gradient-text');
+        jumbotronState.alertLevel = 'normal';
+        jumbotronState.headline = 'BASE ON BALLS !';
+        jumbotronState.subtext = 'BATTER WALKS TO FIRST';
+        updateJumbotronDisplay();
+
+        advanceWalkRunners();
+        appState.gameState.balls = 0;
+        appState.gameState.strikes = 0;
+        appState.currentBatterIndex = (appState.currentBatterIndex + 1) % 9;
+      }
+      updateHUD();
+      updateJumbotronDisplay();
+    }
+
+    /* 四壞保送擠壘推進邏輯 */
+    function advanceWalkRunners() {
+      let runsScored = 0;
+      if (appState.bases[0]) {
+        if (appState.bases[1]) {
+          if (appState.bases[2]) {
+            // 滿壘保送擠回一分！
+            runsScored = 1;
+          } else {
+            appState.bases[2] = true;
+          }
+        } else {
+          appState.bases[1] = true;
+        }
+      } else {
+        appState.bases[0] = true;
+      }
+
+      if (runsScored > 0) {
+        if (appState.gameMode === 'offense') {
+          appState.myTeamScore += runsScored;
+          appState.gameState.score = appState.myTeamScore;
+        } else {
+          appState.cpuTeamScore += runsScored;
+        }
+        speakCommentary('滿壘擠壘得分！我方再添一分！');
+      }
+
+      updateBaseRunners3D();
+      updateHUD();
+    }
+
     /* 攻守交換切換邏輯 (Side Switching) */
     function recordOut() {
       appState.gameState.outs++;
@@ -3401,6 +4069,7 @@
         appState.gameState.outs = 0;
         appState.gameState.strikes = 0;
         appState.gameState.balls = 0;
+        resetBases(); // 局結束壘包清空
 
         triggerSideSwitch();
       }
@@ -3422,6 +4091,7 @@
         document.getElementById('main-action-text').textContent = '親自投球 (PITCH)';
         document.getElementById('control-hint-text').innerHTML = '攻守交換！<strong>【換您登上投手丘】</strong>，選擇球種並點擊按鈕三振打者！';
 
+        speakCommentary('三人出局！攻守交換，換您登上投手丘親自主宰好球帶！');
         showQuickAlert('🔁 三人出局，攻守交換！換您登上投手丘親自投球！');
       } else {
         // 切換為我方進攻 (自己打擊)
@@ -3435,6 +4105,7 @@
         document.getElementById('main-action-text').textContent = '手動投球 (PITCH)';
         document.getElementById('control-hint-text').innerHTML = '移動滑鼠瞄準好球帶甜蜜點，待球進入時<strong>【點擊滑鼠左鍵】</strong>揮棒打擊！';
 
+        speakCommentary(`第 ${appState.currentInning} 局上半開始，我方四番巨砲就位打擊！`);
         showQuickAlert(`🔁 攻守交換！第 ${appState.currentInning} 局上半，我方進攻打擊！`);
       }
 
@@ -3445,47 +4116,76 @@
       updateHUD();
     }
 
-    /* 主動畫運算迴圈 */
-    let lastClockTime = performance.now();
-    function animateLoop() {
+    /* 3D 主動畫與渲染迴圈 */
+    let lastTime = performance.now();
+    function animateLoop(now = performance.now()) {
       requestAnimationFrame(animateLoop);
 
-      const currentTime = performance.now();
-      const delta = (currentTime - lastClockTime) / 1000;
-      lastClockTime = currentTime;
+      const delta = ((now - lastTime) / 1000) * timeScale;
+      lastTime = now;
 
-      // 自動投球計時器邏輯
-      if (appState.currentView === 'game' && appState.gameState.autoPitchEnabled && !isBallInPlay) {
+      // 自動投球倒數計時器
+      if (appState.gameState.autoPitchEnabled && !isBallInPlay) {
         appState.gameState.countdown -= delta;
-        const cdEl = document.getElementById('pitch-countdown-sec');
-        if (cdEl) {
-          cdEl.textContent = `${Math.max(0, appState.gameState.countdown).toFixed(1)}s`;
+        const countEl = document.getElementById('pitch-countdown-sec');
+
+        if (countEl) {
+          countEl.textContent = `${Math.max(0, appState.gameState.countdown).toFixed(1)}s`;
         }
 
         if (appState.gameState.countdown <= 0) {
-          if (appState.gameMode === 'offense') {
-            pitchNextBall();
-          } else {
-            pitchByMyPlayer();
-          }
+          handleMainActionClick();
         }
       }
 
-      // 1. 棒球飛行更新
+      // 1. 棒球飛行更新與【子彈時間慢動作觸發 (Bullet Time Slow-Mo)】
       if (isBallInPlay) {
-        ballMesh.position.add(ballVelocity);
-        ballMesh.rotation.x += 0.2;
-        ballMesh.rotation.y += 0.1;
+        // 子彈時間：當球進入打擊區前方 1.5m ~ 0.2m 時，畫面放慢至 0.35x 倍速，讓玩家能清楚瞄準！
+        if (!ballContacted && appState.gameMode === 'offense') {
+          if (ballMesh.position.z >= -2.0 && ballMesh.position.z <= 0.6) {
+            timeScale = 0.38;
+            if (strikeZoneBox) {
+              strikeZoneBox.material.color.setHex(0x00ff88); // 好球帶亮綠燈提示擊球！
+            }
+          } else {
+            timeScale = 1.0;
+            if (strikeZoneBox) {
+              strikeZoneBox.material.color.setHex(0xffcc00);
+            }
+          }
+        } else {
+          timeScale = 1.0;
+        }
+
+        ballMesh.position.addScaledVector(ballVelocity, timeScale);
+        ballMesh.rotation.x += 0.2 * timeScale;
+        ballMesh.rotation.y += 0.1 * timeScale;
 
         if (!ballContacted) {
           if (ballMesh.position.z > 2.5) {
             isBallInPlay = false;
-            recordStrike();
+            timeScale = 1.0;
+
+            // 判斷此球是否穿過好球帶判定框
+            // 好球帶空間定義：X: ±0.44m, Y: 0.72m ~ 1.70m
+            const isStrikeZone = Math.abs(ballMesh.position.x) <= 0.44 && ballMesh.position.y >= 0.72 && ballMesh.position.y <= 1.70;
+
+            if (isSwinging) {
+              // 只要有出棒揮空，無論好壞球一律記好球
+              recordStrike();
+            } else {
+              // 未出棒：判斷是站著看的好球還是成功選到的壞球
+              if (isStrikeZone) {
+                recordStrike();
+              } else {
+                recordBall();
+              }
+            }
             appState.gameState.countdown = appState.gameState.autoPitchTimer;
           }
         } else {
           // 球已被擊出：重力拋物線
-          ballVelocity.y -= 0.012;
+          ballVelocity.y -= 0.012 * timeScale;
           if (ballMesh.position.y <= 0.09) {
             ballMesh.position.y = 0.09;
             ballVelocity.multiplyScalar(0.78);
@@ -3502,7 +4202,7 @@
               const dir = new THREE.Vector3().subVectors(ballMesh.position, f.position);
               dir.y = 0;
               if (dir.length() > 0.6) {
-                dir.normalize().multiplyScalar(0.18);
+                dir.normalize().multiplyScalar(0.18 * timeScale);
                 f.position.add(dir);
               }
             }
@@ -3512,7 +4212,7 @@
 
       // 2. 揮棒動畫
       if (isSwinging) {
-        swingProgress += 0.12;
+        swingProgress += 0.14;
         const swingAngle = -0.6 + Math.sin(swingProgress * Math.PI) * 2.8;
         batMesh.rotation.z = swingAngle;
         batMesh.rotation.x = -0.4 + Math.sin(swingProgress * Math.PI) * 0.4;
@@ -3534,6 +4234,16 @@
           cameraShake = 0;
           setCameraView(currentCameraView);
         }
+      }
+
+      // 4. 下雨粒子運算
+      if (rainSystem && rainSystem.visible) {
+        const positions = rainSystem.geometry.attributes.position.array;
+        for (let i = 1; i < positions.length; i += 3) {
+          positions[i] -= 0.85;
+          if (positions[i] < 0) positions[i] = 45;
+        }
+        rainSystem.geometry.attributes.position.needsUpdate = true;
       }
 
       renderer.render(scene, camera);
